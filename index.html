@@ -170,6 +170,42 @@ table.ladder tr.you td{background:var(--chip);font-weight:700}
 .meth ul{margin:0 0 11px 20px;font-size:13px;color:var(--ink2)}
 .meth li{margin-bottom:4px}
 footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.5}
+/* ---------- mobile ---------- */
+@media(max-width:560px){
+  .wrap{padding:0 13px}
+  main.wrap{padding:26px 13px 32px}
+  .mast{padding:15px 0 14px}
+  .brand{gap:10px}
+  .brand .flag,.brand .flag svg{width:30px;height:20px}
+  .bt{font-size:18px}
+  .tag{font-size:11.5px;line-height:1.35}
+  .subrow{gap:6px}
+  nav.tabs{margin:0 -13px;padding:0 13px;width:calc(100% + 26px)}
+  nav.tabs button{font-size:13px;padding:9px 11px}
+  .ctl{gap:6px;padding-bottom:8px}
+  .seg button{font-size:11.5px;padding:5px 9px}
+  .seg.primary button{font-size:12px;padding:5px 10px}
+  h1{font-size:21px}
+  .sub{font-size:13px}
+  .pagehead{margin-bottom:16px}
+  .card{padding:15px 14px}
+  .ctitle{font-size:15px}
+  .big{font-size:38px}
+  .result .expl{font-size:13.5px}
+  .statrow{grid-template-columns:1fr 1fr}
+  .stat{padding:9px 10px;border-right:0}
+  .stat:nth-child(odd){border-right:1px solid var(--hair)}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--hair)}
+  .stat .v{font-size:16px}
+  .moneyin input{font-size:20px}
+  .emgrid{grid-template-columns:1fr}
+  .frow{flex-direction:column;gap:0}
+  .rrow{padding:9px 12px}
+  .rrow .vals{text-align:left}
+  .pctchip{display:inline-block;margin-top:0;margin-left:8px}
+  .rangewrap{display:none}
+  .plinks a{display:block;margin:5px 0}
+}
 /* ---------- partner links (subtle, text-only) ---------- */
 .plinks{margin-top:12px;padding:10px 14px;border:1px solid var(--hair);border-radius:8px;background:var(--surface)}
 .plinks .pk{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
@@ -626,8 +662,26 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 const seq=frac=>css('--seq'+Math.min(5,Math.max(1,Math.ceil(frac*5))));
 const tt=()=>$('#tt');
 function showTT(e,html){const t=tt();t.style.display='block';t.innerHTML=html;
-  t.style.left=Math.min(window.innerWidth-180,e.clientX+14)+'px';t.style.top=(e.clientY+14)+'px';}
+  const w=t.offsetWidth||150,h=t.offsetHeight||60;
+  let x=e.clientX+14, y=e.clientY+14;
+  if(x+w>window.innerWidth-8)x=Math.max(8,e.clientX-w-14);
+  if(y+h>window.innerHeight-8)y=Math.max(8,e.clientY-h-14);
+  t.style.left=x+'px';t.style.top=y+'px';}
 function hideTT(){tt().style.display='none';}
+/* pointer helper: unifies mouse hover and touch tap so tooltips work on phones */
+let ttTimer=null;
+function onPointer(el,moveFn){
+  if(!el)return;
+  el.style.touchAction='pan-y';
+  const run=e=>{clearTimeout(ttTimer);moveFn(e);
+    if(e.pointerType&&e.pointerType!=='mouse')ttTimer=setTimeout(hideTT,3500);};
+  el.addEventListener('pointerdown',run);
+  el.addEventListener('pointermove',e=>{if(!e.pointerType||e.pointerType==='mouse'||e.buttons)run(e);});
+  el.addEventListener('pointerleave',e=>{if(!e.pointerType||e.pointerType==='mouse')hideTT();});
+  el.addEventListener('pointercancel',hideTT);
+}
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('svg'))hideTT();},true);
+const isNarrow=w=>w<520;
 
 /* ================= controls ================= */
 const applyTheme=t=>{document.documentElement.setAttribute('data-theme',t);try{localStorage.uaeTheme=t}catch(e){}renderAll();};
@@ -760,7 +814,9 @@ function userBand(inc){
 function drawHist(vk,inc,userP){
   const shares=DATA.hist.shares[vk];
   const holder=$('#histChart');
-  const W=holder.clientWidth||1000,H=250,padL=34,padR=8,padT=26,padB=40;
+  const W=holder.clientWidth||1000;
+  const nar=isNarrow(W);
+  const H=nar?250:250, padL=nar?26:34, padR=nar?4:8, padT=26, padB=nar?64:40;
   const n=shares.length;
   const bw=(W-padL-padR)/n;
   const max=Math.max(...shares);
@@ -770,31 +826,35 @@ function drawHist(vk,inc,userP){
   let s='<svg id="histSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Income distribution histogram">';
   for(let g=0;g<=yMax;g+=10){
     s+='<line x1="'+padL+'" y1="'+ys(g)+'" x2="'+(W-padR)+'" y2="'+ys(g)+'" stroke="'+css('--grid')+'" stroke-width="1"/>'
-      +'<text x="'+(padL-7)+'" y="'+(ys(g)+3.5)+'" text-anchor="end" font-size="10.5" fill="'+css('--muted')+'">'+g+'%</text>';
+      +'<text x="'+(padL-5)+'" y="'+(ys(g)+3.5)+'" text-anchor="end" font-size="'+(nar?9:10.5)+'" fill="'+css('--muted')+'">'+g+'%</text>';
   }
   shares.forEach((v,i)=>{
-    const x=padL+i*bw+3, w=bw-6;
-    const y=ys(v), h=(H-padB)-y;
-    const isYou=i===ub;
+    const x=padL+i*bw+(nar?1.2:3), w=bw-(nar?2.4:6);
+    const y=ys(v), h=(H-padB)-y, cxp=x+w/2, isYou=i===ub;
     s+='<rect class="hbar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(1,h).toFixed(1)+'" rx="1" fill="'+(isYou?css('--seq5'):seq(0.25+0.5*v/max))+'"/>';
-    if(v>=3||isYou)s+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="10.5" font-weight="'+(isYou?'800':'600')+'" fill="'+css('--ink2')+'">'+(v>=1?v.toFixed(1):v.toFixed(2))+'%</text>';
-    if(isYou){const cxp=x+w/2;
-      s+='<rect x="'+(cxp-24).toFixed(1)+'" y="0" width="48" height="18" rx="9" fill="'+css('--critical')+'"/>'
-        +'<text x="'+cxp.toFixed(1)+'" y="13" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">YOU</text>'
-        +'<path d="M'+(cxp-5).toFixed(1)+',18 L'+(cxp+5).toFixed(1)+',18 L'+cxp.toFixed(1)+',25 Z" fill="'+css('--critical')+'"/>';}
-    s+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-padB+15)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+bandLabel(i)+'</text>';
+    const showVal = nar ? (isYou||v>=10) : (v>=3||isYou);
+    if(showVal)s+='<text x="'+cxp.toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="'+(nar?9:10.5)+'" font-weight="'+(isYou?'800':'600')+'" fill="'+css('--ink2')+'">'+(v>=1?v.toFixed(nar?0:1):v.toFixed(2))+'%</text>';
+    if(isYou){
+      const bwid=nar?38:48, bh=nar?16:18;
+      s+='<rect x="'+(cxp-bwid/2).toFixed(1)+'" y="0" width="'+bwid+'" height="'+bh+'" rx="9" fill="'+css('--critical')+'"/>'
+        +'<text x="'+cxp.toFixed(1)+'" y="'+(bh-5)+'" text-anchor="middle" font-size="'+(nar?9.5:11)+'" font-weight="800" fill="#fff">YOU</text>'
+        +'<path d="M'+(cxp-5).toFixed(1)+','+bh+' L'+(cxp+5).toFixed(1)+','+bh+' L'+cxp.toFixed(1)+','+(bh+7)+' Z" fill="'+css('--critical')+'"/>';}
+    if(nar){
+      const ly=H-padB+11;
+      s+='<text x="'+cxp.toFixed(1)+'" y="'+ly+'" text-anchor="end" font-size="9" fill="'+css('--muted')+'" transform="rotate(-55 '+cxp.toFixed(1)+' '+ly+')">'+bandLabel(i)+'</text>';
+    }else{
+      s+='<text x="'+cxp.toFixed(1)+'" y="'+(H-padB+15)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+bandLabel(i)+'</text>';
+    }
   });
   s+='<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'" stroke-width="1"/>'
-    +'<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">Gross '+(PER==='yr'?'annual':'monthly')+' income ('+CUR+(PER==='yr'?' / year':' / month')+')</text></svg>';
+    +'<text x="'+((padL+W-padR)/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="'+(nar?9.5:10.5)+'" fill="'+css('--muted')+'">Gross '+(PER==='yr'?'annual':'monthly')+' income ('+CUR+')</text></svg>';
   holder.innerHTML=s;
-  const svg=$('#histSvg');
-  svg.addEventListener('mousemove',e=>{
-    const b=e.target.closest('.hbar');
+  onPointer($('#histSvg'),e=>{
+    const b=e.target&&e.target.closest?e.target.closest('.hbar'):null;
     if(!b){hideTT();return;}
     const i=+b.dataset.i;
     showTT(e,'<b>'+shares[i].toFixed(1)+'%</b> of '+(MODE==='hh'?'households':'workers')+'<div class="l">earn '+bandLabel(i)+' '+CUR+(PER==='yr'?'/yr':'/mo')+'</div>');
   });
-  svg.addEventListener('mouseleave',hideTT);
 }
 /* ---- age chart: modelled tiers per age band ---- */
 const AGE_TIERS={p10:0.534,p25:0.719,p50:1,p75:1.392,p90:1.874,p99:3.126}; /* lognormal sigma 0.49 from Paylab overall p10/p90 spread */
@@ -802,7 +862,8 @@ function ageTier(i,t){return DATA.age.median_monthly_aed[i]*AGE_TIERS[t];}
 function drawAge(inc){
   const A=DATA.age;
   const holder=$('#ageChart');
-  const W=holder.clientWidth||480,H=278,padL=42,padR=72,padT=18,padB=28;
+  const W0=holder.clientWidth||480, nar=isNarrow(W0);
+  const W=W0,H=nar?250:278,padL=nar?34:42,padR=nar?12:72,padT=18,padB=nar?34:28;
   const n=A.labels.length;
   const conv=v=>{let x=v;if(PER==='yr')x*=12;if(CUR==='USD')x/=FX;return x;};
   $('#ageSub').textContent='Where white-collar salaries fall at each age: outer band 10th–90th percentile, inner band 25th–75th, bold line is the median. Modelled around Paylab UAE age medians; professional data, not the full workforce.'
@@ -856,20 +917,22 @@ function drawAge(inc){
   A.median_monthly_aed.forEach((m,i)=>{
     const p=pts('p50')[i];
     s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i===peak?4.5:3)+'" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.6"/>'
-      +'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-(i===peak?20:9)).toFixed(1)+'" text-anchor="middle" font-size="'+(i===peak?11:10)+'" font-weight="'+(i===peak?800:650)+'" fill="'+(i===peak?css('--seq5'):css('--ink3'))+'" font-variant-numeric="tabular-nums">'+money(m,{compact:true}).replace(CUR+' ','')+'</text>'
+      +((!nar||i===peak)?'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-(i===peak?20:9)).toFixed(1)+'" text-anchor="middle" font-size="'+(i===peak?11:10)+'" font-weight="'+(i===peak?800:650)+'" fill="'+(i===peak?css('--seq5'):css('--ink3'))+'" font-variant-numeric="tabular-nums">'+money(m,{compact:true}).replace(CUR+' ','')+'</text>':'')
       +(i===peak?'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="0.06em" fill="'+css('--ink3')+'">PEAK</text>':'')
-      +'<text x="'+p[0].toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+A.labels[i]+'</text>';
+      +'<text x="'+p[0].toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="'+(nar?9:10.5)+'" fill="'+css('--muted')+'">'+(nar?A.labels[i].replace('Under ','<').replace('–','-'):A.labels[i])+'</text>';
   });
   // right-edge band labels, tone-matched, collision-spread
-  const last=n-1, lx=W-padR+8;
-  const labels=[['p90','90th',css('--seq3')],['p75','75th',css('--seq4')],['p50','MEDIAN',css('--seq5')],['p25','25th',css('--seq4')],['p10','10th',css('--seq3')]];
-  let yprev=-99;
-  labels.forEach(([k,txt,col])=>{
-    let y=ys(conv(A.median_monthly_aed[last]*AGE_TIERS[k]))+3.5;
-    if(y-yprev<11)y=yprev+11;
-    yprev=y;
-    s+='<text x="'+lx.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="9" font-weight="750" letter-spacing="0.05em" fill="'+col+'">'+txt+'</text>';
-  });
+  if(!nar){
+    const last=n-1, lx=W-padR+8;
+    const labels=[['p90','90th',css('--seq3')],['p75','75th',css('--seq4')],['p50','MEDIAN',css('--seq5')],['p25','25th',css('--seq4')],['p10','10th',css('--seq3')]];
+    let yprev=-99;
+    labels.forEach(([k,txt,col])=>{
+      let y=ys(conv(A.median_monthly_aed[last]*AGE_TIERS[k]))+3.5;
+      if(y-yprev<11)y=yprev+11;
+      yprev=y;
+      s+='<text x="'+lx.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="9" font-weight="750" letter-spacing="0.05em" fill="'+col+'">'+txt+'</text>';
+    });
+  }
   if(uv&&uv<max){
     const y=ys(uv);
     s+='<line x1="'+padL+'" y1="'+y.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+y.toFixed(1)+'" stroke="'+css('--critical')+'" stroke-width="1.5" stroke-dasharray="5 4"/>'
@@ -881,7 +944,7 @@ function drawAge(inc){
   holder.innerHTML=s;
   /* refined hover: snap crosshair to the nearest age column, compact tier readout */
   const svg=$('#ageSvg'),xh=$('#ageXh');
-  svg.onmousemove=e=>{
+  onPointer(svg,e=>{
     const r=svg.getBoundingClientRect();
     const px=(e.clientX-r.left)*(W/r.width);
     if(px<padL||px>W-padR){hideTT();xh.setAttribute('opacity',0);return;}
@@ -897,64 +960,91 @@ function drawAge(inc){
       +'<div class="l">25th &nbsp;<b>'+m('p25')+'</b></div>'
       +'<div class="l">10th &nbsp;<b>'+m('p10')+'</b></div>'
       +'<div class="l" style="margin-top:3px">'+CUR+(PER==='yr'?' per year':' per month')+', white-collar</div>');
-  };
-  svg.onmouseleave=()=>{hideTT();xh.setAttribute('opacity',0);};
+  });
+  svg.addEventListener('mouseleave',()=>xh.setAttribute('opacity',0));
 }
 /* ---- segments chart ---- */
 function drawSegments(){
   const S=DATA.segments;
   const idx=[...S.labels.keys()].sort((a,b)=>S.pop_m[b]-S.pop_m[a]);
   const holder=$('#segChart');
-  const W=holder.clientWidth||480,rowH=32,padL=168,padR=142;
+  const W=holder.clientWidth||480;
+  const nar=isNarrow(W);
+  const rowH=nar?44:32, padL=nar?2:168, padR=nar?2:142;
   const H=idx.length*rowH+6;
   const max=Math.max(...S.pop_m);
   let s='<svg id="segSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
   idx.forEach((k,r)=>{
     const y=3+r*rowH;
     const w=Math.max(3,(S.pop_m[k]/max)*(W-padL-padR));
-    s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+S.labels[k]+'</text>'
-      +'<rect class="sbar" data-i="'+k+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'"  rx="1" fill="'+css('--seq3')+'"/>'
-      +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+S.pop_m[k].toFixed(2)+'M · med '+money(S.median_aed[k],{compact:true})+'</text>';
+    const meta=S.pop_m[k].toFixed(2)+'M · med '+money(S.median_aed[k],{compact:true});
+    if(nar){
+      s+='<text x="'+padL+'" y="'+(y+11)+'" font-size="11.5" fill="'+css('--ink2')+'">'+S.labels[k]+'</text>'
+        +'<text x="'+(W-padR)+'" y="'+(y+11)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+meta+'</text>'
+        +'<rect class="sbar" data-i="'+k+'" x="'+padL+'" y="'+(y+18)+'" width="'+w.toFixed(1)+'" height="12" rx="1" fill="'+css('--seq3')+'"/>';
+    }else{
+      s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+S.labels[k]+'</text>'
+        +'<rect class="sbar" data-i="'+k+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'" rx="1" fill="'+css('--seq3')+'"/>'
+        +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+meta+'</text>';
+    }
   });
   s+='</svg>';
   holder.innerHTML=s;
-  $('#segSvg').addEventListener('mousemove',e=>{
-    const b=e.target.closest('.sbar');
+  onPointer($('#segSvg'),e=>{
+    const b=e.target&&e.target.closest?e.target.closest('.sbar'):null;
     if(!b){hideTT();return;}
     const i=+b.dataset.i;
     showTT(e,'<b>'+DATA.segments.labels[i]+'</b><div class="l">'+DATA.segments.pop_m[i].toFixed(2)+'M workers · median '+money(DATA.segments.median_aed[i],{compact:true})+(PER==='yr'?'/yr':'/mo')+'</div>');
   });
-  $('#segSvg').addEventListener('mouseleave',hideTT);
 }
-
 /* ================= percentile curves (wealthdashboard-style) ================= */
 function drawPercCurve(sel,{getVal,userP,userVal,fmt,yTicks,unitTail}){
   const holder=$(sel);
-  const W=holder.clientWidth||1000,H=290,padL=46,padR=16,padT=16,padB=30;
+  const W=holder.clientWidth||1000;
+  const nar=isNarrow(W);
+  const H=nar?255:290,padL=nar?38:46,padR=nar?10:16,padT=nar?22:16,padB=nar?26:30;
   const P=[];for(let p=1;p<=99;p++)P.push(p);P.push(99.5,99.9);
   const y0=Math.log(getVal(1)*0.8),y1=Math.log(getVal(99.9)*1.25);
   const xs=p=>padL+(p/100)*(W-padL-padR);
   const ys=v=>padT+(1-(Math.log(v)-y0)/(y1-y0))*(H-padT-padB);
   let s='<svg id="'+sel.slice(1)+'Svg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
-  yTicks.forEach(t=>{
-    if(Math.log(t)<y0||Math.log(t)>y1)return;
+  const shown=yTicks.filter(t=>Math.log(t)>=y0&&Math.log(t)<=y1);
+  shown.forEach((t,ti)=>{
     const gy=ys(t);
-    s+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="'+css('--grid')+'"/>'
-      +'<text x="'+(padL-7)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(t>=1e6?(t/1e6)+'M':t>=1000?(t/1000)+'k':t)+'</text>';
+    s+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="'+css('--grid')+'"/>';
+    if(!nar||ti%2===0)
+      s+='<text x="'+(padL-5)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="'+(nar?9:10)+'" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(t>=1e6?(t/1e6)+'M':t>=1000?(t/1000)+'k':t)+'</text>';
   });
-  [10,25,50,75,90].forEach(p=>{
-    s+='<text x="'+xs(p).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">'+p+'th</text>';
+  (nar?[10,50,90]:[10,25,50,75,90]).forEach(p=>{
+    s+='<text x="'+xs(p).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="'+(nar?9:10)+'" fill="'+css('--muted')+'">'+p+'th</text>';
   });
-  s+='<text x="'+xs(99).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">99th</text>';
+  if(!nar)s+='<text x="'+xs(99).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">99th</text>';
   const pts=P.map(p=>[xs(p),ys(getVal(p))]);
   const area='M'+pts[0][0].toFixed(1)+','+(H-padB)+' L'+pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+' L'+pts[pts.length-1][0].toFixed(1)+','+(H-padB)+' Z';
   s+='<defs><linearGradient id="'+sel.slice(1)+'g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="'+css('--seq1')+'" stop-opacity="0.25"/><stop offset="1" stop-color="'+css('--seq3')+'" stop-opacity="0.45"/></linearGradient></defs>'
     +'<path d="'+area+'" fill="url(#'+sel.slice(1)+'g)"/>'
     +'<path d="M'+pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+'" fill="none" stroke="'+css('--seq5')+'" stroke-width="2.5" stroke-linejoin="round"/>';
+  /* YOU pill geometry, computed up front so milestone labels can dodge it */
+  let pill=null;
+  if(userP&&userVal>0){
+    const ux0=xs(Math.min(99.9,userP));
+    const uy0=ys(Math.max(getVal(1)*0.8,Math.min(getVal(99.9),userVal)));
+    pill={x0:Math.min(W-58,Math.max(padL,ux0-45)),y0:Math.min(H-padB-18,uy0+10)};
+    pill.x1=pill.x0+36; pill.y1=pill.y0+15;
+  }
+  const overlaps=(a,b)=>!(a.x1<b.x0||a.x0>b.x1||a.y1<b.y0||a.y0>b.y1);
   [[50,'median'],[90,'top 10%'],[99,'top 1%']].forEach(([p,lbl])=>{
-    const v=getVal(p);
-    s+='<circle cx="'+xs(p).toFixed(1)+'" cy="'+ys(v).toFixed(1)+'" r="3.5" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.5"/>'
-      +'<text x="'+(xs(p)-(p>95?8:0)).toFixed(1)+'" y="'+(ys(v)-9).toFixed(1)+'" text-anchor="'+(p>95?'end':'middle')+'" font-size="9.5" font-weight="700" fill="'+css('--ink3')+'">'+lbl+' · '+fmt(v)+'</text>';
+    const v=getVal(p), cx=xs(p), cy=ys(v);
+    const txt=lbl+' · '+fmt(v);
+    const approxW=txt.length*(nar?5.0:5.6);
+    let anchor='middle', tx=cx;
+    if(cx+approxW/2>W-padR-2){anchor='end';tx=Math.min(W-padR-2,cx+6);}
+    else if(cx-approxW/2<padL+2){anchor='start';tx=padL+2;}
+    const lx0=anchor==='end'?tx-approxW:anchor==='start'?tx:tx-approxW/2;
+    const box={x0:lx0,x1:lx0+approxW,y0:cy-9-7,y1:cy-9+3};
+    s+='<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="3.5" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.5"/>';
+    if(!(pill&&overlaps(box,pill)))
+      s+='<text x="'+tx.toFixed(1)+'" y="'+(cy-9).toFixed(1)+'" text-anchor="'+anchor+'" font-size="'+(nar?8.8:9.5)+'" font-weight="700" fill="'+css('--ink3')+'">'+txt+'</text>';
   });
   if(userP&&userVal>0){
     const ux=xs(Math.min(99.9,userP)),uy=ys(Math.max(getVal(1)*0.8,Math.min(getVal(99.9),userVal)));
@@ -967,15 +1057,14 @@ function drawPercCurve(sel,{getVal,userP,userVal,fmt,yTicks,unitTail}){
   s+='<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/></svg>';
   holder.innerHTML=s;
   const svg=$(sel+'Svg');
-  svg.onmousemove=e=>{
+  onPointer(svg,e=>{
     const r=svg.getBoundingClientRect();
     const px=(e.clientX-r.left)*(W/r.width);
     if(px<padL||px>W-padR){hideTT();return;}
     const p=Math.min(99.9,Math.max(1,(px-padL)/(W-padL-padR)*100));
     const v=getVal(p);
     showTT(e,'<b>'+fmt(v)+unitTail+'</b><div class="l">'+p.toFixed(p>99?1:0)+'th percentile — richer than '+p.toFixed(p>99?1:0)+'% · top '+(100-p).toFixed(p>99?1:0)+'%</div>');
-  };
-  svg.onmouseleave=hideTT;
+  });
 }
 /* ---- Lorenz curve ---- */
 function drawLorenz(){
@@ -1008,28 +1097,36 @@ function drawLorenz(){
     +'<line x1="'+padL+'" y1="'+ys(0)+'" x2="'+(W-padR)+'" y2="'+ys(0)+'" stroke="'+css('--baseline')+'"/></svg>';
   holder.innerHTML=s;
   const svg=$('#lzSvg');
-  svg.onmousemove=e=>{
+  onPointer(svg,e=>{
     const r=svg.getBoundingClientRect();
     const px=(e.clientX-r.left)*(W/r.width);
     if(px<padL||px>W-padR){hideTT();return;}
     const p=Math.min(99,Math.max(1,(px-padL)/(W-padL-padR)*100));
     showTT(e,'<b>Bottom '+Math.round(p)+'%</b><div class="l">earn '+ (100*L(Math.round(p))).toFixed(1)+'% of total income</div>');
-  };
-  svg.onmouseleave=hideTT;
+  });
 }
 /* ---- global city comparison ---- */
 const CITIES=[['New York',384500],['Bay Area',342400],['Tokyo',292300],['Singapore',242400],['Los Angeles',220600],['London',215700],['Paris',160100],['Hong Kong',154900],['Sydney',152900],['Dubai',81200]];
 function drawCities(){
   const holder=$('#cityChart');
-  const W=holder.clientWidth||480,rowH=27,padL=96,padR=64;
+  const W=holder.clientWidth||480;
+  const nar=isNarrow(W);
+  const rowH=nar?36:27, padL=nar?2:96, padR=nar?2:64;
   const H=CITIES.length*rowH+6;
   const max=CITIES[0][1];
   let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
   CITIES.forEach(([name,v],i)=>{
     const y=3+i*rowH, w=Math.max(3,(v/max)*(W-padL-padR)), dxb=name==='Dubai';
-    s+='<text x="'+(padL-8)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11" font-weight="'+(dxb?'800':'400')+'" fill="'+(dxb?css('--ink'):css('--ink2'))+'">'+name+'</text>'
-      +'<rect x="'+padL+'" y="'+(y+6)+'" width="'+w.toFixed(1)+'" height="'+(rowH-12)+'" rx="1" fill="'+(dxb?css('--seq5'):css('--seq2'))+'"'+(dxb?'':' opacity="0.55"')+'/>'
-      +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" font-weight="'+(dxb?'800':'600')+'" fill="'+(dxb?css('--ink'):css('--muted'))+'" font-variant-numeric="tabular-nums">'+(v/1000).toFixed(0)+'k</text>';
+    const fill=dxb?css('--seq5'):css('--seq2'), op=dxb?'':' opacity="0.55"';
+    if(nar){
+      s+='<text x="'+padL+'" y="'+(y+10)+'" font-size="11" font-weight="'+(dxb?'800':'400')+'" fill="'+(dxb?css('--ink'):css('--ink2'))+'">'+name+'</text>'
+        +'<text x="'+(W-padR)+'" y="'+(y+10)+'" text-anchor="end" font-size="10.5" font-weight="'+(dxb?'800':'600')+'" fill="'+(dxb?css('--ink'):css('--muted'))+'" font-variant-numeric="tabular-nums">'+(v/1000).toFixed(0)+'k</text>'
+        +'<rect x="'+padL+'" y="'+(y+15)+'" width="'+w.toFixed(1)+'" height="10" rx="1" fill="'+fill+'"'+op+'/>';
+    }else{
+      s+='<text x="'+(padL-8)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11" font-weight="'+(dxb?'800':'400')+'" fill="'+(dxb?css('--ink'):css('--ink2'))+'">'+name+'</text>'
+        +'<rect x="'+padL+'" y="'+(y+6)+'" width="'+w.toFixed(1)+'" height="'+(rowH-12)+'" rx="1" fill="'+fill+'"'+op+'/>'
+        +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" font-weight="'+(dxb?'800':'600')+'" fill="'+(dxb?css('--ink'):css('--muted'))+'" font-variant-numeric="tabular-nums">'+(v/1000).toFixed(0)+'k</text>';
+    }
   });
   s+='</svg>';
   holder.innerHTML=s;
@@ -1125,23 +1222,37 @@ function drawMig(){
 /* ================= emirates ================= */
 function hbarChart(holderSel,items,{fmtVal,ranges=null,cls='embar',padR=84}){
   const holder=$(holderSel);
-  const W=holder.clientWidth||900,rowH=32,padL=122;
+  const W=holder.clientWidth||900;
+  const nar=isNarrow(W);
+  const rowH=nar?42:32, padL=nar?2:122, pR=nar?2:padR;
   const H=items.length*rowH+8;
   const max=Math.max(...items.map(e=>ranges?e.range[1]:e.value));
+  const scale=v=>Math.max(3,(v/max)*(W-padL-pR));
   let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
   items.forEach((e,i)=>{
-    const y=4+i*rowH;
-    const scale=v=>Math.max(3,(v/max)*(W-padL-padR));
-    const w=scale(e.value);
-    s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+e.name+'</text>'
-      +'<rect class="'+cls+'" data-i="'+i+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'"  rx="1" fill="'+seq(e.value/max)+'"/>';
-    if(ranges){
-      const x1=padL+scale(e.range[0]),x2=padL+scale(e.range[1]),cy=y+rowH/2-0.5;
-      s+='<line x1="'+x1.toFixed(1)+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+cy+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
-        +'<line x1="'+x1.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x1.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
-        +'<line x1="'+x2.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x2.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>';
+    const y=4+i*rowH, w=scale(e.value);
+    if(nar){
+      /* name and value on one line, full-width bar beneath: bars stay readable on a phone */
+      s+='<text x="'+padL+'" y="'+(y+11)+'" font-size="11.5" fill="'+css('--ink2')+'">'+e.name+'</text>'
+        +'<text x="'+(W-pR)+'" y="'+(y+11)+'" text-anchor="end" font-size="11.5" font-weight="700" fill="'+css('--ink2')+'" font-variant-numeric="tabular-nums">'+fmtVal(e)+'</text>'
+        +'<rect class="'+cls+'" data-i="'+i+'" x="'+padL+'" y="'+(y+18)+'" width="'+w.toFixed(1)+'" height="12" rx="1" fill="'+seq(e.value/max)+'"/>';
+      if(ranges){
+        const x1=padL+scale(e.range[0]),x2=padL+scale(e.range[1]),cy=y+24;
+        s+='<line x1="'+x1.toFixed(1)+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+cy+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+          +'<line x1="'+x1.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x1.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+          +'<line x1="'+x2.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x2.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>';
+      }
+    }else{
+      s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+e.name+'</text>'
+        +'<rect class="'+cls+'" data-i="'+i+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'" rx="1" fill="'+seq(e.value/max)+'"/>';
+      if(ranges){
+        const x1=padL+scale(e.range[0]),x2=padL+scale(e.range[1]),cy=y+rowH/2-0.5;
+        s+='<line x1="'+x1.toFixed(1)+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+cy+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+          +'<line x1="'+x1.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x1.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+          +'<line x1="'+x2.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x2.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>';
+      }
+      s+='<text x="'+(padL+(ranges?scale(e.range[1]):w)+8).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="11.5" font-weight="700" fill="'+css('--ink2')+'" font-variant-numeric="tabular-nums">'+fmtVal(e)+'</text>';
     }
-    s+='<text x="'+(padL+((ranges? scale(e.range[1]):w))+8).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="11.5" font-weight="700" fill="'+css('--ink2')+'" font-variant-numeric="tabular-nums">'+fmtVal(e)+'</text>';
   });
   s+='</svg>';
   holder.innerHTML=s;
