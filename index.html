@@ -832,7 +832,8 @@ function drawHist(vk,inc,userP){
     const x=padL+i*bw+(nar?1.2:3), w=bw-(nar?2.4:6);
     const y=ys(v), h=(H-padB)-y, cxp=x+w/2, isYou=i===ub;
     s+='<rect class="hbar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(1,h).toFixed(1)+'" rx="1" fill="'+(isYou?css('--seq5'):seq(0.25+0.5*v/max))+'"/>';
-    const showVal = nar ? (isYou||v>=10) : (v>=3||isYou);
+    /* only label bars that have room: on very narrow phones just the tallest + your band */
+    const showVal = nar ? (isYou || (bw>=22 ? v>=10 : v===max)) : (v>=3||isYou);
     if(showVal)s+='<text x="'+cxp.toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="'+(nar?9:10.5)+'" font-weight="'+(isYou?'800':'600')+'" fill="'+css('--ink2')+'">'+(v>=1?v.toFixed(nar?0:1):v.toFixed(2))+'%</text>';
     if(isYou){
       const bwid=nar?38:48, bh=nar?16:18;
@@ -863,7 +864,7 @@ function drawAge(inc){
   const A=DATA.age;
   const holder=$('#ageChart');
   const W0=holder.clientWidth||480, nar=isNarrow(W0);
-  const W=W0,H=nar?250:278,padL=nar?34:42,padR=nar?12:72,padT=18,padB=nar?34:28;
+  const W=W0,H=nar?250:278,padL=nar?42:50,padR=nar?12:72,padT=18,padB=nar?34:28;
   const n=A.labels.length;
   const conv=v=>{let x=v;if(PER==='yr')x*=12;if(CUR==='USD')x/=FX;return x;};
   $('#ageSub').textContent='Where white-collar salaries fall at each age: outer band 10th–90th percentile, inner band 25th–75th, bold line is the median. Modelled around Paylab UAE age medians; professional data, not the full workforce.'
@@ -902,7 +903,7 @@ function drawAge(inc){
   for(let g=1;g<=4;g++){
     const gv=niceStep*g, gy=ys(gv);
     s+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="'+css('--grid')+'"/>'
-      +'<text x="'+(padL-7)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(gv>=1000?(Math.round(gv/100)/10)+'k':Math.round(gv))+'</text>';
+      +'<text x="'+(padL-6)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="'+(nar?9:10)+'" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(gv>=1000?(gv>=10000?Math.round(gv/1000):Math.round(gv/100)/10)+'k':Math.round(gv))+'</text>';
   }
   // bands with hairline edges, then median curve
   s+='<path d="'+band('p90','p10')+'" fill="url(#agB1)"/>'
