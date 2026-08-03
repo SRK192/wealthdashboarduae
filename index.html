@@ -14,9 +14,15 @@ if(location.protocol==='http:'&&location.hostname.indexOf('localhost')<0&&locati
 <meta property="og:description" content="Your salary. Your rank. See exactly where you stand among 11 million UAE residents.">
 <meta property="og:url" content="https://wealthdashboarduae.com/">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The UAE Wealth Dashboard">
 <meta name="twitter:description" content="Income percentiles, wealth rankings and salary benchmarks for the UAE.">
+<meta property="og:image" content="https://wealthdashboarduae.com/social-card.png">
+<meta name="twitter:image" content="https://wealthdashboarduae.com/social-card.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "The UAE Wealth Dashboard", "url": "https://wealthdashboarduae.com/", "description": "Interactive income percentile and wealth dashboard for the United Arab Emirates."}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "The UAE Wealth Dashboard", "url": "https://wealthdashboarduae.com/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "AED"}, "description": "Free tool showing where any salary or net worth ranks among UAE residents, with salary benchmarks for 837 roles."}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "UAE income and wealth distribution dataset", "description": "Modelled income percentiles, wealth distribution, emirate-level wealth estimates and salary benchmarks for the United Arab Emirates.", "url": "https://wealthdashboarduae.com/", "license": "https://creativecommons.org/licenses/by/4.0/", "creator": {"@type": "Organization", "name": "The UAE Wealth Dashboard"}, "temporalCoverage": "2024/2026", "spatialCoverage": {"@type": "Place", "name": "United Arab Emirates"}, "variableMeasured": ["Gross monthly income percentile", "Household income percentile", "Net worth percentile", "Salary range by role", "Household wealth per adult by emirate"], "isBasedOn": ["https://wid.world/country/united-arab-emirates/", "https://www.ubs.com/global/en/wealthmanagement/insights/global-wealth-report.html"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the average salary in the UAE?", "acceptedAnswer": {"@type": "Answer", "text": "About AED 15,234 a month as a mean for workers in regular households, with a median of AED 8,926. Across the entire workforce of 9.2 million, including labour-camp and domestic workers, the median is closer to AED 3,662."}}, {"@type": "Question", "name": "What salary puts you in the top 1% in the UAE?", "acceptedAnswer": {"@type": "Answer", "text": "About AED 87,333 a month in labour income across all UAE workers."}}, {"@type": "Question", "name": "What is the top 10% income in the UAE?", "acceptedAnswer": {"@type": "Answer", "text": "Roughly AED 21,674 a month across the full workforce."}}, {"@type": "Question", "name": "How much net worth do you need for the top 1% in the UAE?", "acceptedAnswer": {"@type": "Answer", "text": "About AED 14.4 million (roughly $3.9 million) in net worth per adult on a WID-based model; Knight Frank's separate survey estimate is about $1.6 million."}}, {"@type": "Question", "name": "How many millionaires are in Dubai?", "acceptedAnswer": {"@type": "Answer", "text": "About 81,200 resident US-dollar millionaires at end-2024, plus 237 centi-millionaires and 20 billionaires (Henley & Partners)."}}, {"@type": "Question", "name": "Is there income tax in the UAE?", "acceptedAnswer": {"@type": "Answer", "text": "No. The UAE levies no personal income tax on salaries, so gross pay is effectively take-home pay."}}]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 18'%3E%3Crect width='26' height='6' fill='%2300843D'/%3E%3Crect y='6' width='26' height='6' fill='%23fff'/%3E%3Crect y='12' width='26' height='6' fill='%23000'/%3E%3Crect width='8' height='18' fill='%23C8102E'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -74,7 +80,7 @@ section.tab{display:none}
 section.tab.on{display:block;animation:fade .2s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
-h1{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weight:800}
+h1,.pagetitle{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weight:800}
 .sub{color:var(--ink2);font-size:13.5px}
 .klabel{font-size:10.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
 .tiny{color:var(--ink3);font-size:11.5px;line-height:1.45}
@@ -169,7 +175,10 @@ table.ladder tr.you td{background:var(--chip);font-weight:700}
 .meth h2{margin-top:18px;font-size:15px;margin-bottom:7px}
 .meth ul{margin:0 0 11px 20px;font-size:13px;color:var(--ink2)}
 .meth li{margin-bottom:4px}
-footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.5}
+footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted);font-size:11px;line-height:1.5}
+.keyfacts{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.guides{font-size:11.5px;margin-bottom:8px;line-height:1.9}
+.guides a{margin-right:2px}
 /* ---------- mobile ---------- */
 @media(max-width:560px){
   .wrap{padding:0 13px}
@@ -185,7 +194,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
   .ctl{gap:6px;padding-bottom:8px}
   .seg button{font-size:11.5px;padding:5px 9px}
   .seg.primary button{font-size:12px;padding:5px 10px}
-  h1{font-size:21px}
+  h1,.pagetitle{font-size:21px}
   .sub{font-size:13px}
   .pagehead{margin-bottom:16px}
   .card{padding:15px 14px}
@@ -356,7 +365,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 <!-- ================= SALARY CHECK ================= -->
 <section class="tab" id="tab-salcheck">
   <div class="pagehead">
-    <h1>Is your salary fair?</h1>
+    <h2 class="pagetitle">Is your salary fair?</h2>
     <div class="sub">Benchmark your total package against recruiter salary guides for your role, adjusted for your experience and emirate.</div>
   </div>
   <div class="hero">
@@ -407,7 +416,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 <!-- ================= WEALTH ================= -->
 <section class="tab" id="tab-wealth">
   <div class="pagehead">
-    <h1>Where does your net worth rank?</h1>
+    <h2 class="pagetitle">Where does your net worth rank?</h2>
     <div class="sub" id="wSub">Total assets (property, investments, cash, business equity) minus all debts, compared against the adult resident population.</div>
   </div>
   <div class="hero" id="wHero">
@@ -472,7 +481,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 <!-- ================= EMIRATES ================= -->
 <section class="tab" id="tab-emirates">
   <div class="pagehead">
-    <h1>The seven emirates</h1>
+    <h2 class="pagetitle">The seven emirates</h2>
     <div class="sub">Economic output, estimated household wealth, population and cost of living. Abu Dhabi and Dubai together produce about 80% of national GDP.</div>
   </div>
   <div class="card chartcard" style="margin-bottom:12px">
@@ -506,7 +515,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 <!-- ================= ROLES ================= -->
 <section class="tab" id="tab-roles">
   <div class="pagehead">
-    <h1>Salaries by role &amp; industry</h1>
+    <h2 class="pagetitle">Salaries by role &amp; industry</h2>
     <div class="sub" id="roleCount"></div>
   </div>
   <div class="rolebar">
@@ -527,7 +536,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 <!-- ================= METHODOLOGY ================= -->
 <section class="tab" id="tab-method">
   <div class="card meth">
-    <h1 style="margin-bottom:10px">Methodology &amp; sources</h1>
+    <h2 class="pagetitle" style="margin-bottom:10px">Methodology &amp; sources</h2>
     <p>No official income percentile series exists for the UAE, so this dashboard is built on a synthesized model that reconciles several partially conflicting sources. Every design decision is documented here.</p>
     <h2>The income model</h2>
     <p>Incomes are modelled as a mixture of lognormal distributions over labour-market segments: domestic workers (~0.75M), construction labourers (~1.4M), other low-wage services (~3.3M), skilled trades and clerical workers (~1.7M), professionals (~1.7M) and senior executives (~0.3M). Segment weights come from the FCSC Labour Force Survey 2024 (9.4M labour force), MOHRE data and industry estimates. Medians and spreads are calibrated against four anchors: the WPS-linked finding that over 60% of workers earn below AED 5,000 per month (model: 59.7%), the LFS 2024 median of AED 10,000 and mean of AED 16,000 for the household-survey view (model: 8,900 and 15,200), crowd-sourced professional medians of AED 12,000 to 20,000 (model: 20,000), and recruiter executive bands of AED 80,000 to 275,000 (model 99th percentile, all workers: 87,000).</p>
@@ -562,6 +571,7 @@ footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted)
 </main>
 <footer>
   <div class="wrap">
+<div class="keyfacts"><b>Key UAE income &amp; wealth figures (2026):</b> median salary across all workers AED 3,662/month; median in the official household-survey frame AED 8,926; median for white-collar professionals AED 20,010; top 10% of workers earn above AED 21,674 and the top 1% above AED 87,333; about 60% of all UAE workers earn under AED 5,000 a month; median household income AED 19,720; median net worth per adult AED 337,549 and the top 1% threshold about AED 14.4M; UAE wealth Gini 0.82, the highest in the world; roughly 183,000 US-dollar millionaires nationally and 81,200 in Dubai; no personal income tax on salaries.</div><nav class="guides"><b>Guides:</b> <a href="/average-salary-in-dubai.html">Average salary in Dubai</a> · <a href="/average-salary-in-uae.html">Average salary in the UAE</a> · <a href="/uae-income-percentile.html">UAE income percentile calculator</a> · <a href="/median-salary-uae.html">Median salary in the UAE</a> · <a href="/salary-by-emirate.html">Salaries and wealth by emirate</a> · <a href="/uae-net-worth-percentile.html">UAE net worth percentiles</a> · <a href="/how-many-millionaires-in-dubai.html">How many millionaires in Dubai</a> · <a href="/uae-salary-guide-by-role.html">UAE salary guide by role</a> · <a href="/is-my-salary-good-in-dubai.html">Is my salary good in Dubai?</a> · <a href="/uae-wealth-inequality.html">UAE wealth inequality explained</a></nav>
     UAE Income &amp; Wealth Dashboard — modelled estimates from public sources, compiled July 2026. Not affiliated with any UAE government entity. See Methodology for caveats.
     <div id="ftDisclosure" style="display:none">Some links on this site are referral links; they support the project at no extra cost to you and never affect the data shown.</div>
     <div class="newsline" id="ftNews"></div>
