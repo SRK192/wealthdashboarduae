@@ -8,7 +8,7 @@
 if(location.protocol==='http:'&&location.hostname.indexOf('localhost')<0&&location.hostname!=='127.0.0.1'){
   location.replace('https://'+location.host+location.pathname+location.search+location.hash);
 }</script>
-<title>The UAE Wealth Dashboard — income percentiles, wealth and salaries</title>
+<title>UAE Wealth Dashboard: Income Percentiles and Salaries</title>
 <meta name="description" content="See exactly where you stand among 11 million UAE residents. Income percentiles, net-worth rankings, salary checks for 800+ roles, and wealth by emirate.">
 <link rel="canonical" href="https://wealthdashboarduae.com/">
 <meta property="og:title" content="The UAE Wealth Dashboard">
@@ -34,6 +34,9 @@ if(location.protocol==='http:'&&location.hostname.indexOf('localhost')<0&&locati
   --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#5598e7; --seq4:#2a78d6; --seq5:#1c5cab;
   --ink3:#5d5c57;
   --critical:#d03b3b; --chip:#eef3fb;
+  /* --muted stays the validated chart-chrome grey; --muted-text is the same role for
+     body-sized UI text, darkened to clear WCAG AA 4.5:1 on both surfaces */
+  --muted-text:#6b6963; --link:#1c5cab; --seg-on-fg:#ffffff;
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
@@ -43,6 +46,7 @@ if(location.protocol==='http:'&&location.hostname.indexOf('localhost')<0&&locati
   --seq1:#184f95; --seq2:#1c5cab; --seq3:#256abf; --seq4:#3987e5; --seq5:#6da7ec;
   --ink3:#b3b2a8;
   --critical:#e66767; --chip:#1d2735;
+  --muted-text:#a3a199; --link:#5598e7; --seg-on-fg:#0b0b0b;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--page);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;font-size:14px}
@@ -67,8 +71,8 @@ header::before{content:"";display:block;height:4px;background:linear-gradient(90
 .spacer{flex:1}
 .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .seg{display:inline-flex;background:var(--page);border:1px solid var(--border);border-radius:7px;padding:2px}
-.seg button{border:0;background:transparent;color:var(--ink2);font:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;white-space:nowrap}
-.seg button.on{background:var(--s1);color:#fff}
+.seg button{border:0;background:transparent;color:var(--ink3);font:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--s1-deep);color:var(--seg-on-fg)}
 .seg.primary button{font-size:12.5px;padding:5px 14px}
 .iconbtn{border:1px solid var(--border);background:var(--page);color:var(--ink2);border-radius:7px;width:30px;height:30px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;justify-content:center}
 nav.tabs{display:flex;gap:0;overflow-x:auto}
@@ -108,7 +112,7 @@ h1,.pagetitle{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weigh
 .stat:first-child{padding-left:0}
 .stat:last-child{border-right:0}
 .stat .v{font-size:17px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.stat .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+.stat .k{font-size:10.5px;color:var(--muted-text);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
 .milestone{margin-top:14px;font-size:13px;color:var(--ink2);border-left:2px solid var(--s1);padding:2px 0 2px 11px;display:none}
 .milestone.show{display:block}
 .milestone b{color:var(--s1-deep)}
@@ -116,7 +120,7 @@ h1,.pagetitle{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weigh
 .chartcard{margin-bottom:12px;position:relative}
 .chartcard::before{content:"";display:block;width:36px;height:4px;background:var(--critical);margin-bottom:10px}
 .ctitle{font-size:16px;font-weight:800;letter-spacing:-.015em;line-height:1.25;margin:-2px 0 3px;color:var(--ink)}
-.src{margin-top:10px;padding-top:7px;border-top:1px solid var(--hair);color:var(--muted);font-size:10.5px}
+.src{margin-top:10px;padding-top:7px;border-top:1px solid var(--hair);color:var(--muted-text);font-size:10.5px}
 svg text{font-family:inherit}
 .tt{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--border);box-shadow:0 4px 14px rgba(0,0,0,.18);border-radius:7px;padding:7px 10px;font-size:12px;display:none;z-index:99;min-width:120px}
 .tt b{font-size:13px}
@@ -179,7 +183,7 @@ table.ladder tr.you td{background:var(--chip);font-weight:700}
 footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted);font-size:11px;line-height:1.5}
 .keyfacts{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:8px}
 .guides{font-size:11.5px;margin-bottom:8px;line-height:1.9}
-.guides a{margin-right:2px}
+.guides a{margin-right:2px;color:var(--link);display:inline-block;padding:5px 2px;min-height:24px}
 /* ---------- mobile ---------- */
 @media(max-width:560px){
   .wrap{padding:0 13px}
@@ -218,19 +222,19 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
 }
 /* ---------- partner links (subtle, text-only) ---------- */
 .plinks{margin-top:12px;padding:10px 14px;border:1px solid var(--hair);border-radius:8px;background:var(--surface)}
-.plinks .pk{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.plinks .pk{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-text);margin-bottom:4px}
 .plinks a{font-size:12.5px;font-weight:600;margin-right:14px;white-space:nowrap}
 .plinks a::after{content:" ↗";font-size:10px;color:var(--muted)}
 .scjobs{margin-top:10px;font-size:12.5px;color:var(--ink2);display:none}
 .scjobs a{font-weight:650;margin-right:10px}
 .newsline{margin-top:6px}
-.newsline a{font-weight:650}
+.newsline a{font-weight:650;color:var(--link);display:inline-block;padding:4px 0;min-height:24px}
 /* ---------- refine chips + capture (frictionless, never blocking) ---------- */
 .capcard{margin-top:16px}
 .caphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .capsub{font-size:12.5px;color:var(--ink2);line-height:1.5}
 .chiprow{margin-top:9px}
-.chiprow .cl{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.chiprow .cl{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-text);margin-bottom:5px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font:inherit;font-size:12.5px;font-weight:600;line-height:1;color:var(--ink2);background:var(--page);
   border:1px solid var(--hair);border-radius:999px;padding:8px 12px;cursor:pointer;transition:.12s;min-height:32px}
@@ -240,11 +244,12 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
 .capout{margin-top:12px;padding-top:11px;border-top:1px solid var(--hair);font-size:13.5px;line-height:1.6;color:var(--ink);display:none}
 .capout b{font-weight:750}
 .capout .cdelta{display:block;margin-top:4px;font-size:12.5px;color:var(--ink2)}
-.capskip{font-size:11px;color:var(--muted);margin-top:8px}
+.capskip{font-size:11px;color:var(--muted-text);margin-top:8px;line-height:1.7}
+.capskip a,footer a{color:var(--link);display:inline-block;padding:4px 0;min-height:24px}
 .emailbox{margin-top:14px;padding:12px 14px;border:1px solid var(--hair);border-left:3px solid var(--s1-deep);
   border-radius:8px;background:var(--page);display:none;position:relative}
 .emailbox .et{font-size:13px;font-weight:650;color:var(--ink);padding-right:22px;line-height:1.45}
-.emailbox .es{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.emailbox .es{font-size:11.5px;color:var(--muted-text);margin-top:3px;line-height:1.45}
 .emailform{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
 .emailform input{flex:1;min-width:190px;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--hair);
   border-radius:7px;background:var(--surface);color:var(--ink)}
@@ -560,7 +565,7 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
   </div>
   <div class="emgrid" id="emGrid"></div>
   <div class="plinks" id="plEmirates"></div>
-  <div class="note">Emirate-level <b>income</b> data is the weakest part of the official record: results of the 2024 national Household Income &amp; Expenditure Survey (~19,000 families) were still unpublished as of mid-2026. Salary index figures are third-party estimates, useful as relative comparison only. Wealth per adult is this site's model estimate — no official figure exists. Population figures mix official series (Dubai 2025 register-based, Abu Dhabi 2024, Sharjah 2022 census) with third-party estimates for the northern emirates.</div>
+  <div class="note">Emirate-level <b>income</b> data is the weakest part of the official record: results of the 2024 national Household Income &amp; Expenditure Survey (~19,000 families) were still unpublished as of mid-2026. Salary index figures are third-party estimates, useful as relative comparison only. Wealth per adult is this site's model estimate — no official figure exists. Population figures mix official series (Dubai 2025 register-based, Abu Dhabi 2024, Sharjah 2022 census) with third-party estimates for the northern emirates. They sum to about 12.0M, above the ~11M national resident estimate used elsewhere on this site, because the emirate counts are of different vintages and Dubai's register-based series counts people present rather than resident. Use the emirate figures for relative comparison, not as a national total.</div>
 </section>
 
 <!-- ================= ROLES ================= -->
@@ -592,7 +597,7 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
     <h2>The income model</h2>
     <p>Incomes are modelled as a mixture of lognormal distributions over labour-market segments: domestic workers (~0.75M), construction labourers (~1.4M), other low-wage services (~3.3M), skilled trades and clerical workers (~1.7M), professionals (~1.7M) and senior executives (~0.3M). Segment weights come from the FCSC Labour Force Survey 2024 (9.4M labour force), MOHRE data and industry estimates. Medians and spreads are calibrated against four anchors: the WPS-linked finding that over 60% of workers earn below AED 5,000 per month (model: 59.7%), the LFS 2024 median of AED 10,000 and mean of AED 16,000 for the household-survey view (model: 8,900 and 15,200), crowd-sourced professional medians of AED 12,000 to 20,000 (model: 20,000), and recruiter executive bands of AED 80,000 to 275,000 (model 99th percentile, all workers: 87,000).</p>
     <h2>The household view</h2>
-    <p>Household mode compares combined household income against ~2.4M regular households (a count anchored on Dubai's official ~771,000 households), averaging about 2.3 earners each. The distribution is a four-component mixture: modest expatriate households (1.05M, median AED 11,000 per month), mid-income family households (0.75M, median AED 25,000), professional and executive households (0.35M, median AED 60,000) and Emirati households (0.25M, median AED 60,000), the last consistent with the Dubai HIES 2014/15 finding that Emirati family income (AED 866,890 per year average) ran about 2.6x non-Emirati family income (AED 337,392). The mixture is calibrated to an aggregate-consistency test: mean household income (~AED 34,000) must equal the number of workers living in regular households (~5.5M) times their mean individual income (~AED 15,200) divided by the household count, and household percentile thresholds must sit at or above every individual view's thresholds (verified numerically; the household curve tracks within 2% of the professionals curve where they meet). Collective households and labour camps are excluded, since "household income" is not meaningful there. Household net worth applies a factor of 2 wealth-holding adults per household to the per-adult wealth curve.</p>
+    <p>Household mode compares combined household income against ~2.4M regular households (a count anchored on Dubai's official ~771,000 households), averaging about 2.3 earners each. The distribution is a four-component mixture: modest expatriate households (1.05M, median AED 11,000 per month), mid-income family households (0.75M, median AED 25,000), professional and executive households (0.35M, median AED 60,000) and Emirati households (0.25M, median AED 60,000), the last consistent with the Dubai HIES 2014/15 finding that Emirati family income (AED 866,890 per year average) ran about 2.6x non-Emirati family income (AED 337,392). The mixture is calibrated to an aggregate-consistency test: mean household income (~AED 34,000) must equal the number of workers living in regular households (~5.5M) times their mean individual income (~AED 15,200) divided by the household count, and household percentile thresholds must sit at or above the two whole-workforce views at every percentile (verified numerically: zero violations against both the all-workers and household-survey curves). The household curve sits <i>below</i> the professionals-only curve up to about the 53rd percentile and crosses it there, which is expected rather than an error: professionals are a selected high-earning subset of ~2.0M workers, so a mid-ranking household can earn less than a mid-ranking professional. The aggregate identity above closes to within 3% (model mean AED 33,997 against AED 34,833 implied by the stated inputs). Collective households and labour camps are excluded, since "household income" is not meaningful there. Household net worth applies a factor of 2 wealth-holding adults per household to the per-adult wealth curve. One tension worth stating plainly: this WID-derived curve puts USD 1M at about the 94.5th percentile, which across ~9.9M adults would imply roughly 540,000 dollar millionaires, whereas UBS reports 183,000 (about the top 1.9%). The two are measuring different things — the curve is a distributional model anchored on WID shares, while the UBS count is a balance-sheet estimate on a narrower definition of wealth — and we report both rather than silently reconciling them. Treat the millionaire counts on this site as UBS/Henley figures, and the percentile curve as a modelled distribution.</p>
     <h2>The wealth model</h2>
     <p>Wealth percentiles use World Inequality Database derived anchors (median AED 337,549; p90 AED 2.17M; p99 AED 14.4M per adult), monotonically interpolated, with lognormal extrapolation below the median. UBS Global Wealth Report figures (mean USD 157,612 in 2025; median USD 32,746 in 2023; wealth Gini 0.82, the world's highest) and Knight Frank's top-1% threshold (USD 1.6M, 2023) serve as independent references. The UBS millionaire series has a break: 240,343 (2024 data, GWR 2025) vs 183,000 (2025 data, GWR 2026, revised methodology); this site cites by edition.</p>
     <h2>Wealth per adult by emirate</h2>
@@ -1215,7 +1220,7 @@ function drawUhnwi(){
   s+='<text x="'+(W/2+25)+'" y="'+(padT+8)+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+css('--critical')+'">+'+growth+'%</text>'
     +'<line x1="16" y1="'+(H-padB)+'" x2="'+(W-16)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/></svg>';
   holder.innerHTML=s;
-  $('#uhnwiStats').innerHTML=[['Millionaires 2028','~242k','UBS projection'],['Wealth inflow 2025','$63B','with 9,800 migrants']]
+  $('#uhnwiStats').innerHTML=[['Millionaires 2028','~210k','UBS +15% on 183k'],['Wealth inflow 2025','$63B','with 9,800 migrants']]
     .map(x=>'<div class="stat"><div class="v">'+x[1]+'</div><div class="k">'+x[0]+' · '+x[2]+'</div></div>').join('');
 }
 
