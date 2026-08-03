@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The UAE Wealth Dashboard — income percentiles, wealth and salaries</title>
+<meta name="description" content="See exactly where you stand among 11 million UAE residents. Income percentiles, net-worth rankings, salary checks for 800+ roles, and wealth by emirate.">
+<link rel="canonical" href="https://wealthdashboarduae.com/">
+<meta property="og:title" content="The UAE Wealth Dashboard">
+<meta property="og:description" content="Your salary. Your rank. See exactly where you stand among 11 million UAE residents.">
+<meta property="og:url" content="https://wealthdashboarduae.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The UAE Wealth Dashboard">
+<meta name="twitter:description" content="Income percentiles, wealth rankings and salary benchmarks for the UAE.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 18'%3E%3Crect width='26' height='6' fill='%2300843D'/%3E%3Crect y='6' width='26' height='6' fill='%23fff'/%3E%3Crect y='12' width='26' height='6' fill='%23000'/%3E%3Crect width='8' height='18' fill='%23C8102E'/%3E%3C/svg%3E">
+<style>
+:root{
+  color-scheme: light;
+  --page:#f5f5f2; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.12); --hair:rgba(11,11,11,.08);
+  --s1:#2a78d6; --s1-deep:#1c5cab; --fill-lo:#cde2fb; --fill-mid:#86b6ef; --fill-hi:#3987e5;
+  --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#5598e7; --seq4:#2a78d6; --seq5:#1c5cab;
+  --ink3:#5d5c57;
+  --critical:#d03b3b; --chip:#eef3fb;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,.14); --hair:rgba(255,255,255,.08);
+  --s1:#3987e5; --s1-deep:#6da7ec; --fill-lo:#104281; --fill-mid:#1c5cab; --fill-hi:#3987e5;
+  --seq1:#184f95; --seq2:#1c5cab; --seq3:#256abf; --seq4:#3987e5; --seq5:#6da7ec;
+  --ink3:#b3b2a8;
+  --critical:#e66767; --chip:#1d2735;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--page);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;font-size:14px}
+a{color:var(--s1);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.num{font-variant-numeric:tabular-nums}
+/* ---------- masthead ---------- */
+header::before{content:"";display:block;height:4px;background:linear-gradient(90deg,#C8102E 0 25%,#00843D 25% 50%,#c3c2b7 50% 75%,#2a2a28 75% 100%)}
+.mast{background:linear-gradient(180deg,#10141a,#0b0e13);padding:22px 0 20px}
+.hbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand .flag{width:38px;height:25px;border-radius:4px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.brand .flag svg{width:38px;height:25px;display:block}
+.bt{font-weight:850;font-size:23px;letter-spacing:-.025em;line-height:1.1;color:#fff}
+.bt .hl{color:#5aa0f2}
+.tag{font-size:12.5px;color:#9aa3ad;font-weight:550;margin-top:3px;letter-spacing:.005em}
+.tag b{color:#e8ecf1;font-weight:700}
+/* ---------- sticky sub-bar ---------- */
+.subbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 0 var(--hair)}
+.subrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.spacer{flex:1}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--page);border:1px solid var(--border);border-radius:7px;padding:2px}
+.seg button{border:0;background:transparent;color:var(--ink2);font:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--s1);color:#fff}
+.seg.primary button{font-size:12.5px;padding:5px 14px}
+.iconbtn{border:1px solid var(--border);background:var(--page);color:var(--ink2);border-radius:7px;width:30px;height:30px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;justify-content:center}
+nav.tabs{display:flex;gap:0;overflow-x:auto}
+nav.tabs button{border:0;background:transparent;color:var(--ink2);font:inherit;font-size:13.5px;font-weight:600;padding:9px 15px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--s1)}
+/* ---------- layout ---------- */
+main.wrap{padding:52px 22px 48px}
+.pagehead{margin-bottom:24px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
+h1{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weight:800}
+.sub{color:var(--ink2);font-size:13.5px}
+.klabel{font-size:10.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.tiny{color:var(--ink3);font-size:11.5px;line-height:1.45}
+/* ---------- input hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(300px,370px) 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:840px){.hero{grid-template-columns:1fr}}
+.moneyin{display:flex;align-items:center;background:var(--page);border:1px solid var(--border);border-radius:7px;padding:0 13px;transition:border-color .15s}
+.moneyin:focus-within{border-color:var(--s1);box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 18%,transparent)}
+.moneyin span.cur{font-weight:700;color:var(--muted);font-size:13px;margin-right:8px}
+.moneyin input{border:0;background:transparent;outline:0;font:inherit;font-size:22px;font-weight:700;color:var(--ink);width:100%;padding:10px 0;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.moneyin span.per{color:var(--muted);font-size:12px;white-space:nowrap}
+.groupsel{margin-top:12px}
+.groupsel .opt{display:flex;gap:9px;align-items:flex-start;padding:8px 9px;border-radius:7px;cursor:pointer;border:1px solid transparent}
+.groupsel .opt:hover{background:var(--page)}
+.groupsel .opt.on{border-color:var(--s1);background:var(--chip)}
+.groupsel .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--baseline);margin-top:3px;flex:none}
+.groupsel .opt.on .dot{border-color:var(--s1);background:var(--s1);box-shadow:inset 0 0 0 2.5px var(--surface)}
+.groupsel b{font-size:12.5px;display:block}
+.groupsel small{color:var(--muted);font-size:11px;line-height:1.4;display:block}
+.big{font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--s1);font-variant-numeric:tabular-nums}
+.result .expl{font-size:14px;color:var(--ink2);max-width:460px;margin-top:6px}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0;margin-top:16px;border-top:1px solid var(--hair)}
+.stat{padding:10px 14px 2px 0;border-right:1px solid var(--hair);padding-left:14px}
+.stat:first-child{padding-left:0}
+.stat:last-child{border-right:0}
+.stat .v{font-size:17px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.stat .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+.milestone{margin-top:14px;font-size:13px;color:var(--ink2);border-left:2px solid var(--s1);padding:2px 0 2px 11px;display:none}
+.milestone.show{display:block}
+.milestone b{color:var(--s1-deep)}
+/* ---------- charts (Economist/FT editorial grammar) ---------- */
+.chartcard{margin-bottom:12px;position:relative}
+.chartcard::before{content:"";display:block;width:36px;height:4px;background:var(--critical);margin-bottom:10px}
+.ctitle{font-size:16px;font-weight:800;letter-spacing:-.015em;line-height:1.25;margin:-2px 0 3px;color:var(--ink)}
+.src{margin-top:10px;padding-top:7px;border-top:1px solid var(--hair);color:var(--muted);font-size:10.5px}
+svg text{font-family:inherit}
+.tt{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--border);box-shadow:0 4px 14px rgba(0,0,0,.18);border-radius:7px;padding:7px 10px;font-size:12px;display:none;z-index:99;min-width:120px}
+.tt b{font-size:13px}
+.tt .l{color:var(--muted);font-size:10.5px}
+/* ---------- ladder ---------- */
+table.ladder{width:100%;border-collapse:collapse;font-size:13px}
+table.ladder th{text-align:left;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-bottom:1px solid var(--grid)}
+table.ladder td{padding:6px 8px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums}
+table.ladder tr:last-child td{border-bottom:0}
+table.ladder tr.you td{background:var(--chip);font-weight:700}
+.rbar{height:5px;border-radius:3px;background:var(--seq3);min-width:2px}
+/* ---------- grids ---------- */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:840px){.cols{grid-template-columns:1fr}}
+.note{border-left:2px solid var(--s1);padding:2px 0 2px 12px;font-size:12.5px;color:var(--ink2);margin-top:14px}
+.warnnote{border-left-color:var(--critical)}
+/* ---------- emirates ---------- */
+.emgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:10px;margin-top:12px}
+.emcard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 15px}
+.emcard h3{font-size:14px;margin-bottom:7px;font-weight:700}
+.emcard .row{display:flex;justify-content:space-between;font-size:12px;padding:2.5px 0;color:var(--ink2)}
+.emcard .row b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:650}
+.emcard .row.wl b{color:var(--s1-deep)}
+/* ---------- roles ---------- */
+.rolebar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.rolebar input,.rolebar select{font:inherit;font-size:13px;padding:7px 11px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--ink);outline:0}
+.rolebar input:focus,.rolebar select:focus{border-color:var(--s1)}
+.rolebar input{flex:1;min-width:180px}
+.rolehead{display:grid;grid-template-columns:minmax(160px,1.35fr) 2fr auto;gap:12px;padding:4px 13px;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+@media(max-width:700px){.rolehead{display:none}}
+.rolelist{display:flex;flex-direction:column;gap:4px}
+.rrow{display:grid;grid-template-columns:minmax(160px,1.35fr) 2fr auto;gap:12px;align-items:center;padding:7px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--hair);font-size:12.5px}
+@media(max-width:700px){.rrow{grid-template-columns:1fr;gap:4px}}
+.rrow .nm b{display:block;font-size:13px}
+.rrow .nm small{color:var(--muted);font-size:10.5px}
+.rangewrap{position:relative;height:20px}
+.rangetrack{position:absolute;left:0;right:0;top:8px;height:4px;border-radius:3px;background:var(--grid)}
+.rangefill{position:absolute;top:7px;height:6px;border-radius:4px;background:var(--seq3)}
+.rrow .vals{font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap;font-size:12px;text-align:right}
+.pctchip{display:block;background:var(--chip);color:var(--s1-deep);font-weight:700;font-size:10.5px;border-radius:5px;padding:1px 7px;margin-top:3px;cursor:help}
+.showmore{margin:12px auto 0;display:block;font:inherit;font-size:12.5px;font-weight:600;color:var(--s1);background:transparent;border:1px solid var(--border);border-radius:7px;padding:7px 16px;cursor:pointer}
+/* ---------- salary check ---------- */
+.flabel{display:block;font-size:11px;font-weight:700;color:var(--ink2);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.05em}
+.finput{width:100%;font:inherit;font-size:14px;padding:9px 12px;border-radius:7px;border:1px solid var(--border);background:var(--page);color:var(--ink);outline:0}
+.finput:focus{border-color:var(--s1)}
+.frow{display:flex;gap:10px}
+.verdict{display:inline-flex;align-items:center;gap:8px;font-size:19px;font-weight:800;letter-spacing:-.01em;padding:7px 14px;border-radius:8px;margin:2px 0 8px}
+.verdict.good{background:color-mix(in srgb,#0ca30c 14%,transparent);color:#0ca30c}
+.verdict.warn{background:color-mix(in srgb,#fab219 16%,transparent);color:#a86e00}
+:root[data-theme="dark"] .verdict.warn{color:#fab219}
+.verdict.bad{background:color-mix(in srgb,var(--critical) 13%,transparent);color:var(--critical)}
+.verdict .ic{font-size:16px}
+.scdelta{font-size:13.5px;color:var(--ink2);margin-bottom:4px}
+.scdelta b{font-variant-numeric:tabular-nums}
+/* ---------- methodology ---------- */
+.meth p{margin-bottom:11px;font-size:13.5px;color:var(--ink2)}
+.meth h2{margin-top:18px;font-size:15px;margin-bottom:7px}
+.meth ul{margin:0 0 11px 20px;font-size:13px;color:var(--ink2)}
+.meth li{margin-bottom:4px}
+footer{border-top:1px solid var(--border);padding:10px 0 14px;color:var(--muted);font-size:11px;line-height:1.5}
+/* ---------- partner links (subtle, text-only) ---------- */
+.plinks{margin-top:12px;padding:10px 14px;border:1px solid var(--hair);border-radius:8px;background:var(--surface)}
+.plinks .pk{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.plinks a{font-size:12.5px;font-weight:600;margin-right:14px;white-space:nowrap}
+.plinks a::after{content:" ↗";font-size:10px;color:var(--muted)}
+.scjobs{margin-top:10px;font-size:12.5px;color:var(--ink2);display:none}
+.scjobs a{font-weight:650;margin-right:10px}
+.newsline{margin-top:6px}
+.newsline a{font-weight:650}
+</style>
+</head>
+<body>
+<header>
+  <div class="mast">
+    <div class="wrap">
+      <div class="hbar">
+        <div class="brand">
+          <span class="flag"><svg viewBox="0 0 26 18"><rect width="26" height="6" fill="#00843D"/><rect y="6" width="26" height="6" fill="#fff"/><rect y="12" width="26" height="6" fill="#000"/><rect width="8" height="18" fill="#C8102E"/></svg></span>
+          <div>
+            <div class="bt">The UAE <span class="hl">Wealth</span> Dashboard</div>
+            <div class="tag">See exactly where you stand among <b>11 million residents</b>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="subbar">
+  <div class="wrap subrow">
+    <nav class="tabs" id="tabs">
+      <button data-tab="income" class="on">Income</button>
+      <button data-tab="wealth">Wealth</button>
+      <button data-tab="salcheck">Salary check</button>
+      <button data-tab="emirates">Emirates</button>
+      <button data-tab="roles">Roles &amp; industries</button>
+      <button data-tab="method">Methodology</button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="ctl">
+      <div class="seg primary" id="modeSeg"><button data-mode="ind" class="on">Individual</button><button data-mode="hh">Household</button></div>
+      <div class="seg" id="curSeg"><button data-cur="AED" class="on">AED</button><button data-cur="USD">USD</button></div>
+      <div class="seg" id="perSeg"><button data-per="mo" class="on">Monthly</button><button data-per="yr">Annual</button></div>
+      <button class="iconbtn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ================= INCOME ================= -->
+<section class="tab on" id="tab-income">
+  <div class="pagehead">
+    <h1 id="incTitle">Where does your income rank in the UAE?</h1>
+    <div class="sub" id="incSub">Enter your gross salary and pick a comparison group. The UAE labour market is sharply segmented, so <b>who you compare against changes everything</b>.</div>
+  </div>
+  <div class="hero">
+    <div class="card inputcard">
+      <div class="klabel" id="incInLbl">Your gross salary</div>
+      <div class="moneyin">
+        <span class="cur" id="incCur">AED</span>
+        <input id="incIn" type="text" inputmode="numeric" value="15,000" aria-label="Your gross salary">
+        <span class="per" id="incPer">/ month</span>
+      </div>
+      <div class="groupsel" id="groupSel">
+        <div class="opt on" data-view="full">
+          <span class="dot"></span>
+          <span><b>All workers · ~9.2M</b><small>Everyone employed in the UAE, including labour-camp, collective-household and domestic workers</small></span>
+        </div>
+        <div class="opt" data-view="household">
+          <span class="dot"></span>
+          <span><b>Household-survey view · ~5.5M</b><small>Workers living in regular households, comparable to the official Labour Force Survey</small></span>
+        </div>
+        <div class="opt" data-view="pro">
+          <span class="dot"></span>
+          <span><b>Professionals &amp; executives · ~2.0M</b><small>White-collar professional and management roles, the group most salary guides describe</small></span>
+        </div>
+      </div>
+      <div class="note" id="hhIncNote" style="display:none">Combined gross income of everyone in your household, compared against ~2.4M regular UAE households (collective and labour-camp housing excluded). Includes an Emirati-household component with much higher averages.</div>
+    </div>
+    <div class="card result">
+      <div class="klabel">Your position</div>
+      <span class="big" id="incBig">–</span>
+      <div class="expl" id="incExpl"></div>
+      <div class="statrow" id="incStats"></div>
+      <div class="milestone" id="incMile"></div>
+    </div>
+  </div>
+  <div class="card chartcard">
+    <div class="klabel" id="chartTitle">Income distribution</div>
+    <div class="ctitle" id="chartHead"></div>
+    <div class="tiny" id="chartSub" style="margin-bottom:10px"></div>
+    <div id="histChart" style="position:relative"></div>
+    <div class="src">Source: model calibrated to FCSC Labour Force Survey 2024, Wage Protection System coverage and World Inequality Database</div>
+  </div>
+  <div class="card chartcard">
+    <div class="klabel">The percentile curve</div>
+    <div class="ctitle" id="pcHead">The ladder gets steep at the top</div>
+    <div class="tiny" style="margin-bottom:10px" id="pcSub">Gross income required at every percentile of the selected group (log scale). Hover to explore any rung; your position is marked.</div>
+    <div id="pcChart" style="position:relative"></div>
+    <div class="src">Source: site model — see Methodology</div>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <div class="klabel">Percentile ladder</div>
+      <div class="tiny" style="margin-bottom:8px" id="ladderSub">Gross salary needed to reach each rung of the selected group</div>
+      <table class="ladder" id="ladder"></table>
+    </div>
+    <div class="card chartcard">
+      <div class="klabel">Salary by age <span style="font-weight:600;text-transform:none;letter-spacing:0">(individual, white-collar)</span></div>
+      <div class="ctitle" id="ageTitle"></div>
+      <div class="tiny" style="margin-bottom:10px" id="ageSub"></div>
+      <div id="ageChart" style="position:relative"></div>
+      <div class="src">Source: Paylab UAE 2026 age medians; percentile tiers modelled from the overall white-collar spread</div>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card chartcard">
+      <div class="klabel">The segmented workforce</div>
+      <div class="ctitle">Six workforces, one labour market</div>
+      <div class="tiny" style="margin-bottom:10px">Bar length is workers (millions); label shows typical (median) gross monthly pay</div>
+      <div id="segChart" style="position:relative"></div>
+      <div class="src">Source: FCSC, MOHRE, industry estimates; model segments</div>
+    </div>
+    <div class="card chartcard">
+      <div class="klabel">Income concentration</div>
+      <div class="ctitle" id="lzHead"></div>
+      <div class="tiny" style="margin-bottom:10px">Lorenz curve: cumulative share of total income against share of the group, poorest first. The straight line is perfect equality; the deeper the bow, the greater the concentration. Hover to explore.</div>
+      <div id="lzChart" style="position:relative"></div>
+      <div class="src">Source: computed from the site income model</div>
+    </div>
+  </div>
+  <div class="cols" style="grid-template-columns:1fr">
+    <div class="card">
+      <div class="klabel" id="whyTitle">Why three views?</div>
+      <div id="whyInd">
+        <p class="sub" style="margin-bottom:9px">Official statistics disagree because they measure different populations. The Labour Force Survey samples regular households and reports a median of AED 10,000, while Wage Protection System coverage shows over 60% of all workers earn under AED 5,000. Both are true: labour-camp and collective-household workers are invisible to household surveys.</p>
+        <p class="sub">This dashboard models all three populations so you can see both realities. Toggle groups above and watch the median move from about AED 3,700 to AED 20,000.</p>
+      </div>
+      <div id="whyHH" style="display:none">
+        <p class="sub" style="margin-bottom:9px">Household mode compares your household's combined gross income against ~2.4M regular UAE households, averaging about 2.3 earners each. The model mixes modest expatriate households (median ~AED 11,000 per month), mid-income family households (~AED 25,000), professional and executive households (~AED 60,000) and Emirati households (~AED 60,000, about 10% of households), calibrated so total household income matches the earnings of the ~5.5M workers who live in regular households.</p>
+        <p class="sub">Because households pool multiple pay cheques, every rung costs more here: the median household earns about AED 20,000 against AED 3,700 for the median individual worker. Collective housing and labour camps are excluded, since "household income" is not meaningful there.</p>
+      </div>
+      <div class="note">Income here means gross labour income. Total-income percentiles including capital income run higher: the World Inequality Database puts the UAE's top 1% threshold near AED 154,000 per month per adult. See Methodology.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SALARY CHECK ================= -->
+<section class="tab" id="tab-salcheck">
+  <div class="pagehead">
+    <h1>Is your salary fair?</h1>
+    <div class="sub">Benchmark your total package against recruiter salary guides for your role, adjusted for your experience and emirate.</div>
+  </div>
+  <div class="hero">
+    <div class="card inputcard">
+      <div class="klabel">Your details</div>
+      <label class="flabel" for="scRole">Role title</label>
+      <input id="scRole" class="finput" type="text" list="scRoles" placeholder="Start typing… e.g. Financial Controller" autocomplete="off">
+      <datalist id="scRoles"></datalist>
+      <div class="frow">
+        <div style="flex:1">
+          <label class="flabel" for="scYrs">Years of experience</label>
+          <input id="scYrs" class="finput" type="number" min="0" max="45" value="5">
+        </div>
+        <div style="flex:1.4">
+          <label class="flabel" for="scCity">Emirate</label>
+          <select id="scCity" class="finput">
+            <option value="1.00">Dubai</option>
+            <option value="0.98">Abu Dhabi</option>
+            <option value="0.95">Sharjah</option>
+            <option value="0.90">Ajman</option>
+            <option value="0.92">Ras Al Khaimah</option>
+            <option value="0.88">Fujairah</option>
+            <option value="0.88">Umm Al Quwain</option>
+          </select>
+        </div>
+      </div>
+      <label class="flabel" for="scPay">Salary incl. all fixed benefits</label>
+      <div class="moneyin">
+        <span class="cur" id="scCur">AED</span>
+        <input id="scPay" type="text" inputmode="numeric" value="" placeholder="25,000" aria-label="Salary including benefits">
+        <span class="per" id="scPer">/ month</span>
+      </div>
+      <div class="tiny" style="margin-top:9px">Include basic + housing + transport and other fixed allowances; exclude bonus. Benchmarks are recruiter-guide ranges on the same basis.</div>
+      <div class="tiny" id="scHHNote" style="margin-top:6px;display:none;color:var(--critical)">Note: salary check always benchmarks <b>individual</b> pay. The Individual/Household toggle does not apply here.</div>
+    </div>
+    <div class="card result" id="scResult">
+      <div class="klabel">Verdict</div>
+      <div id="scVerdict"><div class="sub">Pick a role and enter your package to see where you stand.</div></div>
+      <div id="scRangeViz"></div>
+      <div class="statrow" id="scStats"></div>
+      <div id="scMatches" class="tiny" style="margin-top:12px"></div>
+      <div class="scjobs" id="scJobs"></div>
+    </div>
+  </div>
+  <div class="note">The verdict compares you with the matched role's guide range (min of mins to max of maxes across matching rows), reduced by 10% because published guide figures typically include benefits that vary a lot by company, then scaled by an emirate factor derived from relative average salaries, with an experience-based expected point inside the range (early career sits near the bottom, 12+ years near the top). Pay for the same title varies widely by employer, sector and hiring market, so treat this as a benchmark, not a promise.</div>
+</section>
+
+<!-- ================= WEALTH ================= -->
+<section class="tab" id="tab-wealth">
+  <div class="pagehead">
+    <h1>Where does your net worth rank?</h1>
+    <div class="sub" id="wSub">Total assets (property, investments, cash, business equity) minus all debts, compared against the adult resident population.</div>
+  </div>
+  <div class="hero" id="wHero">
+    <div class="card inputcard">
+      <div class="klabel" id="wInLbl">Your net worth</div>
+      <div class="moneyin">
+        <span class="cur" id="wCur">AED</span>
+        <input id="wIn" type="text" inputmode="numeric" value="500,000" aria-label="Your net worth">
+      </div>
+      <div class="note" style="margin-top:13px">Wealth data is modelled from the World Inequality Database with UBS and Knight Frank anchors. The UAE's wealth Gini of <b>0.82</b> is the highest in the world, so small differences in net worth move you many percentiles.</div>
+    </div>
+    <div class="card result">
+      <div class="klabel">Your position</div>
+      <span class="big" id="wBig">–</span>
+      <div class="expl" id="wExpl"></div>
+      <div class="statrow" id="wStats"></div>
+    </div>
+  </div>
+  <div class="card chartcard">
+    <div class="klabel">The wealth curve</div>
+    <div class="ctitle">Wealth compounds; the curve goes vertical</div>
+    <div class="tiny" style="margin-bottom:10px" id="wpcSub">Net worth required at every percentile of UAE resident adults (log scale). Hover to explore; your position is marked.</div>
+    <div id="wpcChart" style="position:relative"></div>
+    <div class="src">Source: WID-based model with UBS and Knight Frank anchors — see Methodology</div>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <div class="klabel">Wealth ladder</div>
+      <div class="tiny" style="margin-bottom:8px" id="wLadderSub">Net worth per adult needed to reach each rung</div>
+      <table class="ladder" id="wLadder"></table>
+    </div>
+    <div class="card chartcard">
+      <div class="klabel">Millionaire migration</div>
+      <div class="ctitle">The world's strongest millionaire magnet</div>
+      <div class="tiny" style="margin-bottom:8px">Net inflow of USD millionaires per year, the world's highest four years running</div>
+      <div id="migChart" style="position:relative"></div>
+      <div class="statrow" id="wContext"></div>
+      <div class="src">Source: Henley &amp; Partners / New World Wealth private wealth migration reports</div>
+    </div>
+  </div>
+  <div class="cols" style="margin-top:12px">
+    <div class="card chartcard">
+      <div class="klabel">Global wealth hubs</div>
+      <div class="ctitle">Dubai is climbing the millionaire league</div>
+      <div class="tiny" style="margin-bottom:10px">Resident USD millionaires by city, end-2024. Dubai ranked 18th worldwide, the biggest climber in the top 50, with numbers up 102% in a decade.</div>
+      <div id="cityChart" style="position:relative"></div>
+      <div class="src">Source: Henley &amp; Partners / New World Wealth, World's Wealthiest Cities 2025</div>
+    </div>
+    <div class="card chartcard">
+      <div class="klabel">The ultra-rich pipeline</div>
+      <div class="ctitle">More of the very wealthy are coming</div>
+      <div class="tiny" style="margin-bottom:10px">UAE residents worth $30M+ (UHNWIs), Knight Frank forecast, plus UBS's projection of ~15% millionaire growth to 2028.</div>
+      <div id="uhnwiChart" style="position:relative"></div>
+      <div class="statrow" id="uhnwiStats"></div>
+      <div class="src">Source: Knight Frank Wealth Report 2026; UBS Global Wealth Report</div>
+    </div>
+  </div>
+  <div class="note warnnote"><b>Model caveats:</b> below-median values are extrapolated; UBS's survey-based median (USD 32,746 per adult, 2023) sits well below the WID model median used here (~USD 92,000). Percentiles at the extremes carry wide uncertainty. Sources and reconciliation in Methodology.</div>
+  <div class="plinks" id="plWealth"></div>
+</section>
+
+<!-- ================= EMIRATES ================= -->
+<section class="tab" id="tab-emirates">
+  <div class="pagehead">
+    <h1>The seven emirates</h1>
+    <div class="sub">Economic output, estimated household wealth, population and cost of living. Abu Dhabi and Dubai together produce about 80% of national GDP.</div>
+  </div>
+  <div class="card chartcard" style="margin-bottom:12px">
+    <div class="klabel">Estimated household wealth per adult</div>
+    <div class="ctitle">Dubai holds the household wealth</div>
+    <div class="tiny" style="margin-bottom:10px">Model estimate, USD. National wealth stock (UBS mean × adults) allocated 55% by resident-millionaire shares, 45% by adults weighted by income and property levels. Whiskers show the 45–62% top-share scenario range. <b>Why isn't Abu Dhabi first?</b> Abu Dhabi is richer as a state — higher GDP per capita and ~$1.7T in sovereign funds (ADIA, Mubadala, ADQ) — but that is government wealth, excluded here. Private wealth held by residents concentrates in Dubai: 81,200 resident millionaires vs ~20,000 in Abu Dhabi, and 237 vs 75 centi-millionaires.</div>
+    <div id="emWealthChart" style="position:relative"></div>
+    <div class="src">Source: UBS Global Wealth Report 2026, Henley &amp; Partners / New World Wealth city data; site model</div>
+  </div>
+  <div class="cols">
+    <div class="card chartcard">
+      <div class="klabel">GDP per capita</div>
+      <div class="ctitle">Oil lifts Abu Dhabi's output per head</div>
+      <div class="tiny" style="margin-bottom:10px">USD, 2023 — latest consistent cross-emirate set. Abu Dhabi's figure includes oil rents accruing to the state, which is why its household wealth ranks below its GDP.</div>
+      <div id="emChart" style="position:relative"></div>
+      <div class="src">Source: emirate statistics centres, 2023</div>
+    </div>
+    <div class="card chartcard">
+      <div class="klabel">Typical 1-bedroom rent</div>
+      <div class="ctitle">A Dubai 1-bed costs about twice the north</div>
+      <div class="tiny" style="margin-bottom:10px">Per year, midpoint of typical asking range</div>
+      <div id="emRentChart" style="position:relative"></div>
+      <div class="src">Source: Bayut annual rental market reports, 2025</div>
+    </div>
+  </div>
+  <div class="emgrid" id="emGrid"></div>
+  <div class="plinks" id="plEmirates"></div>
+  <div class="note">Emirate-level <b>income</b> data is the weakest part of the official record: results of the 2024 national Household Income &amp; Expenditure Survey (~19,000 families) were still unpublished as of mid-2026. Salary index figures are third-party estimates, useful as relative comparison only. Wealth per adult is this site's model estimate — no official figure exists. Population figures mix official series (Dubai 2025 register-based, Abu Dhabi 2024, Sharjah 2022 census) with third-party estimates for the northern emirates.</div>
+</section>
+
+<!-- ================= ROLES ================= -->
+<section class="tab" id="tab-roles">
+  <div class="pagehead">
+    <h1>Salaries by role &amp; industry</h1>
+    <div class="sub" id="roleCount"></div>
+  </div>
+  <div class="rolebar">
+    <input id="roleQ" type="search" placeholder="Search roles… e.g. engineer, CFO, nurse">
+    <select id="roleSector"><option value="">All sectors</option></select>
+    <select id="roleSort">
+      <option value="hi">Highest paid first</option>
+      <option value="lo">Lowest paid first</option>
+      <option value="az">A–Z</option>
+    </select>
+  </div>
+  <div class="rolehead"><span>Role</span><span>Salary range</span><span style="text-align:right">Range · rank vs all workers</span></div>
+  <div class="rolelist" id="roleList"></div>
+  <button class="showmore" id="roleMore">Show more</button>
+  <div class="note" style="margin-top:14px"><b>How to read the rank:</b> "Top 5% overall" means a person earning this role's midpoint salary earns more than 95% of all ~9.2M workers in the UAE — labourers and domestic workers included. Most listed professional roles rank in the top 10% precisely because recruiter guides describe the professional tier, not the whole workforce. Recruiter-guide figures (Cooper Fitch, Robert Half, Michael Page) are shown reduced by 10%, since published ranges typically include benefits that vary widely by company. Market and sector sources (GulfTalent, UAESalary, Jooble postings, SOEG hospitality bands, nursing and aviation data, manpower-supplier blue-collar bands and others) are unadjusted; blue-collar figures are base pay and often exclude employer-provided food and housing. Strategy consulting (Tier 1 &amp; 2, incl. MBB) and investment banking rows come from the Cooper Fitch 2025 guide tables, cross-checked against Glassdoor, PrepLounge and Levels.fyi Dubai submissions; they are base plus fixed allowances and <b>exclude bonuses</b>. Note the two-tier IB market: these ranges reflect the regional mix, while international bulge-bracket desks at DIFC pay near New York scales (a separate analyst row shows that tier's base).</div>
+</section>
+
+<!-- ================= METHODOLOGY ================= -->
+<section class="tab" id="tab-method">
+  <div class="card meth">
+    <h1 style="margin-bottom:10px">Methodology &amp; sources</h1>
+    <p>No official income percentile series exists for the UAE, so this dashboard is built on a synthesized model that reconciles several partially conflicting sources. Every design decision is documented here.</p>
+    <h2>The income model</h2>
+    <p>Incomes are modelled as a mixture of lognormal distributions over labour-market segments: domestic workers (~0.75M), construction labourers (~1.4M), other low-wage services (~3.3M), skilled trades and clerical workers (~1.7M), professionals (~1.7M) and senior executives (~0.3M). Segment weights come from the FCSC Labour Force Survey 2024 (9.4M labour force), MOHRE data and industry estimates. Medians and spreads are calibrated against four anchors: the WPS-linked finding that over 60% of workers earn below AED 5,000 per month (model: 59.7%), the LFS 2024 median of AED 10,000 and mean of AED 16,000 for the household-survey view (model: 8,900 and 15,200), crowd-sourced professional medians of AED 12,000 to 20,000 (model: 20,000), and recruiter executive bands of AED 80,000 to 275,000 (model 99th percentile, all workers: 87,000).</p>
+    <h2>The household view</h2>
+    <p>Household mode compares combined household income against ~2.4M regular households (a count anchored on Dubai's official ~771,000 households), averaging about 2.3 earners each. The distribution is a four-component mixture: modest expatriate households (1.05M, median AED 11,000 per month), mid-income family households (0.75M, median AED 25,000), professional and executive households (0.35M, median AED 60,000) and Emirati households (0.25M, median AED 60,000), the last consistent with the Dubai HIES 2014/15 finding that Emirati family income (AED 866,890 per year average) ran about 2.6x non-Emirati family income (AED 337,392). The mixture is calibrated to an aggregate-consistency test: mean household income (~AED 34,000) must equal the number of workers living in regular households (~5.5M) times their mean individual income (~AED 15,200) divided by the household count, and household percentile thresholds must sit at or above every individual view's thresholds (verified numerically; the household curve tracks within 2% of the professionals curve where they meet). Collective households and labour camps are excluded, since "household income" is not meaningful there. Household net worth applies a factor of 2 wealth-holding adults per household to the per-adult wealth curve.</p>
+    <h2>The wealth model</h2>
+    <p>Wealth percentiles use World Inequality Database derived anchors (median AED 337,549; p90 AED 2.17M; p99 AED 14.4M per adult), monotonically interpolated, with lognormal extrapolation below the median. UBS Global Wealth Report figures (mean USD 157,612 in 2025; median USD 32,746 in 2023; wealth Gini 0.82, the world's highest) and Knight Frank's top-1% threshold (USD 1.6M, 2023) serve as independent references. The UBS millionaire series has a break: 240,343 (2024 data, GWR 2025) vs 183,000 (2025 data, GWR 2026, revised methodology); this site cites by edition.</p>
+    <h2>Wealth per adult by emirate</h2>
+    <p>No official or third-party estimate of household wealth by emirate exists, so this is a model. The national household wealth stock (UBS mean per adult x ~9.9M adults ≈ USD 1.56T) is split in two parts. The top-tier share (55% central case, reflecting UBS data showing millionaires hold roughly 50–60% of wealth) is allocated by each emirate's share of resident millionaires: Dubai 81,200, Abu Dhabi ~20,000 (Henley reports range 17,800–22,700), Sharjah 4,100 (Henley/New World Wealth city data), with a small residual for the northern emirates. The mass share (45%) is allocated by adult population weighted by income and property-price levels. Ranges shown reflect top-share scenarios of 45% to 62%. Sovereign wealth funds (ADIA ~$1.1T, Mubadala, ADQ, ICD) are state assets and are excluded throughout; this is also why Abu Dhabi's household wealth ranks well below its GDP per capita.</p>
+    <h2>Salary check and roles adjustment</h2>
+    <p>Recruiter-guide salary ranges (Cooper Fitch, Robert Half, Michael Page) are displayed and benchmarked at 90% of their published values, because guide figures are typically quoted inclusive of fixed benefits packages whose cash value varies widely by company. GulfTalent's self-reported non-office benchmarks are not adjusted. The salary check verdict further scales ranges by an emirate factor (Dubai 1.00 down to about 0.88 for the northern emirates) derived from relative average salary levels, and places an experience-based expected point within the range.</p>
+    <h2>Known limitations</h2>
+    <ul>
+      <li>The 2024/25 national Household Income &amp; Expenditure Survey results are unpublished; when released they will replace several model assumptions.</li>
+      <li>World Bank survey-based inequality figures (Gini 26.4 in 2018) appear nowhere as headlines because Gulf household surveys capture only ~20–39% of national income and truncate the top tail.</li>
+      <li>Crowd-sourced data (including the age chart) skews toward English-speaking professionals; the majority low-wage workforce is nearly invisible in it.</li>
+      <li>Emirate wealth figures are model estimates with wide uncertainty; small-emirate populations are stale census extrapolations.</li>
+      <li>Nationality-based pay differences are real and large (the same role can span 3–5x by hiring market) but are not modelled separately.</li>
+    </ul>
+    <h2>Primary sources</h2>
+    <ul>
+      <li><a href="https://wid.world/country/united-arab-emirates/" target="_blank" rel="noopener">World Inequality Database</a> and Alvaredo, Assouad &amp; Piketty, "Measuring Inequality in the Middle East" (top 10% ≈ 75% of income, Gini ≈ 0.74, 2016)</li>
+      <li>UAE Federal Competitiveness &amp; Statistics Centre — Labour Force Survey 2024; <a href="https://www.dsc.gov.ae/" target="_blank" rel="noopener">Dubai Statistics Center</a> HIES 2014/15; SCAD Abu Dhabi; CBUAE statistical bulletins</li>
+      <li><a href="https://www.ubs.com/global/en/media/display-page-ndp/en-20260630-gwr-2026.html" target="_blank" rel="noopener">UBS Global Wealth Report</a> 2024–2026; <a href="https://www.henleyglobal.com/newsroom/press-releases/wealthiest-cities-report-2025" target="_blank" rel="noopener">Henley &amp; Partners Wealthiest Cities / Private Wealth Migration reports</a>; Knight Frank Wealth Report; New World Wealth</li>
+      <li><a href="https://cooperfitch.ae/2026-salary-guide-uae/" target="_blank" rel="noopener">Cooper Fitch</a>, Robert Half, Michael Page, Hays salary guides; Glassdoor, Levels.fyi, PayScale, Paylab, Numbeo</li>
+      <li>MOHRE (Emirati private-sector minimum wage AED 6,000 from Jan 2026); World Bank national accounts; Bayut sales and rental reports; ADREC; official emirate statistics centres</li>
+    </ul>
+    <p class="tiny">Data compiled July 2026. AED pegged at 3.6725 per USD. This dashboard is for information only and is not financial advice.</p>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    UAE Income &amp; Wealth Dashboard — modelled estimates from public sources, compiled July 2026. Not affiliated with any UAE government entity. See Methodology for caveats.
+    <div id="ftDisclosure" style="display:none">Some links on this site are referral links; they support the project at no extra cost to you and never affect the data shown.</div>
+    <div class="newsline" id="ftNews"></div>
+  </div>
+</footer>
+
+<div class="tt" id="tt"></div>
+
+<script>
+const DATA = {"views":{"full":{"label":"All workers","population_millions":9.17,"p_step":0.001,"values":[568,628,668,699,726,749,769,787,804,820,835,849,862,875,887,898,910,920,931,941,950,960,969,978,987,995,1004,1012,1020,1028,1036,1043,1051,1058,1065,1072,1079,1086,1093,1100,1107,1113,1120,1126,1132,1139,1145,1151,1157,1163,1169,1175,1181,1186,1192,1198,1203,1209,1214,1220,1225,1231,1236,1242,1247,1252,1257,1263,1268,1273,1278,1283,1288,1293,1298,1303,1308,1313,1318,1322,1327,1332,1337,1342,1346,1351,1356,1360,1365,1370,1374,1379,1384,1388,1393,1397,1402,1406,1411,1415,1420,1424,1429,1433,1437,1442,1446,1451,1455,1459,1464,1468,1472,1477,1481,1485,1489,1494,1498,1502,1506,1511,1515,1519,1523,1527,1532,1536,1540,1544,1548,1552,1557,1561,1565,1569,1573,1577,1581,1585,1590,1594,1598,1602,1606,1610,1614,1618,1622,1626,1630,1634,1638,1643,1647,1651,1655,1659,1663,1667,1671,1675,1679,1683,1687,1691,1695,1699,1703,1707,1711,1715,1719,1723,1727,1731,1735,1739,1743,1747,1751,1755,1759,1763,1767,1771,1775,1780,1784,1788,1792,1796,1800,1804,1808,1812,1816,1820,1824,1828,1832,1836,1840,1844,1848,1852,1856,1860,1864,1869,1873,1877,1881,1885,1889,1893,1897,1901,1905,1909,1914,1918,1922,1926,1930,1934,1938,1942,1947,1951,1955,1959,1963,1967,1972,1976,1980,1984,1988,1993,1997,2001,2005,2010,2014,2018,2022,2027,2031,2035,2039,2044,2048,2052,2057,2061,2065,2070,2074,2078,2083,2087,2091,2096,2100,2105,2109,2113,2118,2122,2127,2131,2136,2140,2144,2149,2153,2158,2162,2167,2172,2176,2181,2185,2190,2194,2199,2204,2208,2213,2217,2222,2227,2231,2236,2241,2246,2250,2255,2260,2264,2269,2274,2279,2284,2288,2293,2298,2303,2308,2313,2318,2323,2327,2332,2337,2342,2347,2352,2357,2362,2367,2372,2377,2383,2388,2393,2398,2403,2408,2413,2419,2424,2429,2434,2439,2445,2450,2455,2461,2466,2471,2477,2482,2488,2493,2498,2504,2509,2515,2520,2526,2532,2537,2543,2548,2554,2560,2565,2571,2577,2582,2588,2594,2600,2606,2611,2617,2623,2629,2635,2641,2647,2653,2659,2665,2671,2677,2683,2689,2696,2702,2708,2714,2720,2727,2733,2739,2746,2752,2758,2765,2771,2778,2784,2791,2797,2804,2811,2817,2824,2831,2837,2844,2851,2858,2865,2872,2878,2885,2892,2899,2906,2913,2921,2928,2935,2942,2949,2956,2964,2971,2978,2986,2993,3001,3008,3016,3023,3031,3038,3046,3054,3061,3069,3077,3085,3093,3100,3108,3116,3124,3132,3141,3149,3157,3165,3173,3182,3190,3198,3207,3215,3224,3232,3241,3249,3258,3267,3275,3284,3293,3302,3311,3320,3329,3338,3347,3356,3365,3374,3383,3393,3402,3411,3421,3430,3440,3450,3459,3469,3479,3488,3498,3508,3518,3528,3538,3548,3558,3568,3579,3589,3599,3610,3620,3630,3641,3652,3662,3673,3684,3695,3705,3716,3727,3738,3749,3761,3772,3783,3794,3806,3817,3829,3840,3852,3864,3875,3887,3899,3911,3923,3935,3947,3959,3971,3984,3996,4008,4021,4033,4046,4059,4071,4084,4097,4110,4123,4136,4149,4162,4176,4189,4202,4216,4229,4243,4257,4270,4284,4298,4312,4326,4340,4354,4368,4383,4397,4412,4426,4441,4455,4470,4485,4500,4515,4530,4545,4560,4575,4591,4606,4622,4637,4653,4669,4684,4700,4716,4732,4748,4765,4781,4797,4814,4830,4847,4863,4880,4897,4914,4931,4948,4965,4983,5000,5017,5035,5053,5070,5088,5106,5124,5142,5160,5178,5197,5215,5234,5252,5271,5290,5308,5327,5346,5366,5385,5404,5424,5443,5463,5482,5502,5522,5542,5562,5582,5603,5623,5644,5664,5685,5706,5726,5747,5769,5790,5811,5833,5854,5876,5897,5919,5941,5963,5985,6008,6030,6053,6075,6098,6121,6144,6167,6190,6213,6237,6260,6284,6308,6332,6356,6380,6404,6429,6453,6478,6503,6528,6553,6578,6603,6629,6654,6680,6706,6732,6758,6784,6811,6837,6864,6891,6918,6945,6972,6999,7027,7055,7083,7111,7139,7167,7196,7225,7253,7282,7312,7341,7370,7400,7430,7460,7490,7521,7551,7582,7613,7644,7675,7707,7739,7771,7803,7835,7867,7900,7933,7966,7999,8033,8067,8101,8135,8169,8204,8239,8274,8309,8345,8380,8416,8453,8489,8526,8563,8600,8638,8675,8713,8752,8790,8829,8868,8908,8947,8987,9028,9068,9109,9150,9191,9233,9275,9318,9360,9403,9447,9490,9534,9579,9623,9668,9714,9759,9805,9852,9899,9946,9993,10041,10090,10138,10187,10237,10287,10337,10388,10439,10490,10542,10595,10648,10701,10755,10809,10864,10919,10974,11031,11087,11144,11202,11260,11318,11377,11437,11497,11558,11619,11681,11743,11806,11869,11933,11997,12063,12128,12194,12261,12329,12397,12466,12535,12605,12675,12747,12818,12891,12964,13038,13113,13188,13264,13340,13418,13496,13575,13654,13734,13815,13897,13980,14063,14147,14232,14318,14404,14491,14579,14668,14758,14849,14940,15032,15126,15220,15315,15410,15507,15605,15704,15803,15904,16005,16108,16211,16316,16421,16528,16635,16744,16854,16964,17076,17189,17304,17419,17535,17653,17772,17892,18013,18135,18259,18384,18511,18638,18767,18898,19029,19163,19297,19434,19571,19710,19851,19993,20137,20283,20430,20579,20730,20883,21037,21193,21351,21512,21674,21838,22004,22172,22343,22516,22691,22868,23048,23231,23416,23603,23794,23987,24182,24381,24583,24788,24996,25207,25422,25640,25862,26088,26317,26551,26788,27030,27276,27527,27782,28043,28308,28579,28855,29137,29425,29719,30019,30326,30640,30962,31291,31628,31973,32327,32690,33063,33446,33840,34244,34661,35090,35532,35988,36459,36945,37448,37969,38508,39068,39649,40253,40882,41537,42221,42935,43683,44467,45291,46157,47070,48034,49055,50138,51290,52518,53832,55241,56758,58396,60171,62103,64215,66535,69095,71937,75110,78677,82717,87333,92659,98878,106252,115167,126233,140504,160030,189659,246112,310316,493071],"curve_x":[600,631,663,696,732,769,808,850,893,938,986,1036,1089,1145,1203,1264,1329,1397,1468,1542,1621,1704,1790,1882,1978,2078,2184,2296,2413,2535,2665,2800,2943,3093,3251,3416,3590,3773,3965,4168,4380,4603,4838,5084,5343,5615,5901,6202,6518,6850,7199,7566,7952,8357,8783,9230,9700,10195,10714,11260,11834,12436,13070,13736,14436,15172,15945,16757,17611,18508,19451,20442,21484,22578,23729,24938,26208,27544,28947,30422,31972,33601,35313,37112,39003,40991,43079,45274,47581,50005,52553,55231,58045,61002,64110,67377,70810,74418,78209,82194,86382,90784,95409,100270,105379,110749,116391,122322,128554,135104,141988,149223,156826,164816,173214,182040,191315,201063,211307,222073,233388,245280,257777,270912,284715,299222,314467,330490,347329,365026,383625,403171,423713,445302,467991,491836,516896,543233,570911,600000],"curve_y":[0.01017,0.01372,0.01826,0.02398,0.03108,0.03977,0.05025,0.06272,0.07735,0.09428,0.11362,0.13541,0.15962,0.18613,0.2147,0.24495,0.27637,0.30827,0.33985,0.3702,0.39835,0.42334,0.44431,0.46058,0.47169,0.47749,0.47811,0.47398,0.46575,0.45422,0.44028,0.42482,0.40863,0.3924,0.37667,0.36182,0.34809,0.33562,0.32444,0.31452,0.30578,0.29812,0.29139,0.28543,0.2801,0.2752,0.27056,0.26602,0.2614,0.25659,0.25147,0.24598,0.24009,0.23384,0.22726,0.22045,0.21352,0.20657,0.19974,0.19314,0.18684,0.18092,0.17542,0.17033,0.16564,0.16129,0.15721,0.15332,0.14953,0.14574,0.14188,0.13786,0.13364,0.12917,0.12443,0.11943,0.11418,0.1087,0.10306,0.09729,0.09146,0.08563,0.07985,0.0742,0.06871,0.06344,0.05842,0.05369,0.04925,0.04513,0.04132,0.03783,0.03464,0.03175,0.02913,0.02676,0.02463,0.0227,0.02096,0.01939,0.01796,0.01666,0.01546,0.01436,0.01334,0.01238,0.01149,0.01065,0.00986,0.00912,0.00841,0.00774,0.0071,0.0065,0.00593,0.0054,0.0049,0.00443,0.00399,0.00358,0.0032,0.00286,0.00254,0.00224,0.00198,0.00174,0.00152,0.00132,0.00115,0.00099,0.00086,0.00074,0.00063,0.00054,0.00045,0.00038,0.00032,0.00027,0.00023,0.00019],"mean":9490},"household":{"label":"Household-survey view","population_millions":5.5,"p_step":0.001,"values":[859,966,1039,1097,1146,1189,1227,1263,1295,1326,1354,1381,1407,1432,1456,1479,1501,1522,1543,1563,1583,1602,1621,1639,1657,1675,1692,1710,1726,1743,1759,1775,1791,1807,1822,1837,1853,1867,1882,1897,1911,1926,1940,1954,1968,1982,1996,2009,2023,2036,2050,2063,2076,2089,2102,2115,2128,2141,2154,2167,2180,2192,2205,2217,2230,2242,2255,2267,2279,2292,2304,2316,2328,2340,2352,2364,2376,2388,2400,2412,2424,2436,2448,2460,2472,2484,2496,2507,2519,2531,2543,2554,2566,2578,2590,2601,2613,2625,2636,2648,2660,2671,2683,2695,2706,2718,2730,2741,2753,2765,2776,2788,2800,2811,2823,2835,2846,2858,2870,2882,2893,2905,2917,2928,2940,2952,2964,2975,2987,2999,3011,3023,3034,3046,3058,3070,3082,3094,3106,3118,3129,3141,3153,3165,3177,3189,3201,3213,3226,3238,3250,3262,3274,3286,3298,3310,3323,3335,3347,3359,3372,3384,3396,3409,3421,3434,3446,3458,3471,3483,3496,3509,3521,3534,3546,3559,3572,3584,3597,3610,3623,3635,3648,3661,3674,3687,3700,3713,3726,3739,3752,3765,3778,3791,3804,3817,3830,3844,3857,3870,3883,3897,3910,3924,3937,3950,3964,3977,3991,4004,4018,4032,4045,4059,4073,4086,4100,4114,4128,4142,4155,4169,4183,4197,4211,4225,4239,4253,4268,4282,4296,4310,4324,4339,4353,4367,4381,4396,4410,4425,4439,4454,4468,4483,4497,4512,4526,4541,4556,4570,4585,4600,4615,4630,4644,4659,4674,4689,4704,4719,4734,4749,4764,4779,4794,4809,4825,4840,4855,4870,4885,4901,4916,4931,4947,4962,4977,4993,5008,5024,5039,5055,5070,5086,5102,5117,5133,5149,5164,5180,5196,5211,5227,5243,5259,5275,5291,5306,5322,5338,5354,5370,5386,5402,5418,5434,5450,5466,5483,5499,5515,5531,5547,5563,5580,5596,5612,5628,5645,5661,5677,5694,5710,5727,5743,5760,5776,5792,5809,5825,5842,5859,5875,5892,5908,5925,5942,5958,5975,5992,6008,6025,6042,6059,6075,6092,6109,6126,6143,6160,6177,6193,6210,6227,6244,6261,6278,6295,6312,6329,6346,6363,6381,6398,6415,6432,6449,6466,6484,6501,6518,6535,6552,6570,6587,6604,6622,6639,6656,6674,6691,6709,6726,6744,6761,6779,6796,6814,6831,6849,6866,6884,6902,6919,6937,6955,6972,6990,7008,7026,7043,7061,7079,7097,7115,7133,7151,7169,7186,7204,7222,7240,7258,7277,7295,7313,7331,7349,7367,7385,7403,7422,7440,7458,7477,7495,7513,7532,7550,7568,7587,7605,7624,7642,7661,7679,7698,7716,7735,7754,7772,7791,7810,7829,7847,7866,7885,7904,7923,7942,7961,7980,7998,8018,8037,8056,8075,8094,8113,8132,8151,8171,8190,8209,8229,8248,8267,8287,8306,8326,8345,8365,8384,8404,8424,8443,8463,8483,8503,8522,8542,8562,8582,8602,8622,8642,8662,8682,8702,8722,8743,8763,8783,8803,8824,8844,8865,8885,8905,8926,8947,8967,8988,9009,9029,9050,9071,9092,9113,9134,9155,9176,9197,9218,9239,9260,9281,9303,9324,9345,9367,9388,9410,9431,9453,9475,9496,9518,9540,9562,9584,9606,9628,9650,9672,9694,9716,9738,9761,9783,9805,9828,9850,9873,9896,9918,9941,9964,9987,10010,10032,10055,10079,10102,10125,10148,10171,10195,10218,10242,10265,10289,10313,10336,10360,10384,10408,10432,10456,10480,10504,10528,10553,10577,10602,10626,10651,10675,10700,10725,10750,10775,10800,10825,10850,10875,10901,10926,10951,10977,11003,11028,11054,11080,11106,11132,11158,11184,11210,11237,11263,11290,11316,11343,11370,11396,11423,11450,11477,11505,11532,11559,11587,11614,11642,11670,11697,11725,11753,11781,11810,11838,11866,11895,11923,11952,11981,12010,12039,12068,12097,12126,12156,12185,12215,12245,12275,12304,12335,12365,12395,12425,12456,12487,12517,12548,12579,12610,12641,12673,12704,12736,12768,12799,12831,12864,12896,12928,12961,12993,13026,13059,13092,13125,13158,13192,13225,13259,13293,13327,13361,13395,13429,13464,13499,13534,13569,13604,13639,13675,13710,13746,13782,13818,13854,13891,13927,13964,14001,14038,14075,14113,14150,14188,14226,14264,14302,14341,14380,14418,14457,14497,14536,14576,14615,14655,14696,14736,14777,14817,14858,14900,14941,14982,15024,15066,15109,15151,15194,15236,15280,15323,15366,15410,15454,15498,15543,15588,15633,15678,15723,15769,15815,15861,15907,15954,16001,16048,16095,16143,16191,16239,16288,16337,16386,16435,16485,16534,16585,16635,16686,16737,16788,16840,16892,16944,16997,17050,17103,17157,17210,17265,17319,17374,17429,17485,17541,17597,17653,17710,17768,17825,17883,17942,18000,18059,18119,18179,18239,18300,18361,18422,18484,18547,18609,18672,18736,18800,18864,18929,18995,19060,19127,19193,19260,19328,19396,19465,19534,19603,19673,19744,19815,19887,19959,20031,20104,20178,20252,20327,20403,20479,20555,20632,20710,20788,20867,20947,21027,21108,21189,21271,21354,21437,21521,21606,21691,21778,21864,21952,22040,22129,22219,22310,22401,22493,22586,22680,22774,22870,22966,23063,23161,23260,23359,23460,23562,23664,23767,23872,23977,24084,24191,24299,24409,24520,24631,24744,24858,24973,25089,25206,25325,25445,25566,25688,25811,25936,26063,26190,26319,26450,26581,26715,26850,26986,27124,27263,27405,27547,27692,27838,27986,28136,28287,28441,28596,28754,28913,29075,29238,29404,29572,29742,29915,30090,30267,30447,30629,30814,31002,31192,31385,31581,31781,31983,32188,32397,32608,32824,33043,33265,33491,33721,33955,34193,34435,34682,34933,35189,35450,35715,35986,36262,36543,36830,37123,37422,37728,38040,38359,38684,39018,39359,39708,40065,40431,40806,41191,41585,41990,42406,42832,43271,43722,44187,44665,45157,45665,46189,46729,47288,47865,48462,49081,49722,50386,51077,51794,52540,53316,54126,54970,55853,56776,57743,58757,59821,60941,62120,63364,64678,66069,67544,69111,70780,72560,74463,76502,78694,81056,83608,86376,89387,92678,96288,100271,104690,109627,115188,121517,128808,137341,147534,160055,176058,197791,230566,292676,363012,562132],"curve_x":[600,631,663,696,732,769,808,850,893,938,986,1036,1089,1145,1203,1264,1329,1397,1468,1542,1621,1704,1790,1882,1978,2078,2184,2296,2413,2535,2665,2800,2943,3093,3251,3416,3590,3773,3965,4168,4380,4603,4838,5084,5343,5615,5901,6202,6518,6850,7199,7566,7952,8357,8783,9230,9700,10195,10714,11260,11834,12436,13070,13736,14436,15172,15945,16757,17611,18508,19451,20442,21484,22578,23729,24938,26208,27544,28947,30422,31972,33601,35313,37112,39003,40991,43079,45274,47581,50005,52553,55231,58045,61002,64110,67377,70810,74418,78209,82194,86382,90784,95409,100270,105379,110749,116391,122322,128554,135104,141988,149223,156826,164816,173214,182040,191315,201063,211307,222073,233388,245280,257777,270912,284715,299222,314467,330490,347329,365026,383625,403171,423713,445302,467991,491836,516896,543233,570911,600000],"curve_y":[0.00064,0.00091,0.00127,0.00176,0.0024,0.00325,0.00435,0.00577,0.00757,0.00982,0.0126,0.01601,0.02014,0.02506,0.03087,0.03764,0.04542,0.05426,0.06417,0.07513,0.0871,0.09999,0.11368,0.128,0.14278,0.15779,0.17281,0.18759,0.20189,0.2155,0.22824,0.23996,0.25057,0.26004,0.26841,0.27579,0.28235,0.2883,0.29391,0.29946,0.30523,0.31149,0.31845,0.32627,0.33504,0.34474,0.35527,0.36644,0.37795,0.38945,0.40056,0.41086,0.41992,0.42737,0.43288,0.4362,0.43718,0.43574,0.43191,0.42583,0.41768,0.40771,0.39622,0.38353,0.36993,0.35572,0.34116,0.32646,0.3118,0.2973,0.28305,0.2691,0.25547,0.24215,0.22914,0.21642,0.20398,0.19182,0.17993,0.16834,0.15706,0.14613,0.13559,0.12547,0.11581,0.10665,0.09801,0.08992,0.08239,0.07542,0.06901,0.06315,0.05781,0.05297,0.04859,0.04463,0.04107,0.03785,0.03495,0.03233,0.02994,0.02777,0.02578,0.02394,0.02224,0.02065,0.01916,0.01776,0.01645,0.0152,0.01402,0.0129,0.01184,0.01084,0.00989,0.009,0.00817,0.00738,0.00665,0.00597,0.00534,0.00476,0.00423,0.00374,0.0033,0.00289,0.00253,0.00221,0.00192,0.00166,0.00143,0.00123,0.00105,0.00089,0.00076,0.00064,0.00054,0.00045,0.00038,0.00031],"mean":15234},"pro":{"label":"Professionals & executives","population_millions":2.0,"p_step":0.001,"values":[2893,3291,3564,3778,3958,4115,4255,4383,4500,4610,4712,4809,4901,4989,5073,5153,5231,5305,5378,5448,5516,5582,5647,5709,5771,5831,5890,5947,6003,6059,6113,6166,6219,6270,6321,6371,6421,6469,6517,6564,6611,6657,6703,6748,6792,6836,6880,6923,6965,7008,7049,7091,7132,7172,7213,7253,7292,7331,7370,7409,7447,7485,7523,7561,7598,7635,7672,7708,7745,7781,7816,7852,7887,7923,7958,7992,8027,8061,8096,8130,8164,8197,8231,8264,8298,8331,8364,8396,8429,8461,8494,8526,8558,8590,8622,8654,8685,8717,8748,8779,8810,8841,8872,8903,8934,8964,8995,9025,9056,9086,9116,9146,9176,9206,9235,9265,9295,9324,9354,9383,9412,9442,9471,9500,9529,9558,9587,9615,9644,9673,9701,9730,9758,9787,9815,9843,9872,9900,9928,9956,9984,10012,10040,10068,10096,10123,10151,10179,10207,10234,10262,10289,10317,10344,10371,10399,10426,10453,10481,10508,10535,10562,10589,10616,10643,10670,10697,10724,10751,10778,10805,10831,10858,10885,10912,10938,10965,10992,11018,11045,11071,11098,11124,11151,11177,11204,11230,11257,11283,11309,11336,11362,11388,11414,11441,11467,11493,11519,11546,11572,11598,11624,11650,11676,11702,11729,11755,11781,11807,11833,11859,11885,11911,11937,11963,11989,12015,12041,12067,12093,12119,12145,12170,12196,12222,12248,12274,12300,12326,12352,12378,12404,12429,12455,12481,12507,12533,12559,12585,12610,12636,12662,12688,12714,12740,12766,12791,12817,12843,12869,12895,12921,12946,12972,12998,13024,13050,13076,13102,13128,13153,13179,13205,13231,13257,13283,13309,13335,13361,13387,13413,13439,13465,13490,13516,13542,13568,13594,13620,13646,13672,13699,13725,13751,13777,13803,13829,13855,13881,13907,13933,13959,13986,14012,14038,14064,14090,14117,14143,14169,14195,14222,14248,14274,14300,14327,14353,14379,14406,14432,14459,14485,14512,14538,14564,14591,14618,14644,14671,14697,14724,14750,14777,14804,14830,14857,14884,14910,14937,14964,14991,15017,15044,15071,15098,15125,15152,15179,15206,15233,15260,15287,15314,15341,15368,15395,15422,15449,15477,15504,15531,15558,15586,15613,15640,15668,15695,15722,15750,15777,15805,15832,15860,15888,15915,15943,15971,15998,16026,16054,16082,16109,16137,16165,16193,16221,16249,16277,16305,16333,16361,16389,16418,16446,16474,16502,16531,16559,16587,16616,16644,16673,16701,16730,16758,16787,16815,16844,16873,16902,16930,16959,16988,17017,17046,17075,17104,17133,17162,17191,17221,17250,17279,17308,17338,17367,17396,17426,17455,17485,17515,17544,17574,17604,17633,17663,17693,17723,17753,17783,17813,17843,17873,17903,17933,17964,17994,18024,18055,18085,18116,18146,18177,18207,18238,18269,18300,18330,18361,18392,18423,18454,18485,18516,18548,18579,18610,18642,18673,18704,18736,18767,18799,18831,18862,18894,18926,18958,18990,19022,19054,19086,19118,19151,19183,19215,19248,19280,19313,19345,19378,19411,19443,19476,19509,19542,19575,19608,19641,19675,19708,19741,19775,19808,19842,19875,19909,19943,19976,20010,20044,20078,20112,20147,20181,20215,20249,20284,20318,20353,20388,20422,20457,20492,20527,20562,20597,20632,20667,20703,20738,20774,20809,20845,20880,20916,20952,20988,21024,21060,21096,21133,21169,21206,21242,21279,21315,21352,21389,21426,21463,21500,21537,21575,21612,21649,21687,21725,21762,21800,21838,21876,21914,21953,21991,22029,22068,22106,22145,22184,22223,22262,22301,22340,22379,22419,22458,22498,22537,22577,22617,22657,22697,22737,22778,22818,22859,22899,22940,22981,23022,23063,23104,23146,23187,23229,23270,23312,23354,23396,23438,23480,23523,23565,23608,23651,23694,23737,23780,23823,23866,23910,23954,23997,24041,24085,24129,24174,24218,24263,24307,24352,24397,24442,24487,24533,24578,24624,24670,24716,24762,24808,24855,24901,24948,24995,25042,25089,25136,25184,25231,25279,25327,25375,25423,25472,25520,25569,25618,25667,25716,25766,25815,25865,25915,25965,26016,26066,26117,26167,26218,26270,26321,26373,26424,26476,26528,26581,26633,26686,26739,26792,26845,26899,26952,27006,27060,27115,27169,27224,27279,27334,27390,27445,27501,27557,27613,27670,27726,27783,27841,27898,27956,28013,28072,28130,28188,28247,28306,28366,28425,28485,28545,28605,28666,28727,28788,28849,28911,28973,29035,29098,29160,29223,29287,29350,29414,29478,29543,29608,29673,29738,29804,29870,29936,30003,30070,30137,30204,30272,30340,30409,30478,30547,30617,30686,30757,30827,30898,30970,31041,31113,31186,31258,31332,31405,31479,31553,31628,31703,31778,31854,31931,32007,32084,32162,32240,32318,32397,32476,32556,32636,32717,32798,32879,32961,33044,33127,33210,33294,33378,33463,33549,33635,33721,33808,33895,33983,34072,34161,34251,34341,34432,34523,34615,34708,34801,34894,34989,35084,35179,35275,35372,35470,35568,35667,35766,35866,35967,36069,36171,36274,36378,36482,36587,36693,36800,36907,37015,37124,37234,37345,37456,37569,37682,37796,37911,38027,38143,38261,38379,38499,38619,38741,38863,38986,39111,39236,39363,39490,39619,39748,39879,40011,40144,40278,40414,40550,40688,40827,40967,41109,41251,41396,41541,41688,41836,41986,42137,42289,42443,42598,42755,42914,43074,43236,43399,43564,43731,43899,44069,44241,44415,44591,44768,44948,45129,45313,45498,45686,45876,46067,46262,46458,46656,46857,47061,47266,47475,47685,47899,48115,48334,48555,48779,49007,49237,49470,49706,49945,50188,50434,50683,50936,51192,51452,51715,51982,52253,52529,52808,53091,53378,53670,53967,54268,54573,54884,55199,55520,55846,56177,56513,56856,57204,57558,57918,58284,58657,59037,59423,59817,60217,60625,61041,61465,61897,62338,62787,63245,63712,64189,64675,65172,65679,66197,66727,67267,67820,68385,68963,69554,70159,70778,71412,72061,72726,73408,74106,74822,75557,76310,77084,77878,78694,79532,80393,81279,82191,83129,84095,85089,86114,87172,88262,89387,90549,91750,92992,94276,95606,96983,98410,99892,101429,103027,104689,106420,108223,110105,112070,114125,116277,118534,120905,123400,126030,128808,131749,134870,138191,141736,145532,149612,154017,158796,164008,169730,176058,183120,191086,200189,210766,223317,238643,258123,284442,323928,398280,481923,716444],"curve_x":[600,631,663,696,732,769,808,850,893,938,986,1036,1089,1145,1203,1264,1329,1397,1468,1542,1621,1704,1790,1882,1978,2078,2184,2296,2413,2535,2665,2800,2943,3093,3251,3416,3590,3773,3965,4168,4380,4603,4838,5084,5343,5615,5901,6202,6518,6850,7199,7566,7952,8357,8783,9230,9700,10195,10714,11260,11834,12436,13070,13736,14436,15172,15945,16757,17611,18508,19451,20442,21484,22578,23729,24938,26208,27544,28947,30422,31972,33601,35313,37112,39003,40991,43079,45274,47581,50005,52553,55231,58045,61002,64110,67377,70810,74418,78209,82194,86382,90784,95409,100270,105379,110749,116391,122322,128554,135104,141988,149223,156826,164816,173214,182040,191315,201063,211307,222073,233388,245280,257777,270912,284715,299222,314467,330490,347329,365026,383625,403171,423713,445302,467991,491836,516896,543233,570911,600000],"curve_y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1e-05,1e-05,2e-05,2e-05,3e-05,5e-05,7e-05,9e-05,0.00013,0.00019,0.00026,0.00035,0.00048,0.00066,0.00089,0.00119,0.00159,0.00211,0.00277,0.00361,0.00469,0.00604,0.00772,0.00981,0.01238,0.01552,0.01931,0.02388,0.02932,0.03576,0.04332,0.05212,0.06228,0.07391,0.08712,0.102,0.1186,0.13697,0.15712,0.17901,0.20256,0.22767,0.25416,0.28181,0.31036,0.33951,0.36889,0.39812,0.4268,0.45448,0.48074,0.50513,0.52724,0.5467,0.56316,0.57632,0.58597,0.59195,0.59417,0.59263,0.5874,0.57863,0.56653,0.55137,0.53349,0.51325,0.49104,0.46729,0.4424,0.4168,0.39086,0.36495,0.33941,0.31453,0.29054,0.26765,0.24601,0.22572,0.20685,0.18942,0.17343,0.15883,0.14556,0.13355,0.1227,0.11291,0.10409,0.09611,0.0889,0.08234,0.07636,0.07088,0.06583,0.06115,0.05678,0.0527,0.04885,0.04523,0.0418,0.03856,0.03548,0.03257,0.02981,0.02721,0.02476,0.02246,0.0203,0.01829,0.01642,0.01469,0.01309,0.01162,0.01029,0.00907,0.00796,0.00696,0.00607,0.00527,0.00456,0.00393,0.00337,0.00288,0.00245,0.00208,0.00176,0.00148,0.00124,0.00104,0.00086],"mean":29679},"hh":{"label":"All regular households","population_millions":2.4,"p_step":0.001,"values":[2663,2985,3205,3377,3521,3647,3760,3862,3956,4044,4127,4204,4278,4349,4416,4481,4543,4604,4662,4718,4773,4827,4879,4930,4980,5028,5076,5123,5169,5214,5258,5301,5344,5386,5428,5469,5509,5549,5588,5627,5665,5703,5741,5778,5815,5851,5887,5922,5958,5993,6027,6062,6096,6130,6163,6196,6229,6262,6295,6327,6359,6391,6423,6454,6486,6517,6548,6578,6609,6640,6670,6700,6730,6760,6789,6819,6848,6878,6907,6936,6965,6994,7022,7051,7079,7108,7136,7164,7192,7220,7248,7276,7304,7331,7359,7386,7414,7441,7468,7495,7522,7549,7576,7603,7630,7657,7684,7710,7737,7763,7790,7816,7843,7869,7895,7922,7948,7974,8000,8026,8052,8078,8104,8130,8156,8181,8207,8233,8259,8284,8310,8336,8361,8387,8412,8438,8463,8489,8514,8540,8565,8591,8616,8641,8667,8692,8717,8743,8768,8793,8818,8843,8869,8894,8919,8944,8969,8995,9020,9045,9070,9095,9120,9145,9170,9195,9221,9246,9271,9296,9321,9346,9371,9396,9421,9446,9471,9496,9522,9547,9572,9597,9622,9647,9672,9697,9722,9748,9773,9798,9823,9848,9873,9898,9924,9949,9974,9999,10025,10050,10075,10100,10126,10151,10176,10202,10227,10252,10278,10303,10328,10354,10379,10405,10430,10456,10481,10507,10532,10558,10583,10609,10635,10660,10686,10712,10737,10763,10789,10815,10841,10866,10892,10918,10944,10970,10996,11022,11048,11074,11100,11126,11152,11178,11205,11231,11257,11283,11310,11336,11362,11389,11415,11441,11468,11494,11521,11548,11574,11601,11628,11654,11681,11708,11735,11761,11788,11815,11842,11869,11896,11923,11950,11978,12005,12032,12059,12087,12114,12141,12169,12196,12224,12251,12279,12306,12334,12362,12390,12417,12445,12473,12501,12529,12557,12585,12613,12641,12669,12698,12726,12754,12783,12811,12840,12868,12897,12925,12954,12983,13011,13040,13069,13098,13127,13156,13185,13214,13243,13273,13302,13331,13361,13390,13419,13449,13479,13508,13538,13568,13598,13627,13657,13687,13717,13747,13778,13808,13838,13868,13899,13929,13960,13990,14021,14052,14082,14113,14144,14175,14206,14237,14268,14299,14331,14362,14393,14425,14456,14488,14519,14551,14583,14615,14646,14678,14710,14743,14775,14807,14839,14872,14904,14937,14969,15002,15034,15067,15100,15133,15166,15199,15232,15266,15299,15332,15366,15399,15433,15466,15500,15534,15568,15602,15636,15670,15704,15738,15773,15807,15842,15876,15911,15946,15981,16016,16051,16086,16121,16156,16191,16227,16262,16298,16334,16369,16405,16441,16477,16513,16549,16586,16622,16658,16695,16732,16768,16805,16842,16879,16916,16953,16990,17028,17065,17103,17140,17178,17216,17254,17292,17330,17368,17406,17445,17483,17522,17561,17599,17638,17677,17716,17756,17795,17834,17874,17913,17953,17993,18033,18073,18113,18153,18193,18234,18274,18315,18356,18397,18437,18479,18520,18561,18602,18644,18686,18727,18769,18811,18853,18895,18938,18980,19023,19065,19108,19151,19194,19237,19280,19324,19367,19411,19455,19499,19543,19587,19631,19675,19720,19764,19809,19854,19899,19944,19989,20035,20080,20126,20172,20218,20264,20310,20356,20403,20449,20496,20543,20590,20637,20684,20731,20779,20827,20875,20923,20971,21019,21067,21116,21165,21213,21262,21312,21361,21410,21460,21510,21560,21610,21660,21710,21761,21811,21862,21913,21964,22016,22067,22119,22171,22223,22275,22327,22380,22432,22485,22538,22591,22644,22698,22752,22805,22859,22914,22968,23023,23077,23132,23187,23243,23298,23354,23409,23466,23522,23578,23635,23691,23748,23806,23863,23921,23978,24036,24094,24153,24211,24270,24329,24388,24448,24507,24567,24627,24687,24748,24808,24869,24930,24992,25053,25115,25177,25239,25301,25364,25427,25490,25554,25617,25681,25745,25809,25874,25939,26004,26069,26135,26200,26266,26333,26399,26466,26533,26600,26668,26736,26804,26872,26941,27010,27079,27148,27218,27288,27359,27429,27500,27571,27643,27714,27786,27859,27931,28004,28078,28151,28225,28299,28374,28448,28524,28599,28675,28751,28827,28904,28981,29058,29136,29214,29293,29372,29451,29530,29610,29690,29771,29852,29933,30015,30097,30179,30262,30345,30429,30512,30597,30682,30767,30852,30938,31025,31111,31198,31286,31374,31463,31551,31641,31731,31821,31911,32002,32094,32186,32279,32371,32465,32559,32653,32748,32843,32939,33036,33132,33230,33328,33426,33525,33624,33724,33825,33926,34027,34130,34232,34336,34439,34544,34649,34754,34861,34967,35075,35183,35291,35401,35510,35621,35732,35844,35956,36069,36183,36298,36413,36529,36645,36762,36880,36999,37118,37239,37359,37481,37603,37727,37850,37975,38101,38227,38354,38482,38611,38740,38871,39002,39134,39267,39401,39536,39672,39808,39946,40084,40224,40364,40506,40648,40791,40936,41081,41227,41375,41523,41673,41824,41975,42128,42282,42437,42593,42751,42909,43069,43230,43392,43555,43720,43886,44053,44221,44391,44562,44735,44908,45083,45260,45438,45617,45798,45980,46164,46349,46536,46725,46914,47106,47299,47494,47690,47888,48088,48289,48492,48697,48904,49112,49323,49535,49749,49965,50183,50403,50625,50848,51074,51302,51532,51765,51999,52235,52474,52715,52959,53204,53452,53702,53955,54210,54468,54728,54991,55256,55524,55795,56068,56344,56623,56905,57190,57477,57768,58061,58358,58657,58960,59266,59576,59888,60204,60523,60846,61172,61502,61836,62173,62514,62858,63207,63559,63916,64276,64641,65010,65383,65760,66142,66528,66919,67315,67715,68120,68530,68945,69365,69790,70220,70656,71097,71544,71997,72455,72919,73389,73865,74348,74837,75332,75834,76343,76858,77381,77911,78448,78993,79545,80106,80674,81251,81836,82429,83031,83643,84263,84894,85533,86183,86843,87513,88194,88887,89590,90305,91032,91772,92524,93289,94067,94860,95666,96488,97324,98176,99044,99929,100832,101752,102690,103648,104626,105624,106644,107685,108750,109839,110953,112093,113260,114456,115681,116937,118226,119548,120907,122302,123737,125214,126734,128301,129916,131583,133305,135085,136927,138835,140814,142868,145004,147226,149543,151962,154490,157140,159920,162844,165927,169184,172636,176306,180219,184409,188914,193781,199068,204849,211216,218292,226239,235279,245732,258073,273057,291981,317355,355058,425056,502528,714475],"curve_x":[2500,2618,2741,2870,3005,3147,3295,3450,3613,3783,3961,4148,4343,4547,4762,4986,5221,5467,5724,5994,6276,6571,6881,7205,7544,7900,8272,8661,9069,9496,9944,10412,10902,11416,11953,12516,13106,13723,14369,15046,15755,16497,17274,18087,18939,19831,20765,21743,22767,23839,24962,26137,27368,28657,30007,31420,32900,34449,36072,37771,39550,41412,43363,45405,47543,49782,52127,54582,57153,59844,62663,65614,68704,71940,75328,78876,82590,86480,90553,94818,99283,103959,108855,113982,119350,124971,130857,137020,143473,150230,157305,164714,172471,180594,189099,198005,207330,217095,227319,238025,249236,260974,273265,286134,299610,313721,328496,343967,360167,377129,394891,413489,432963,453354,474705,497062,520472,544984,570651,597527,625668,655135,685989,718297,752126,787549,824640,863477,904144,946726,991313,1038001,1086887,1138075,1191675,1247799,1306565,1368100,1432533,1500000],"curve_y":[0.00435,0.00569,0.00738,0.00949,0.01211,0.01532,0.01921,0.0239,0.02949,0.03607,0.04376,0.05266,0.06284,0.07436,0.08729,0.10163,0.11736,0.13444,0.15278,0.17224,0.19266,0.21384,0.23554,0.25748,0.2794,0.301,0.32198,0.34206,0.361,0.37855,0.39453,0.40879,0.42124,0.43184,0.44057,0.44749,0.45268,0.45624,0.45832,0.45904,0.45856,0.457,0.45448,0.4511,0.44693,0.44203,0.43643,0.43014,0.42316,0.41549,0.40711,0.39803,0.38827,0.37784,0.36679,0.35518,0.34311,0.33065,0.31794,0.30507,0.29219,0.2794,0.26681,0.25453,0.24264,0.23121,0.22029,0.2099,0.20005,0.19074,0.18194,0.17362,0.16574,0.15824,0.15109,0.14422,0.13758,0.13115,0.12487,0.11872,0.11268,0.10674,0.10088,0.0951,0.08941,0.08382,0.07833,0.07298,0.06776,0.0627,0.05782,0.05312,0.04863,0.04436,0.04031,0.03649,0.03291,0.02957,0.02646,0.0236,0.02096,0.01854,0.01635,0.01435,0.01255,0.01094,0.00949,0.00821,0.00707,0.00607,0.00518,0.00441,0.00374,0.00316,0.00266,0.00223,0.00186,0.00155,0.00129,0.00106,0.00087,0.00072,0.00058,0.00048,0.00039,0.00031,0.00025,0.0002,0.00016,0.00013,0.0001,8e-05,6e-05,5e-05,4e-05,3e-05,2e-05,2e-05,1e-05,1e-05],"mean":33997}},"wealth_curve":{"note":"WID-based model; below-median values are lognormal extrapolation","p":[0.01,0.015,0.02,0.025,0.03,0.035,0.04,0.045,0.05,0.055,0.06,0.065,0.07,0.075,0.08,0.085,0.09,0.095,0.1,0.105,0.11,0.115,0.12,0.125,0.13,0.135,0.14,0.145,0.15,0.155,0.16,0.165,0.17,0.175,0.18,0.185,0.19,0.195,0.2,0.205,0.21,0.215,0.22,0.225,0.23,0.235,0.24,0.245,0.25,0.255,0.26,0.265,0.27,0.275,0.28,0.285,0.29,0.295,0.3,0.305,0.31,0.315,0.32,0.325,0.33,0.335,0.34,0.345,0.35,0.355,0.36,0.365,0.37,0.375,0.38,0.385,0.39,0.395,0.4,0.405,0.41,0.415,0.42,0.425,0.43,0.435,0.44,0.445,0.45,0.455,0.46,0.465,0.47,0.475,0.48,0.485,0.49,0.495,0.5,0.505,0.51,0.515,0.52,0.525,0.53,0.535,0.54,0.545,0.55,0.555,0.56,0.565,0.57,0.575,0.58,0.585,0.59,0.595,0.6,0.605,0.61,0.615,0.62,0.625,0.63,0.635,0.64,0.645,0.65,0.655,0.66,0.665,0.67,0.675,0.68,0.685,0.69,0.695,0.7,0.705,0.71,0.715,0.72,0.725,0.73,0.735,0.74,0.745,0.75,0.755,0.76,0.765,0.77,0.775,0.78,0.785,0.79,0.795,0.8,0.805,0.81,0.815,0.82,0.825,0.83,0.835,0.84,0.845,0.85,0.855,0.86,0.865,0.87,0.875,0.88,0.885,0.89,0.895,0.9,0.905,0.91,0.915,0.92,0.925,0.93,0.935,0.94,0.945,0.95,0.955,0.96,0.965,0.97,0.975,0.98,0.985,0.99,0.995,0.999,0.9995,0.9999],"values":[4459,5961,7401,8810,10207,11601,12999,14407,15826,17260,18712,20182,21672,23183,24717,26275,27858,29466,31100,32762,34451,36169,37917,39695,41503,43344,45217,47123,49063,51037,53047,55093,57175,59296,61455,63653,65891,68170,70491,72855,75262,77713,80210,82753,85344,87983,90671,93410,96200,99050,101968,104956,108014,111142,114343,117616,120963,124385,127883,131457,135109,138839,142648,146538,150508,154561,158695,162914,167216,171604,176077,180636,185282,190017,194839,199750,204750,209840,215020,220291,225652,231104,236648,242282,248008,253825,259733,265732,271821,278001,284270,290628,297075,303608,310229,316934,323724,330596,337549,344592,351734,358980,366330,373787,381355,389034,396829,404743,412777,420937,429224,437643,446197,454891,463727,472712,481849,491143,500599,510223,520019,529995,540155,550508,561059,571816,582786,593978,605401,617063,628974,641145,653585,666308,679325,692649,706294,720275,734608,749309,764397,779891,795812,812182,829025,846366,864233,882657,901669,921304,941599,962597,984341,1006881,1030268,1054561,1079824,1106127,1133545,1162164,1192077,1223389,1256214,1290682,1326937,1365140,1405475,1448147,1493391,1541473,1592700,1647423,1706050,1769054,1836990,1910512,1990395,2077565,2173142,2277749,2392029,2517521,2656122,2810204,2982770,3177692,3400050,3656660,3956897,4314059,4747701,5287913,5983712,6921158,8267677,10401913,14419108,25949758,106783373,194349285,790803992],"mean_aed":1913345,"median_aed":337549},"roles":[["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Head of Private Banking / Wealth Management",149000,186000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Market Head / Managing Director",132000,154000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Executive Director / Unit Head",85000,110000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Associate Director",71000,88000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Senior Wealth Manager",71000,88000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Wealth Manager",51000,69000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Relationship Manager \u2013 Key Clients",49000,66000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Wealth Management Specialist",38000,50000],["CF","Banking & FS \u2013 Private Banking & Wealth Mgmt","Assistant Relationship Manager \u2013 Support",27000,44000],["CF","Banking & FS \u2013 Corporate Banking","Head of Corporate Banking",96000,146000],["CF","Banking & FS \u2013 Corporate Banking","Head of SME Banking",74000,112000],["CF","Banking & FS \u2013 Corporate Banking","Team Leader \u2013 Corporate Banking",88000,99000],["CF","Banking & FS \u2013 Corporate Banking","Senior Director \u2013 Relationship Management",71000,82000],["CF","Banking & FS \u2013 Corporate Banking","Director \u2013 Relationship Management",53000,69000],["CF","Banking & FS \u2013 Corporate Banking","Relationship Manager",38000,49000],["CF","Banking & FS \u2013 Compliance & Regulation","Chief Compliance Officer (CCO)",102000,125000],["CF","Banking & FS \u2013 Compliance & Regulation","Head of Enforcement",78000,97000],["CF","Banking & FS \u2013 Compliance & Regulation","Head of Compliance",70000,88000],["CF","Banking & FS \u2013 Compliance & Regulation","Head of Financial Crime",61000,73000],["CF","Banking & FS \u2013 Compliance & Regulation","Head of Fraud",56000,69000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance Licensed MLRO (DIFC)",45000,59000],["CF","Banking & FS \u2013 Compliance & Regulation","Senior Manager, Banking Supervisor",50000,57000],["CF","Banking & FS \u2013 Compliance & Regulation","Manager, Banking Supervision",45000,49000],["CF","Banking & FS \u2013 Compliance & Regulation","Financial Crime Manager",42000,48000],["CF","Banking & FS \u2013 Compliance & Regulation","Fraud Manager",39000,45000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance (FATCA specialist)",32000,40000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance Manager",33000,40000],["CF","Banking & FS \u2013 Compliance & Regulation","Sanctions and AML Manager",33000,39000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance Consultant",28000,39000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance Officer \u2013 PB/Wealth/Investment products",23000,29000],["CF","Banking & FS \u2013 Compliance & Regulation","Compliance Officer (KYC, Onboarding, CDD)",16000,23000],["CF","Banking & FS \u2013 Risk","Chief Risk Officer",82000,131000],["CF","Banking & FS \u2013 Risk","Head of Credit Risk",60000,78000],["CF","Banking & FS \u2013 Risk","Head of Collections and Recovery",60000,73000],["CF","Banking & FS \u2013 Risk","Market Risk Head",59000,68000],["CF","Banking & FS \u2013 Risk","Head of Risk Analytics",56000,68000],["CF","Banking & FS \u2013 Risk","Credit Risk Policies Head",57000,67000],["CF","Banking & FS \u2013 Risk","Operational Risk Head",59000,67000],["CF","Banking & FS \u2013 Risk","Credit Risk Policies VP",53000,61000],["CF","Banking & FS \u2013 Risk","Credit Risk Manager",34000,53000],["CF","Banking & FS \u2013 Risk","Operational Risk Manager",38000,46000],["CF","Banking & FS \u2013 Risk","Market Risk Manager",34000,45000],["CF","Banking & FS \u2013 Risk","Risk Analytics Manager",28000,41000],["CF","Banking & FS \u2013 Risk","Enterprise Risk Manager",30000,38000],["CF","Banking & FS \u2013 Risk","Credit Risk Analyst",19000,25000],["CF","Banking & FS \u2013 Risk","Risk Analytics Officer",17000,25000],["CF","Banking & FS \u2013 Risk","Market Risk Analyst",20000,24000],["CF","Banking & FS \u2013 Risk","Credit Risk Portfolio Analyst",17000,23000],["CF","Banking & FS \u2013 Risk","Operational Risk Analyst",17000,21000],["CF","Legal \u2013 Private Practice (Regional firms)","Partner",110000,241000],["CF","Legal \u2013 Private Practice (Regional firms)","Partner",82000,110000],["CF","Legal \u2013 Private Practice (Regional firms)","Counsel",66000,94000],["CF","Legal \u2013 Private Practice (Regional firms)","Senior Associate",49000,76000],["CF","Legal \u2013 Private Practice (Regional firms)","Associate",33000,55000],["CF","Legal \u2013 Private Practice (Regional firms)","Newly Qualified",22000,39000],["CF","Legal \u2013 Private Practice (Regional firms)","Paralegal",16000,27000],["CF","Legal \u2013 Private Practice (Regional firms)","Legal Secretary",14000,22000],["CF","Legal \u2013 Private Practice (US & UK firms)","Partner",132000,275000],["CF","Legal \u2013 Private Practice (US & UK firms)","Partner",88000,132000],["CF","Legal \u2013 Private Practice (US & UK firms)","Counsel",82000,110000],["CF","Legal \u2013 Private Practice (US & UK firms)","Senior Associate",55000,82000],["CF","Legal \u2013 Private Practice (US & UK firms)","Associate",44000,66000],["CF","Legal \u2013 Private Practice (US & UK firms)","Newly Qualified",27000,44000],["CF","Legal \u2013 Private Practice (US & UK firms)","Paralegal",19000,33000],["CF","Legal \u2013 Private Practice (US & UK firms)","Legal Secretary",16000,27000],["CF","Legal \u2013 In-house","Chief Legal Officer",92000,132000],["CF","Legal \u2013 In-house","General Counsel / Head of Legal",75000,105000],["CF","Legal \u2013 In-house","Legal Director",65000,80000],["CF","Legal \u2013 In-house","Senior Legal Counsel / Legal Manager",51000,67000],["CF","Legal \u2013 In-house","Legal Counsel",39000,49000],["CF","Legal \u2013 In-house","Legal Specialist",25000,35000],["CF","Technology \u2013 Industry","Chief Digital Officer",99000,132000],["CF","Technology \u2013 Industry","Chief Information & Technology Officer",99000,120000],["CF","Technology \u2013 Industry","Chief Information Security Officer (CISO)",88000,99000],["CF","Technology \u2013 Industry","Chief Product Officer",76000,99000],["CF","Technology \u2013 Industry","Head of Digital Factory",79000,91000],["CF","Technology \u2013 Industry","Product Director",79000,91000],["CF","Technology \u2013 Industry","VP of Digital Transformation",71000,88000],["CF","Technology \u2013 Industry","Data Governance Director",74000,85000],["CF","Technology \u2013 Industry","Head of Data Science",66000,82000],["CF","Technology \u2013 Industry","IT Director",66000,76000],["CF","Technology \u2013 Industry","Director of Analytics",61000,76000],["CF","Technology \u2013 Industry","Lead Enterprise Architect",59000,76000],["CF","Technology \u2013 Industry","Program Director",64000,74000],["CF","Technology \u2013 Industry","Head of Digital",56000,72000],["CF","Technology \u2013 Industry","Head of Cloud Business Unit",55000,71000],["CF","Technology \u2013 Industry","Digital Transformation Manager",59000,69000],["CF","Technology \u2013 Industry","Cyber Security Manager",53000,64000],["CF","Technology \u2013 Industry","Enterprise Architect",38000,59000],["CF","Technology \u2013 Industry","Data Architect",48000,59000],["CF","Technology \u2013 Industry","Data Scientist",44000,55000],["CF","Technology \u2013 Industry","Cloud Security Architect",42000,55000],["CF","Technology \u2013 Industry","Cyber Security Architect",44000,55000],["CF","Technology \u2013 Industry","IT Project Manager",39000,55000],["CF","Technology \u2013 Industry","Program Manager",43000,53000],["CF","Technology \u2013 Industry","SOC Manager",39000,50000],["CF","Technology \u2013 Industry","Head of IT / IT Manager",39000,49000],["CF","Technology \u2013 Industry","AI/ML Engineer",33000,49000],["CF","Technology \u2013 Industry","IT Infrastructure Manager",39000,49000],["CF","Technology \u2013 Industry","DevOps Manager",39000,48000],["CF","Technology \u2013 Industry","Product Manager",36000,45000],["CF","Technology \u2013 Industry","Data Engineer",27000,44000],["CF","Technology \u2013 Industry","Data Analyst",27000,44000],["CF","Technology \u2013 Industry","Cloud Product Manager",34000,44000],["CF","Technology \u2013 Industry","Service Delivery Manager",32000,43000],["CF","Technology \u2013 Industry","Cloud Architect",31000,39000],["CF","Technology \u2013 Industry","UX / UI Designer",22000,34000],["CF","Technology \u2013 Industry","DevOps Engineer",23000,30000],["CF","Technology \u2013 Industry","Cloud Engineer",24000,30000],["CF","Technology \u2013 Industry","Business Continuity & DR Engineer",20000,24000],["CF","Technology \u2013 Industry","Network Manager",20000,24000],["CF","Technology \u2013 Industry","Network Engineer",14000,20000],["CF","Technology \u2013 Start-up","Chief Product & Technology Officer",80000,110000],["CF","Technology \u2013 Start-up","Head of Product",45000,70000],["CF","Technology \u2013 Start-up","Head of Engineering",45000,70000],["CF","Technology \u2013 Start-up","Technical Lead",35000,50000],["CF","Technology \u2013 Start-up","Product Manager",35000,45000],["CF","Technology \u2013 Start-up","Product Owner",35000,45000],["CF","Technology \u2013 Start-up","Security Architect",35000,45000],["CF","Technology \u2013 Start-up","Data Scientist",30000,40000],["CF","Technology \u2013 Start-up","Security Engineer",30000,40000],["CF","Technology \u2013 Start-up","Software Engineer \u2013 Full Stack",25000,35000],["CF","Technology \u2013 Start-up","Frontend Developer",25000,35000],["CF","Technology \u2013 Start-up","Backend Developer",25000,35000],["CF","Technology \u2013 Start-up","Software QA Engineer",25000,35000],["CF","Technology \u2013 Start-up","Data Engineer",25000,35000],["CF","Technology \u2013 Start-up","DevOps Engineer",25000,35000],["CF","Technology \u2013 Start-up","Business Analyst",25000,33000],["CF","Technology \u2013 Start-up","Cloud Engineer",25000,33000],["CF","Technology \u2013 Start-up","Security Analyst",20000,30000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Partner",91000,117000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Director",52000,75000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Senior Manager",36000,48000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Manager",29000,35000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Senior Consultant",22000,28000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Consultant",17000,21000],["CF","Technology \u2013 Consulting (Cloud Eng. & Advisory)","Business Analyst",11000,16000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Partner",91000,117000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Director",61000,71000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Senior Manager",40000,49000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Manager",31000,37000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Senior Consultant",21000,26000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Consultant",16000,20000],["CF","Technology \u2013 Consulting (Digital Strategy & Data Analytics)","Business Analyst",11000,15000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Partner",91000,117000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Director",57000,64000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Senior Manager",44000,51000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Manager",33000,39000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Senior Consultant",19000,26000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Consultant",15000,19000],["CF","Technology \u2013 Consulting (Cyber Security, IT Audit & Risk)","Business Analyst",11000,15000],["CF","Technology \u2013 Vendors","Vice President of Sales",82000,110000],["CF","Technology \u2013 Vendors","Country Manager / Regional Sales Director",66000,76000],["CF","Technology \u2013 Vendors","Pre-Sales Director",48000,55000],["CF","Technology \u2013 Vendors","Professional Services Director",46000,52000],["CF","Technology \u2013 Vendors","Sales Manager / RSM",39000,52000],["CF","Technology \u2013 Vendors","Pre-Sales Manager",33000,42000],["CF","Technology \u2013 Vendors","Territory / Regional Sales Manager",31000,42000],["CF","Technology \u2013 Vendors","Customer Success Manager / TAM",27000,39000],["CF","Technology \u2013 Vendors","Pre-Sales Engineer",26000,31000],["CF","Technology \u2013 Vendors","Inside Sales Manager",25000,30000],["CF","Technology \u2013 Vendors","Inside Sales Representative",16000,23000],["CF","Technology \u2013 Telecommunications","Chief Commercial Officer / VP of Sales",99000,120000],["CF","Technology \u2013 Telecommunications","CTO / CIO",76000,99000],["CF","Technology \u2013 Telecommunications","Country Head / GM / Sales Director",66000,88000],["CF","Technology \u2013 Telecommunications","VP of Customer Experience",66000,76000],["CF","Technology \u2013 Telecommunications","Head of Digital Development",44000,66000],["CF","Technology \u2013 Telecommunications","Regional Sales Manager / Account Director",42000,55000],["CF","Technology \u2013 Telecommunications","Solutions Architect",36000,49000],["CF","Technology \u2013 Telecommunications","Enterprise Sales / Territory Sales / Account Manager",31000,42000],["CF","Technology \u2013 Telecommunications","Pre-Sales Manager",28000,39000],["CF","Technology \u2013 Telecommunications","Customer Project Manager",31000,38000],["CF","Technology \u2013 Telecommunications","Pre-Sales Engineer",28000,36000],["CF","Technology \u2013 Telecommunications","RF / IBS Engineer",21000,30000],["CF","Human Resources","Chief Shared Services Officer (CSSO)",109600,177000],["CF","Human Resources","Chief Human Resources Officer (CHRO)",109600,165000],["CF","Human Resources","Vice President Human Resources",87300,139000],["CF","Human Resources","Executive Director Support Services",81900,125000],["CF","Human Resources","Executive Director Human Resources",78400,113000],["CF","Human Resources","Director Support Services",65900,94000],["CF","Human Resources","HR Director",58000,92000],["CF","Human Resources","Culture and Change Director",45000,78000],["CF","Human Resources","Director/Head of Organisational Development",43700,76000],["CF","Human Resources","Director/Head of Talent Acquisition",43700,75000],["CF","Human Resources","Director/Head of Talent Management",43700,73000],["CF","Human Resources","Director/Head of Learning & Development",43700,69000],["CF","Human Resources","HR Business Partner",33000,59000],["CF","Human Resources","Organisational Development Manager",32000,48000],["CF","Human Resources","HR Manager",33000,45000],["CF","Human Resources","Compensation & Benefits / Total Rewards Manager",27700,42000],["CF","Human Resources","Learning & Development Manager",27700,39000],["CF","Human Resources","Talent Acquisition Manager",22400,38000],["CF","Human Resources","Training Manager",22400,36000],["CF","Human Resources","Recruitment Manager",20300,31000],["CF","Human Resources","Employee Relations Manager",20300,29000],["CF","Human Resources","Organisational Development Specialist",19100,26000],["CF","Human Resources","Learning & Development Specialist",16000,23000],["CF","Human Resources","Talent Acquisition Specialist",16000,21000],["CF","Human Resources","HR Generalist",16000,21000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Group Chief Financial Officer",102000,153000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Chief Internal Auditor",87000,132000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Chief Financial Officer",81000,122000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Internal Audit Director",61000,81000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Financial Director",56000,73000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Treasury Director",53000,69000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Financial Controller",46000,63000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","FP&A Director",43000,56000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","FP&A Manager",33000,46000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Treasury Manager",36000,46000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Internal Audit Manager",31000,41000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Finance Manager",29000,37000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Reporting Manager",25000,36000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Budgeting Manager",20000,31000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Chief Accountant",15000,23000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Finance / Business Analyst",10000,18000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Credit Manager",12000,18000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Internal Auditor",11000,16000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Management Accountant",9000,15000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","Financial Accountant",8000,13000],["CF","Finance (Senior) \u2013 Large Local Groups / MNCs","AP/AR Accountant",4000,10000],["CF","Finance (Senior) \u2013 SME","Chief Financial Officer",61000,92000],["CF","Finance (Senior) \u2013 SME","Internal Audit Director",63000,81000],["CF","Finance (Senior) \u2013 SME","Financial Director",66000,81000],["CF","Finance (Senior) \u2013 SME","Treasury Director",56000,71000],["CF","Finance (Senior) \u2013 SME","Financial Controller",51000,66000],["CF","Finance (Senior) \u2013 SME","FP&A Director",36000,51000],["CF","Finance (Senior) \u2013 SME","FP&A Manager",32000,46000],["CF","Finance (Senior) \u2013 SME","Treasury Manager",31000,41000],["CF","Finance (Senior) \u2013 SME","Internal Audit Manager",25000,37000],["CF","Finance (Senior) \u2013 SME","Finance Manager",25000,36000],["CF","Finance (Senior) \u2013 SME","Reporting Manager",24000,36000],["CF","Finance (Senior) \u2013 SME","Budgeting Manager",18000,27000],["CF","Finance (Senior) \u2013 SME","Chief Accountant",15000,23000],["CF","Finance (Senior) \u2013 SME","Finance / Business Analyst",12000,18000],["CF","Finance (Senior) \u2013 SME","Credit Manager",10000,18000],["CF","Finance (Senior) \u2013 SME","Internal Auditor",11000,16000],["CF","Finance (Senior) \u2013 SME","Management Accountant",8000,13000],["CF","Finance (Senior) \u2013 SME","Financial Accountant",6000,12000],["CF","Finance (Senior) \u2013 SME","AP/AR Accountant",4000,10000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Chief Sales Officer / Chief Revenue Officer",78000,110000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","General Manager",62000,79000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Commercial Director",59000,72000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","VP of Sales",55000,69000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Sales Director",47000,62000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Country Sales Manager",41000,51000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","E-commerce Manager",26000,38000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Sales Manager",23000,34000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","BD Manager",26000,34000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Key Account Manager",17000,25000],["CF","Sales & Marketing \u2013 Consumer (B2C) Sales","Key Account Executive",8000,16000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Chief Marketing Officer (CMO)",85000,120000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Communications Director",60000,74000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","VP of Marketing Strategy",60000,72000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Marketing Director",59000,72000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Head of Advertising",48000,58000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Marketing Manager",38000,48000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Digital Marketing Manager",30000,43000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Communications Manager",30000,41000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Consumer Insight Manager",23000,34000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","CRM / Marketing Automation Manager",28000,32000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Trade Marketing Manager",21000,30000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","PR Manager",19000,27000],["CF","Sales & Marketing \u2013 Consumer (B2C) Marketing","Brand Manager / Regional",19000,26000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Chief Sales Officer (CSO)",85000,120000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","General Manager",55000,79000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Regional Sales Director",51000,66000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Country Sales Manager",41000,51000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Regional Sales Manager",38000,48000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Project Sales Manager",26000,38000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Business Development Manager",26000,34000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Key Account Manager / Area Sales Manager",19000,26000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Pre-sales Manager",17000,24000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Sales Engineer / Specification Specialist",13000,23000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Account Manager",16000,22000],["CF","Sales & Marketing \u2013 Industrial (B2B) Sales","Business Development Executive",10000,16000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Chief Marketing Officer (CMO)",75000,120000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","VP of Marketing Strategy",60000,72000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Regional Head of Product",43000,53000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Marketing Manager / Group Product Manager",38000,47000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Regional Communications Manager",30000,41000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","CRM / Marketing Automation Manager",29000,37000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Marketing Research Manager",26000,33000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Manager \u2013 Sales Analytics",26000,32000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Category Manager",23000,31000],["CF","Sales & Marketing \u2013 Industrial (B2B) Marketing","Regional PR",19000,27000],["CF","Real Estate \u2013 Development & Design","Chief Development Officer",132000,263000],["CF","Real Estate \u2013 Development & Design","Executive Director of Development",88000,165000],["CF","Real Estate \u2013 Development & Design","Executive Director of Design",79000,127000],["CF","Real Estate \u2013 Development & Design","Director of Development",55000,94000],["CF","Real Estate \u2013 Development & Design","Director of Design",55000,94000],["CF","Real Estate \u2013 Development & Design","Director of Urban Planning",55000,94000],["CF","Real Estate \u2013 Development & Design","Senior Development Manager",43000,72000],["CF","Real Estate \u2013 Development & Design","Senior Design Manager",40000,67000],["CF","Real Estate \u2013 Development & Design","Senior Urban Planning Manager",39000,64000],["CF","Real Estate \u2013 Development & Design","Design Manager",27000,57000],["CF","Real Estate \u2013 Development & Design","Development Manager",27000,57000],["CF","Real Estate \u2013 Development & Design","Urban Planning Manager",27000,48000],["CF","Real Estate \u2013 Development & Design","GIS Manager",27000,45000],["CF","Real Estate \u2013 ESG","Head of Sustainability",37000,54000],["CF","Real Estate \u2013 ESG","Senior Environmental Manager",37000,52000],["CF","Real Estate \u2013 ESG","Environmental Manager",31000,47000],["CF","Real Estate \u2013 ESG","Sustainability Manager",22000,39000],["CF","Real Estate \u2013 Construction & Project Mgmt","Chief Projects Officer",107000,224000],["CF","Real Estate \u2013 Construction & Project Mgmt","Programme Director",78000,133000],["CF","Real Estate \u2013 Construction & Project Mgmt","Executive Director of Project Delivery",76000,131000],["CF","Real Estate \u2013 Construction & Project Mgmt","Director of Infrastructure",64000,92000],["CF","Real Estate \u2013 Construction & Project Mgmt","Commercial Director",64000,91000],["CF","Real Estate \u2013 Construction & Project Mgmt","Procurement Director",55000,89000],["CF","Real Estate \u2013 Construction & Project Mgmt","Director of Project Controls",63000,83000],["CF","Real Estate \u2013 Construction & Project Mgmt","Project Director",55000,78000],["CF","Real Estate \u2013 Construction & Project Mgmt","Director of Construction",55000,76000],["CF","Real Estate \u2013 Construction & Project Mgmt","Bid Director",55000,68000],["CF","Real Estate \u2013 Construction & Project Mgmt","MEP Director",47000,68000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Project Manager",39000,55000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Commercial Manager",38000,55000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Procurement Manager",39000,55000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Bid Manager",31000,55000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Manager of Project Controls",38000,54000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Claims Manager",37000,54000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior Contracts Manager",37000,52000],["CF","Real Estate \u2013 Construction & Project Mgmt","Senior MEP Manager",31000,47000],["CF","Real Estate \u2013 Construction & Project Mgmt","Project Manager",22000,39000],["CF","Real Estate \u2013 Construction & Project Mgmt","Construction Manager",22000,39000],["CF","Real Estate \u2013 Construction & Project Mgmt","Procurement Manager",25000,39000],["CF","Real Estate \u2013 Construction & Project Mgmt","Commercial Manager",21000,38000],["CF","Real Estate \u2013 Construction & Project Mgmt","Project Controls Manager",21000,37000],["CF","Real Estate \u2013 Construction & Project Mgmt","Contracts Manager",19000,37000],["CF","Real Estate \u2013 Construction & Project Mgmt","Claims Manager",21000,37000],["CF","Real Estate \u2013 Construction & Project Mgmt","Bid Manager",19000,31000],["CF","Real Estate \u2013 Construction & Project Mgmt","MEP Manager",17000,30000],["CF","Real Estate \u2013 Sales & Post Construction","Chief Commercial Officer",99000,152000],["CF","Real Estate \u2013 Sales & Post Construction","Executive Director of Sales",82000,120000],["CF","Real Estate \u2013 Sales & Post Construction","Executive Director of Asset Management",82000,110000],["CF","Real Estate \u2013 Sales & Post Construction","Executive Director Facilities Management",64000,101000],["CF","Real Estate \u2013 Sales & Post Construction","Director of Asset Management",66000,88000],["CF","Real Estate \u2013 Sales & Post Construction","Director of Sales",61000,82000],["CF","Real Estate \u2013 Sales & Post Construction","Director of Leasing",49000,76000],["CF","Real Estate \u2013 Sales & Post Construction","Senior Asset Manager",55000,71000],["CF","Real Estate \u2013 Sales & Post Construction","Director of Facilities",39000,61000],["CF","Real Estate \u2013 Sales & Post Construction","Asset Manager",27000,44000],["CF","Real Estate \u2013 Sales & Post Construction","Property Manager",22000,44000],["CF","Real Estate \u2013 Sales & Post Construction","Facilities Manager",22000,44000],["CF","Real Estate \u2013 Sales & Post Construction","Leasing Manager",22000,39000],["CF","Real Estate \u2013 Sales & Post Construction","Sales Manager",22000,39000],["CF","Manufacturing","Managing Director",103000,142000],["CF","Manufacturing","Operations Director",84000,120000],["CF","Manufacturing","Chief Production Officer",71000,88000],["CF","Manufacturing","General Manager",59000,82000],["CF","Manufacturing","Head of R&D",37000,49000],["CF","Manufacturing","Operations Manager",30000,46000],["CF","Manufacturing","Plant/Factory/Manufacturing Manager",30000,44000],["CF","Manufacturing","Production Manager",30000,39000],["CF","Manufacturing","Process Development Manager",25000,38000],["CF","Manufacturing","HSE Manager",24000,36000],["CF","Manufacturing","Quality Manager (QA & QC)",26000,33000],["CF","Manufacturing","Maintenance Manager",22000,33000],["CF","Manufacturing","Process Innovation Manager",21000,32000],["CF","Manufacturing","Master Black Belt",19000,31000],["CF","Manufacturing","Continuous Improvement Manager",20000,31000],["CF","Manufacturing","Lean Six Sigma Black Belt",16000,23000],["CF","Manufacturing","HSE Engineer",14000,20000],["CF","Manufacturing","Production Supervisor",10000,19000],["CF","Manufacturing","Quality Engineer (QA & QC)",13000,16000],["CF","Manufacturing","Civil Engineer",8000,16000],["CF","Manufacturing","Design Engineer",8000,16000],["CF","Manufacturing","Process Engineer",11000,15000],["CF","Manufacturing","Manufacturing Engineer",11000,15000],["CF","Manufacturing","Maintenance Engineer",9000,14000],["CF","Manufacturing","Electrical Engineer",9000,14000],["CF","Manufacturing","Mechanical Engineer",9000,13000],["CF","Supply Chain","General Manager",64000,99000],["CF","Supply Chain","Procurement Director",51000,74000],["CF","Supply Chain","Supply Chain Director",49000,71000],["CF","Supply Chain","Project Procurement Manager",32000,43000],["CF","Supply Chain","Corporate Procurement Manager",32000,43000],["CF","Supply Chain","Supply Chain Manager",25000,41000],["CF","Supply Chain","Trade Compliance Manager",20000,40000],["CF","Supply Chain","Operations Manager",21000,39000],["CF","Supply Chain","Contracts Manager",26000,32000],["CF","Supply Chain","Category Manager",24000,28000],["CF","Supply Chain","Demand/Supply Planning Manager",22000,27000],["CF","Supply Chain","Logistics Manager",16000,27000],["CF","Supply Chain","Bid Manager",19000,27000],["CF","Supply Chain","Materials Manager",16000,26000],["CF","Supply Chain","Senior Contracts Engineer",15000,24000],["CF","Supply Chain","Warehouse Manager",15000,21000],["CF","Supply Chain","Demand/Supply Planner",10000,16000],["CF","Supply Chain","Materials Engineer",9000,14000],["CF","Supply Chain","Buyer",10000,14000],["CF","Supply Chain","Warehouse Supervisor",8000,13000],["CF","Advisory \u2013 Audit","Partner",94000,132000],["CF","Advisory \u2013 Audit","Partner",66000,88000],["CF","Advisory \u2013 Audit","Director",44000,55000],["CF","Advisory \u2013 Audit","Senior Manager",36000,41000],["CF","Advisory \u2013 Audit","Manager",24000,33000],["CF","Advisory \u2013 Audit","Assistant Manager",20000,24000],["CF","Advisory \u2013 Audit","Senior Associate",14000,19000],["CF","Advisory \u2013 Audit","Associate",8000,13000],["CF","Advisory \u2013 Risk Consulting","Partner",110000,165000],["CF","Advisory \u2013 Risk Consulting","Partner",82000,110000],["CF","Advisory \u2013 Risk Consulting","Director",55000,71000],["CF","Advisory \u2013 Risk Consulting","Senior Manager",40000,49000],["CF","Advisory \u2013 Risk Consulting","Manager",31000,39000],["CF","Advisory \u2013 Risk Consulting","Assistant Manager",25000,30000],["CF","Advisory \u2013 Risk Consulting","Senior Associate",17000,24000],["CF","Advisory \u2013 Risk Consulting","Associate",13000,16000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Partner",120000,181000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Partner",88000,110000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Director",57000,76000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Senior Manager",40000,55000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Manager",31000,39000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Assistant Manager",26000,31000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Senior Associate",18000,24000],["CF","Advisory \u2013 Deal Advisory & Transaction Services","Associate",14000,17000],["CF","Strategy \u2013 Industry (in-house)","Chief Strategy Officer",110000,137000],["CF","Strategy \u2013 Industry (in-house)","Strategy Director",66000,91000],["CF","Strategy \u2013 Industry (in-house)","Senior Strategy Manager",51000,64000],["CF","Strategy \u2013 Industry (in-house)","Strategy Manager",33000,48000],["CF","Strategy \u2013 Industry (in-house)","Strategy Analyst",19000,24000],["CF","Strategy \u2013 Tier 1 & 2 Firms","Partner",132000,132000],["CF","Strategy \u2013 Tier 1 & 2 Firms","Principal",78000,95000],["CF","Strategy \u2013 Tier 1 & 2 Firms","Engagement Manager",61000,75000],["CF","Strategy \u2013 Tier 1 & 2 Firms","Associate",44000,59000],["CF","Strategy \u2013 Tier 1 & 2 Firms","Business Analyst",23000,29000],["CF","Strategy \u2013 Management Consulting","Partner",164000,164000],["CF","Strategy \u2013 Management Consulting","Partner",99000,120000],["CF","Strategy \u2013 Management Consulting","Director",59000,79000],["CF","Strategy \u2013 Management Consulting","Senior Manager",42000,53000],["CF","Strategy \u2013 Management Consulting","Manager",29000,40000],["CF","Strategy \u2013 Management Consulting","Senior Consultant",22000,26000],["CF","Strategy \u2013 Management Consulting","Consultant",14000,20000],["CF","Public Sector","Undersecretary",137000,191000],["CF","Public Sector","Assistant Undersecretary",99000,142000],["CF","Public Sector","Chief Economist",88000,132000],["CF","Public Sector","Chief Programs Officer",88000,132000],["CF","Public Sector","Chief Innovation Officer",88000,132000],["CF","Public Sector","International Subject Matter Expert / Advisor",66000,88000],["CF","Public Sector","Public Policy Director",66000,88000],["CF","Public Sector","Director of Shared Services",66000,88000],["CF","Public Sector","Principal/Senior Economist",44000,66000],["CF","Public Sector","Policy Specialist",28000,44000],["CF","Public Sector","Economist",22000,33000],["CF","Investment Mgmt \u2013 Private Sector","Chief Investment Officer",88000,165000],["CF","Investment Mgmt \u2013 Private Sector","Head of Investments / Investment Director",82000,120000],["CF","Investment Mgmt \u2013 Private Sector","Vice President",66000,88000],["CF","Investment Mgmt \u2013 Private Sector","Investment Manager",47000,71000],["CF","Investment Mgmt \u2013 Private Sector","Investment Senior Associate",42000,59000],["CF","Investment Mgmt \u2013 Private Sector","Investment Associate",25000,39000],["CF","Investment Mgmt \u2013 Private Sector","Investment Analyst",13000,25000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Chief Investment Officer",137000,208000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Head of Investments / Investment Director",88000,155000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Vice President",82000,115000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Investment Manager",66000,94000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Investment Senior Associate",55000,76000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Investment Associate",44000,61000],["CF","Investment Mgmt \u2013 Public Sector (SWF/govt)","Investment Analyst",33000,44000],["CF","Investment Mgmt \u2013 Asset Management","Head of Equities",82000,120000],["CF","Investment Mgmt \u2013 Asset Management","Head of Fixed Income",73000,120000],["CF","Investment Mgmt \u2013 Asset Management","Head of Business Development",76000,105000],["CF","Investment Mgmt \u2013 Asset Management","Head of Real Estate",66000,99000],["CF","Investment Mgmt \u2013 Asset Management","Senior Fund/Portfolio Manager",53000,74000],["CF","Investment Mgmt \u2013 Asset Management","Business Development Senior Manager",49000,71000],["CF","Investment Mgmt \u2013 Asset Management","Business Development Manager",36000,55000],["CF","Investment Mgmt \u2013 Asset Management","Fund/Portfolio Manager",37000,51000],["CF","Investment Mgmt \u2013 Asset Management","Investment Associate",27000,37000],["CF","Investment Mgmt \u2013 Asset Management","Investment Analyst",13000,22000],["CF","Investment Mgmt \u2013 Investment Banking","Managing Director",99000,157000],["CF","Investment Mgmt \u2013 Investment Banking","Senior Director",82000,131000],["CF","Investment Mgmt \u2013 Investment Banking","Director",68000,89000],["CF","Investment Mgmt \u2013 Investment Banking","Vice President",44000,73000],["CF","Investment Mgmt \u2013 Investment Banking","Associate",25000,43000],["CF","Investment Mgmt \u2013 Investment Banking","Analyst",16000,27000],["RH","Finance & Accounting \u2013 Corporate","Chief Financial Officer",60596,102524],["RH","Finance & Accounting \u2013 Corporate","Chief Financial Officer",70084,150955],["RH","Finance & Accounting \u2013 Corporate","Finance Director",48355,72838],["RH","Finance & Accounting \u2013 Corporate","Finance Director",60596,90588],["RH","Finance & Accounting \u2013 Corporate","Financial Controller",25019,51262],["RH","Finance & Accounting \u2013 Corporate","Financial Controller",30298,59984],["RH","Finance & Accounting \u2013 Corporate","Chief Accountant",20505,34277],["RH","Finance & Accounting \u2013 Corporate","Chief Accountant",24483,39479],["RH","Finance & Accounting \u2013 Corporate","FP&A Director",45065,53098],["RH","Finance & Accounting \u2013 Corporate","FP&A Director",50497,81101],["RH","Finance & Accounting \u2013 Corporate","FP&A Manager",29992,40015],["RH","Finance & Accounting \u2013 Corporate","FP&A Manager",29992,43458],["RH","Finance & Accounting \u2013 Corporate","Treasurer Director",51109,70313],["RH","Finance & Accounting \u2013 Corporate","Treasurer Director",60061,92425],["RH","Finance & Accounting \u2013 Corporate","Treasurer",42999,53022],["RH","Finance & Accounting \u2013 Corporate","Treasurer",52333,68018],["RH","Finance & Accounting \u2013 Corporate","Finance Manager",20199,35195],["RH","Finance & Accounting \u2013 Corporate","Finance Manager",25095,50191],["RH","Finance & Accounting \u2013 Corporate","Tax Director",50038,60290],["RH","Finance & Accounting \u2013 Corporate","Tax Director",59984,91200],["RH","Finance & Accounting \u2013 Corporate","Tax Manager",24866,35807],["RH","Finance & Accounting \u2013 Corporate","Tax Manager",29380,40091],["RH","Finance & Accounting \u2013 Operations","Financial Analyst",14690,25095],["RH","Finance & Accounting \u2013 Operations","Financial Analyst",20505,33052],["RH","Finance & Accounting \u2013 Operations","Compliance Director",32440,53863],["RH","Finance & Accounting \u2013 Operations","Compliance Director",37031,71614],["RH","Finance & Accounting \u2013 Operations","Compliance Manager",24636,31293],["RH","Finance & Accounting \u2013 Operations","Compliance Manager",31140,35577],["RH","Finance & Accounting \u2013 Operations","Chief/Head of Internal Audit",56159,70313],["RH","Finance & Accounting \u2013 Operations","Chief/Head of Internal Audit",80030,97168],["RH","Finance & Accounting \u2013 Operations","Audit Manager",25401,40091],["RH","Finance & Accounting \u2013 Operations","Audit Manager",35501,60290],["RH","Finance & Accounting \u2013 Operations","Senior Internal Auditor",20811,26320],["RH","Finance & Accounting \u2013 Operations","Senior Internal Auditor",24636,32440],["RH","Finance & Accounting \u2013 Operations","Internal Auditor",17750,23871],["RH","Finance & Accounting \u2013 Operations","Internal Auditor",19281,26932],["RH","Finance & Accounting \u2013 Operations","Management Accountant",24254,34583],["RH","Finance & Accounting \u2013 Operations","Management Accountant",23030,36113],["RH","Finance & Accounting \u2013 Operations","Credit Manager",21193,31216],["RH","Finance & Accounting \u2013 Operations","Credit Manager",30298,49273],["RH","Finance & Accounting \u2013 Operations","Credit Controller",14613,19893],["RH","Finance & Accounting \u2013 Operations","Credit Controller",16373,22953],["RH","Finance & Accounting \u2013 Operations","General Ledger Accountant",12854,23489],["RH","Finance & Accounting \u2013 Operations","General Ledger Accountant",17750,28003],["RH","Finance & Accounting \u2013 Operations","AP/AR Manager",18975,28768],["RH","Finance & Accounting \u2013 Operations","AP/AR Manager",22188,32134],["RH","Finance & Accounting \u2013 Operations","AP/AR Accountant",9028,18056],["RH","Finance & Accounting \u2013 Operations","AP/AR Accountant",10711,23871],["RH","Financial Services \u2013 PE & Asset Management","Director",64269,89364],["RH","Financial Services \u2013 PE & Asset Management","Vice President",41316,58990],["RH","Financial Services \u2013 PE & Asset Management","Senior Associate",33052,47207],["RH","Financial Services \u2013 PE & Asset Management","Associate",25937,35348],["RH","Financial Services \u2013 PE & Asset Management","Analyst",21193,29533],["RH","Financial Services \u2013 GRC","Chief Risk Officer",76510,102524],["RH","Financial Services \u2013 GRC","Head of Risk Management",70772,94261],["RH","Financial Services \u2013 GRC","Head of Compliance",58990,76663],["RH","Financial Services \u2013 GRC","Compliance Manager & MLRO",41316,64804],["RH","Financial Services \u2013 GRC","Compliance Officer",21193,29457],["RH","Financial Services \u2013 GRC","Compliance Officer",27161,35348],["RH","Financial Services \u2013 GRC","Anti-Money Laundering Specialist",18898,25937],["RH","Financial Services \u2013 GRC","KYC/CDD Manager",23565,29303],["RH","Financial Services \u2013 GRC","KYC/CDD Officer",16450,21193],["RH","Financial Services \u2013 GRC","Credit Risk Manager",41316,58990],["RH","Financial Services \u2013 GRC","Operational Risk Manager",35348,47130],["RH","Financial Services \u2013 GRC","Risk Analyst",29457,37720],["RH","Financial Services \u2013 F&A","Chief Financial Officer",63274,104131],["RH","Financial Services \u2013 F&A","Finance Director",53022,79035],["RH","Financial Services \u2013 F&A","Financial Controller",28615,40015],["RH","Financial Services \u2013 Global Markets","Head of Trading / Portfolio Management",67329,100994],["RH","Financial Services \u2013 Global Markets","Head of FX Sales",67329,100994],["RH","Financial Services \u2013 Global Markets","FX Sales Manager",61208,82631],["RH","Financial Services \u2013 Global Markets","Senior Portfolio Manager",36725,45906],["RH","Financial Services \u2013 Global Markets","FX Sales",36725,45906],["RH","Financial Services \u2013 Global Markets","Portfolio Manager",30604,39785],["RH","Financial Services \u2013 Global Markets","FX Broker",30604,39785],["RH","Financial Services \u2013 Global Markets","Analyst",21423,26014],["RH","Technology \u2013 Leadership","Chief Technology Officer (CTO)",65569,124559],["RH","Technology \u2013 Leadership","Chief Information Officer (CIO)",64269,122952],["RH","Technology \u2013 Leadership","Chief Digital Officer",57918,97627],["RH","Technology \u2013 Leadership","Chief Information Security Officer (CISO)",55700,79647],["RH","Technology \u2013 Leadership","Chief Architect",50038,71461],["RH","Technology \u2013 Leadership","IT Manager",32440,60290],["RH","Technology \u2013 Leadership","IT Manager",28309,38102],["RH","Technology \u2013 IT Security","Security Engineer",25401,40780],["RH","Technology \u2013 IT Security","Security Analyst",18056,37031],["RH","Technology \u2013 Support","IT Support Manager",24483,39709],["RH","Technology \u2013 Support","Techno-Functional Consultant",22341,37796],["RH","Technology \u2013 Support","Applications Support",14996,31828],["RH","Technology \u2013 Support","IT Administrator",13160,30910],["RH","Technology \u2013 Software Development","Development Manager",28156,51721],["RH","Technology \u2013 Software Development","Fullstack Developer",18362,49961],["RH","Technology \u2013 Software Development","Back-End Developer",17215,47207],["RH","Technology \u2013 Software Development","Front-End Developer",16450,42310],["RH","Technology \u2013 Project Management","PMO Head",41775,56924],["RH","Technology \u2013 Project Management","Project/Programme Manager",31216,45677],["RH","Technology \u2013 Systems Administration","Technical Support Specialist",17291,30145],["RH","Technology \u2013 Systems Administration","Database Administrator",15991,29686],["RH","Technology \u2013 Systems Administration","Systems Analyst",15149,28538],["RH","Technology \u2013 Systems Administration","Systems Administrator",13466,26779],["RH","Technology \u2013 Architecture","Enterprise Architect",34277,52869],["RH","Technology \u2013 Architecture","Solutions Architect",33741,54628],["RH","Technology \u2013 Network","Network Architect",42846,55623],["RH","Technology \u2013 Network","Network Manager",26779,48202],["RH","Technology \u2013 Network","Network Engineer",19816,33282],["RH","Technology \u2013 Network","Network Administrator",18745,29533],["RH","Legal \u2013 Private Practice","Senior Associate",52027,70390],["RH","Legal \u2013 Private Practice","Associate",27544,52027],["RH","Legal \u2013 Private Practice","Paralegal",15302,29074],["RH","Legal \u2013 In-house","Chief Legal Officer / Head of Legal / General Counsel",70390,110175],["RH","Legal \u2013 In-house","Regional Legal Counsel",53557,84161],["RH","Legal \u2013 In-house","Legal Counsel",45906,55088],["RH","Legal \u2013 In-house","Legal Manager",39785,53557],["RH","Legal \u2013 In-house","Legal Counsel",26014,29074],["RH","Legal \u2013 In-house","Legal Counsel",18362,21423],["RH","Legal \u2013 In-house","Paralegal",18362,22035],["RH","Legal \u2013 In-house","Legal Assistant",16832,22953],["RH","HR \u2013 Leadership","HR Director",72761,122876],["RH","HR \u2013 Leadership","Head of HR",53557,96709],["RH","HR \u2013 Leadership","Regional HR Manager",40857,61208],["RH","HR \u2013 Leadership","HR Manager / HR Business Partner",25554,42157],["RH","HR \u2013 Leadership","Senior HR Officer / Junior HRBP",15302,28079],["RH","HR \u2013 Leadership","HR Officer",9564,20275],["RH","HR \u2013 Recruitment","Head of Recruitment",32134,63963],["RH","HR \u2013 Recruitment","Recruitment Manager",20352,39020],["RH","HR \u2013 Recruitment","Recruitment Specialist",12242,16297],["RH","HR \u2013 L&D","Talent/Organisational Development Manager",32746,67176],["RH","HR \u2013 L&D","Head of Learning and Development",29686,56159],["RH","HR \u2013 L&D","Learning and Development Manager",20275,39020],["RH","HR \u2013 Comp & Benefits","Head of Compensation and Benefits",50497,87528],["RH","HR \u2013 Comp & Benefits","Compensation and Benefits Manager",32670,53557],["RH","HR \u2013 Comp & Benefits","HR Analytics / Rewards Analyst",13925,25248],["RH","Administration","Executive Assistant",21270,34965],["RH","Administration","Office Manager",22494,37031],["RH","Administration","Personal Assistant",15073,22494],["MP","Banking & Financial Services","Head of Wholesale Banking",100000,100000],["MP","Banking & Financial Services","Senior Relationship Manager",37000,37000],["MP","Sales & Marketing","Country Manager",48000,48000],["MP","Sales & Marketing","Key Account Manager",26000,26000],["MP","Marketing","Chief Marketing Officer",90000,90000],["GT","Hospitality","Waiter",500,3000],["GT","Security","Security Guard",1500,2500],["GT","Education","Teacher",2000,9000],["GT","Healthcare","Nurse",3000,6000],["GT","Transport/General services","Driver",2500,4000],["GT","Office support","Receptionist",2000,4500],["GT","Trades","Electrician",1000,3000],["GT","Hospitality/F&B","Chef",2000,4500],["AV","Aviation","Airline Pilot",35100,54840],["AV","Aviation","First Officer / Co-Pilot",24480,38250],["AV","Aviation","Emirates First Officer",30000,60000],["AV","Aviation","Emirates Captain",69580,98750],["AV","Aviation","Etihad First Officer",30000,60000],["AV","Aviation","Etihad Captain",69580,98750],["AV","Aviation","Emirates Cabin Crew (entry)",10800,11300],["AV","Aviation","flydubai Cabin Crew (entry)",8275,12775],["US","Aviation","Flight Attendant",14580,22780],["US","Aviation","Air Traffic Controller",27220,42530],["US","Aviation","Airfield Operations Specialist",21600,33750],["US","Aviation","Aircraft Mechanic",8460,13220],["US","Aviation","Cargo Agent",3600,5630],["US","Healthcare","Doctor (General)",34920,54560],["SA","Healthcare","General Practitioner",25000,45000],["EH","Healthcare","Specialist Physician / Consultant",50000,90000],["SA","Healthcare","Surgeon",50000,90000],["US","Healthcare","Orthopedic Surgeon",65630,102540],["US","Healthcare","Pediatrician",36090,56390],["US","Healthcare","Psychologist",47230,73800],["US","Healthcare","Dentist",35750,55860],["SA","Healthcare","Pharmacist",15000,30000],["US","Healthcare","Physiotherapist",8210,12830],["US","Healthcare","Lab Technician",6300,9840],["EH","Healthcare","Healthcare Administrator",20000,35000],["RF","Healthcare","Staff Nurse (0-3 yrs)",6000,13000],["RF","Healthcare","Senior Nurse (3-6 yrs)",11000,20000],["RF","Healthcare","Charge Nurse / Nursing Supervisor",18000,32000],["RF","Healthcare","Nursing Director",28000,55000],["FH","Healthcare","Registered General Nurse",3400,14000],["FH","Healthcare","ICU Nurse",5500,18000],["FH","Healthcare","ER Nurse",6000,16000],["FH","Healthcare","Operating Theatre Nurse",6000,14000],["FH","Healthcare","Pediatric Nurse",6000,8000],["FH","Healthcare","Neonatal Nurse",5000,19000],["FH","Healthcare","Oncology Nurse",3700,18000],["FH","Healthcare","Cardiac Care Nurse",7800,24000],["FH","Healthcare","Community Health Nurse",13550,21380],["FH","Healthcare","Psychiatric Nurse",6070,21000],["FH","Healthcare","School Nurse",4000,9000],["FH","Healthcare","Home Care Nurse",5000,8000],["FH","Healthcare","Nurse Educator",6670,14810],["FH","Healthcare","Nurse Consultant",18000,28000],["US","Healthcare","Assistant Nurse",3420,5340],["US","Education","Teacher (all-school average)",13140,20530],["TA","Education","English Teacher",2500,17500],["TA","Education","Science Teacher",5000,17500],["US","Education","Primary Teacher (budget school)",5760,9000],["TA","Education","Primary Teacher (premium school)",11000,18580],["TA","Education","Secondary Teacher (under 2 yrs)",5320,8310],["TA","Education","Secondary Teacher (2-5 yrs)",6950,10860],["TA","Education","Vice Principal",17870,27920],["US","Education","Assistant Professor",13320,20810],["US","Education","University Lecturer (PhD)",15300,23910],["US","Education","Professor",20520,32060],["SG","Hospitality","Hotel General Manager (luxury)",35000,60000],["SA","Hospitality","Hotel Manager (mid-scale)",20000,45000],["SG","Hospitality","Front Office Manager",8000,14000],["SG","Hospitality","Assistant Front Office Manager",6000,9000],["SG","Hospitality","Duty Manager",5500,9000],["EH","Hospitality","Front Desk Agent",4000,8000],["SG","Hospitality","Hotel Receptionist",2200,3500],["SG","Hospitality","Telephone Operator",2000,3000],["SG","Hospitality","Reservation Agent",2200,3500],["SG","Hospitality","Reservation Executive",3500,5500],["SG","Hospitality","Reservations Manager",8000,14000],["SG","Hospitality","Concierge",2500,5000],["SG","Hospitality","Head Concierge",4500,7000],["SG","Hospitality","Guest Relations Executive",2500,4500],["SG","Hospitality","F&B Director",16000,28000],["SG","Hospitality","F&B Manager",10000,16000],["SG","Hospitality","Assistant F&B Manager",8000,14000],["SG","Hospitality","Restaurant / Bar Manager (hotel)",6000,10000],["EH","Hospitality","Restaurant Manager (standalone)",12000,20000],["SG","Hospitality","Outlet Manager",5500,8000],["SG","Hospitality","F&B Supervisor",2500,4000],["SG","Hospitality","Banquet Supervisor",2500,4000],["SG","Hospitality","Bartender",2000,3500],["SG","Hospitality","Hostess",1800,2800],["SG","Hospitality","Waiter (hotel, base pay)",1200,2000],["JB","Hospitality","Waiter/Waitress (incl. service charge)",3230,6670],["SG","Hospitality","Busperson / F&B Trainee",800,1200],["JB","Hospitality","Barista",3190,4720],["SG","Hospitality","Executive Chef",13000,25000],["SG","Hospitality","Executive Sous Chef",11000,18000],["SG","Hospitality","Executive Pastry Chef",9000,16000],["SG","Hospitality","Sous Chef",7000,12000],["SG","Hospitality","Chef de Partie",3000,5000],["SG","Hospitality","Demi Chef de Partie",3000,4500],["SG","Hospitality","Commis Chef I",2000,3500],["SG","Hospitality","Commis Chef II/III",1200,2200],["US","Hospitality","Head Chef (standalone restaurant)",11090,17330],["SG","Hospitality","Executive Housekeeper",11000,16000],["SG","Hospitality","Assistant Housekeeping Manager",6000,9000],["SG","Hospitality","Senior Housekeeping Supervisor",3500,5500],["SG","Hospitality","Housekeeping Supervisor",2500,4000],["SG","Hospitality","Room Attendant",1200,2000],["SG","Hospitality","Public Area Attendant",1200,2000],["SG","Hospitality","Linen Attendant",1200,2000],["SG","Hospitality","Laundry Valet",2000,3500],["SG","Hospitality","Laundry Manager",9000,14000],["SG","Hospitality","Spa Therapist",2500,5000],["SG","Hospitality","Spa Manager",7000,12000],["SG","Hospitality","Hotel Sales Executive",4000,7000],["SG","Hospitality","Hotel Sales Manager",8000,16000],["SG","Hospitality","Hotel Marketing Manager",9000,18000],["SG","Hospitality","Hotel HR Officer",4500,7500],["SG","Hospitality","Hotel HR Manager",10000,20000],["SG","Hospitality","Chief Engineer (hotel)",8000,16000],["SG","Hospitality","Maintenance Supervisor",4000,7000],["SA","Hospitality","Tourism Manager",12000,25000],["SA","Hospitality","Front Desk Manager",10000,18000],["EH","Construction & Engineering","Civil Engineer",15000,30000],["US","Construction & Engineering","Mechanical Engineer (junior/site)",3670,5740],["US","Construction & Engineering","Electrical Engineer",14940,23340],["US","Construction & Engineering","Chemical Engineer (junior)",3670,5740],["US","Construction & Engineering","Biomedical Engineer",12020,18790],["JB","Construction & Engineering","Site Engineer",11160,17440],["EH","Construction & Engineering","Site Supervisor",10000,18000],["SA","Construction & Engineering","Quantity Surveyor",15000,30000],["JB","Construction & Engineering","HSE Officer",10250,16020],["EH","Construction & Engineering","Architect",18000,35000],["US","Construction & Engineering","Draftsman",4500,7030],["US","Construction & Engineering","Rigger",5690,8890],["US","Construction & Engineering","Crane Operator",2520,3940],["US","Construction & Engineering","Excavator Operator",2520,3940],["GL","Construction & Engineering","Construction Labourer",2000,3500],["SG","Trades","Electrician (trades)",2200,4000],["SG","Trades","Plumber",2200,4500],["SG","Trades","AC / HVAC Technician",2500,5000],["SG","Trades","General Technician",2000,4000],["JB","Trades","Welder",1800,2360],["BC","Trades","Certified Welder (6G/TIG/MIG)",2500,4000],["BC","Trades","Welder Supervisor",5000,9000],["BC","Trades","Pipe Fitter / MEP Technician",1400,2000],["BC","Trades","Gypsum Carpenter / Fit-out",1300,1800],["JB","Trades","Auto Mechanic",8250,12900],["US","Trades","Tailor",1830,2860],["US","Oil & Gas","Roustabout",5400,8440],["US","Manufacturing","CNC Operator",2700,4220],["US","Manufacturing","Factory Worker",2340,3660],["GL","Transport & Logistics","Light Vehicle Driver",2000,3000],["GL","Transport & Logistics","Heavy Vehicle / Truck Driver",3500,5000],["US","Transport & Logistics","Bus Driver",2700,4220],["US","Transport & Logistics","Personal / Family Driver",3240,5060],["US","Transport & Logistics","Taxi Driver",2160,3380],["JB","Transport & Logistics","Delivery Rider",2200,3440],["US","Transport & Logistics","Forklift Operator",2520,3940],["GL","Transport & Logistics","Warehouse Worker",1500,2800],["JB","Transport & Logistics","Storekeeper",4000,6920],["RF","Transport & Logistics","Logistics Coordinator (2-4 yrs)",9000,18000],["RF","Transport & Logistics","Senior Logistics Coordinator",15000,28000],["RF","Transport & Logistics","Logistics Manager",22000,42000],["JB","Transport & Logistics","Procurement Officer",22770,35580],["GL","Security & Public","Security Guard",1800,2500],["US","Security & Public","Security Supervisor",2520,3940],["US","Security & Public","Fire & Safety Officer",4100,6410],["US","Security & Public","Safety Supervisor",2990,4670],["UT","Security & Public","Police Constable",10000,13000],["UT","Security & Public","Police Sergeant",15000,18000],["UT","Security & Public","Police Lieutenant",22000,28000],["UT","Security & Public","Police Captain",30000,38000],["UT","Security & Public","Police Major",40000,45000],["UT","Security & Public","Police Colonel and above",45000,60000],["US","Office & Admin","Receptionist (office)",2880,4500],["US","Office & Admin","Executive Secretary",5400,8440],["US","Office & Admin","Executive Assistant",6300,9840],["JB","Office & Admin","Data Entry Operator",7210,11570],["JB","Office & Admin","Call Center Agent",3250,4990],["JB","Office & Admin","Telesales Executive",5490,8580],["JX","Office & Admin","Domestic Worker",1280,2000],["US","Retail & Sales","Cashier",2340,3660],["US","Retail & Sales","Sales Executive (retail)",3060,4780],["JB","Retail & Sales","Merchandiser",10000,15630],["US","Real Estate","Real Estate Agent (base, excl. commission)",3960,6190],["US","Real Estate","Property Consultant",5040,7880],["JB","Real Estate","Property Manager",17650,27580],["US","Media & Creative","Journalist",19620,30660],["US","Media & Creative","Graphic Designer",6700,10460],["US","Media & Creative","Senior Graphic Designer",6840,10690],["US","Media & Creative","Interior Designer",15340,23960],["US","Media & Creative","Fashion Designer",11840,18510],["US","Media & Creative","Jewelry Designer",6840,10690],["JB","Media & Creative","Video Editor",9850,15390],["US","Media & Creative","Videographer",3600,5630],["US","Media & Creative","Cinematographer",11520,18000],["US","Media & Creative","DJ",10440,16310],["US","Media & Creative","Radio Jockey",3960,6190],["JB","Professional Services","Translator",11630,16380],["JB","Professional Services","Paralegal",15950,24920],["JX","Professional Services","Legal Assistant",4400,6880],["JX","Professional Services","Tax Consultant",7600,11880],["GT","Professional Services","Accountant (junior/SME)",2500,7000],["EH","Professional Services","Accountant (qualified)",12000,25000],["US","Professional Services","Cost Accountant",10690,16710],["US","Professional Services","Chartered Accountant",14150,22110],["US","Professional Services","Actuary",20840,32570],["JB","Professional Services","Insurance Underwriter",12710,19850],["GT","Professional Services","Business / Data Analyst",6800,10630],["JX","Professional Services","Operations Manager (SME)",12000,18750],["JB","Personal Services","Fitness / Personal Trainer",13420,20970],["JB","Personal Services","Beautician",4660,7280],["CF","Consulting \u2013 Strategy (Tier 1 & 2, incl. MBB)","Business Analyst (strategy)",23000,29000],["CF","Consulting \u2013 Strategy (Tier 1 & 2, incl. MBB)","Associate / Consultant (post-MBA)",44000,59000],["CF","Consulting \u2013 Strategy (Tier 1 & 2, incl. MBB)","Engagement Manager / Project Leader",61000,75000],["CF","Consulting \u2013 Strategy (Tier 1 & 2, incl. MBB)","Associate Partner / Principal",78000,95000],["CF","Consulting \u2013 Strategy (Tier 1 & 2, incl. MBB)","Partner (base, open-ended)",132000,200000],["CF","Investment Banking (DIFC)","Investment Banking Analyst",16000,27000],["CF","Investment Banking (DIFC)","Investment Banking Associate",25000,43000],["CF","Investment Banking (DIFC)","Investment Banking Vice President",44000,73000],["CF","Investment Banking (DIFC)","Investment Banking Director",68000,89000],["CF","Investment Banking (DIFC)","Investment Banking Senior Director / ED",82000,131000],["CF","Investment Banking (DIFC)","Investment Banking Managing Director",99000,157000],["MK","Investment Banking (DIFC)","IB Analyst (international bulge bracket, base)",30000,37000],["MK","Private Equity & Funds","Private Equity Associate",40000,65000],["MK","Private Equity & Funds","Private Equity VP / Principal",70000,110000],["MK","Private Equity & Funds","Hedge Fund Analyst",40000,75000],["MK","Private Equity & Funds","Sovereign Wealth Fund Associate",35000,55000]],"emirates":[{"key":"dubai","name":"Dubai","pop_m":4.58,"pop_year":2025,"gdp_pc_usd":44600,"salary_index_annual_aed":257700,"rent_1bed_annual_aed":[68000,82000],"share_gdp_pct":31,"note":"Population under new register-based methodology","wealth_per_adult_usd":243000,"wealth_range_usd":[230000,252000]},{"key":"abudhabi","name":"Abu Dhabi","pop_m":4.14,"pop_year":2024,"gdp_pc_usd":65700,"salary_index_annual_aed":253400,"rent_1bed_annual_aed":[40000,60000],"share_gdp_pct":49,"note":"~46% of GDP is oil","wealth_per_adult_usd":123000,"wealth_range_usd":[116000,131000]},{"key":"sharjah","name":"Sharjah","pop_m":1.8,"pop_year":2022,"gdp_pc_usd":32100,"salary_index_annual_aed":245300,"rent_1bed_annual_aed":[37000,43000],"share_gdp_pct":13,"note":"2022 census","wealth_per_adult_usd":83000,"wealth_range_usd":[77000,91000]},{"key":"ajman","name":"Ajman","pop_m":0.59,"pop_year":2026,"gdp_pc_usd":22600,"salary_index_annual_aed":232900,"rent_1bed_annual_aed":[27000,30000],"share_gdp_pct":2,"note":"Population is a third-party estimate","wealth_per_adult_usd":61000,"wealth_range_usd":[56000,69000]},{"key":"rak","name":"Ras Al Khaimah","pop_m":0.47,"pop_year":2026,"gdp_pc_usd":30700,"salary_index_annual_aed":null,"rent_1bed_annual_aed":[26000,60000],"share_gdp_pct":3,"note":"Population is a third-party estimate","wealth_per_adult_usd":69000,"wealth_range_usd":[62000,78000]},{"key":"fujairah","name":"Fujairah","pop_m":0.36,"pop_year":2026,"gdp_pc_usd":23500,"salary_index_annual_aed":null,"rent_1bed_annual_aed":null,"share_gdp_pct":1.5,"note":"Population is a third-party estimate","wealth_per_adult_usd":58000,"wealth_range_usd":[53000,65000]},{"key":"uaq","name":"Umm Al Quwain","pop_m":0.1,"pop_year":2026,"gdp_pc_usd":7700,"salary_index_annual_aed":null,"rent_1bed_annual_aed":null,"share_gdp_pct":0.2,"note":"Population is a third-party estimate","wealth_per_adult_usd":50000,"wealth_range_usd":[47000,56000]}],"wealth_stats":{"millionaires_2025":183000,"millionaires_note":"UBS GWR 2026 (revised series); GWR 2025 reported 240,343 on 2024 data","wealth_gini":0.82,"gini_note":"Highest in the world, tied with Russia (UBS GWR 2026)","mean_usd":157612,"median_usd_2023":32746,"top1_threshold_usd_kf":1600000,"migration":[[2022,5200],[2023,4700],[2024,7200],[2025,9800]],"dubai_millionaires":81200,"dubai_centi":237,"dubai_billionaires":20,"uhnwi_2026":4851,"uhnwi_2031":6588},"fx":3.6725,"hist":{"edges":[0,2000,3500,5000,7500,10000,15000,20000,30000,50000,75000,100000,150000,null],"labels":["<2k","2\u20133.5k","3.5\u20135k","5\u20137.5k","7.5\u201310k","10\u201315k","15\u201320k","20\u201330k","30\u201350k","50\u201375k","75\u2013100k","100\u2013150k","150k+"],"shares":{"full":[24.17,24.24,11.28,10.83,6.58,7.45,4.34,4.89,3.59,1.31,0.52,0.44,0.35],"household":[4.73,12.4,10.71,14.78,12.33,16.48,9.12,8.99,6.09,2.18,0.87,0.73,0.58],"pro":[0.01,0.26,1.14,4.83,7.92,18.98,16.83,21.63,16.43,6.0,2.38,2.0,1.59],"hh":[0.01,0.47,2.06,7.48,9.79,17.79,13.03,16.56,15.23,7.62,3.77,3.51,2.68]}},"age":{"labels":["Under 24","25\u201334","35\u201344","45\u201354","55+"],"median_monthly_aed":[12971,16227,18647,16994,16124],"source":"Paylab UAE self-reported data, 2026. White-collar skew: reflects professional respondents, not the full workforce."},"segments":{"labels":["Low-wage services","Skilled trades & clerical","Professionals","Construction labourers","Domestic workers","Senior executives"],"pop_m":[3.3,1.7,1.7,1.42,0.75,0.3],"median_aed":[2800,7000,18000,1600,2000,55000]},"wealth_by_emirate":{"note":"Model estimate: national household wealth stock (UBS mean per adult x adults) allocated 55% by resident millionaire shares (Henley/New World Wealth city data), 45% by adults weighted by income and property levels. Excludes sovereign wealth funds (~$1.7T Abu Dhabi state funds are not household wealth). Ranges reflect 45-62% top-share scenarios.","items":[{"key":"dubai","name":"Dubai","mean_wealth_per_adult_usd":243000,"range_usd":[230000,252000],"adults_m":3.89,"hnwi_share_pct":75.7},{"key":"abudhabi","name":"Abu Dhabi","mean_wealth_per_adult_usd":123000,"range_usd":[116000,131000],"adults_m":3.48,"hnwi_share_pct":18.6},{"key":"sharjah","name":"Sharjah","mean_wealth_per_adult_usd":83000,"range_usd":[77000,91000],"adults_m":1.35,"hnwi_share_pct":3.8},{"key":"ajman","name":"Ajman","mean_wealth_per_adult_usd":61000,"range_usd":[56000,69000],"adults_m":0.44,"hnwi_share_pct":0.7},{"key":"rak","name":"Ras Al Khaimah","mean_wealth_per_adult_usd":69000,"range_usd":[62000,78000],"adults_m":0.36,"hnwi_share_pct":0.6},{"key":"fujairah","name":"Fujairah","mean_wealth_per_adult_usd":58000,"range_usd":[53000,65000],"adults_m":0.27,"hnwi_share_pct":0.4},{"key":"uaq","name":"Umm Al Quwain","mean_wealth_per_adult_usd":50000,"range_usd":[47000,56000],"adults_m":0.08,"hnwi_share_pct":0.1}]},"household_wealth_factor":2.0};
+</script>
+<script>
+"use strict";
+/* Recruiter-guide figures typically include benefits packages that vary widely by
+   company; apply a 10% haircut to white-collar guide rows (all except GulfTalent
+   non-office benchmarks) so expectations are conservative. */
+DATA.roles.forEach(r=>{if(['CF','RH','MP'].includes(r[0])){r[3]=Math.round(r[3]*0.9);r[4]=Math.round(r[4]*0.9);}});
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const FX=DATA.fx;
+let CUR='AED', PER='mo', VIEW='full', MODE='ind';
+const incomeView=()=>MODE==='hh'?'hh':VIEW;
+const fmt=n=>isFinite(n)?Math.round(n).toLocaleString('en-US'):'–';
+const money=(aedMonthly,{perAdj=true,compact=false}={})=>{
+  let v=aedMonthly;
+  if(PER==='yr'&&perAdj)v*=12;
+  if(CUR==='USD')v/=FX;
+  if(compact){
+    const a=Math.abs(v);
+    if(a>=1e9)return CUR+' '+(v/1e9).toFixed(2)+'B';
+    if(a>=1e6)return CUR+' '+(v/1e6).toFixed(2)+'M';
+    if(a>=1e4)return CUR+' '+Math.round(v/1e3)+'k';
+    return CUR+' '+fmt(v);
+  }
+  return CUR+' '+fmt(v);
+};
+const moneyW=aed=>{
+  let v=CUR==='USD'?aed/FX:aed;
+  const a=Math.abs(v);
+  if(a>=1e9)return CUR+' '+(v/1e9).toFixed(2)+'B';
+  if(a>=1e6)return CUR+' '+(v/1e6).toFixed(2)+'M';
+  return CUR+' '+fmt(v);
+};
+const usdK=v=>'$'+(v>=1e6?(v/1e6).toFixed(2)+'M':Math.round(v/1e3)+'k');
+const parseIn=el=>{const n=parseFloat(el.value.replace(/[^0-9.]/g,''));return isFinite(n)?n:0;};
+const pctTxt=p=>p.toFixed(1)+'%';
+const heroLabel=p=>{
+  const top=100-p;
+  if(p>=50)return top<1?('Top '+(top<0.1?top.toFixed(2):top.toFixed(1))+'%'):('Top '+Math.round(top)+'%');
+  return 'Bottom '+(p<1?p.toFixed(1):Math.round(p))+'%';
+};
+function pctOf(view,income){
+  const v=DATA.views[view].values;
+  if(income<=v[0])return Math.max(0.05,0.1*(income/v[0]));
+  if(income>=v[v.length-1])return 99.995;
+  let lo=0,hi=v.length-1;
+  while(hi-lo>1){const m=(hi+lo)>>1;(v[m]<=income)?lo=m:hi=m;}
+  const pAt=i=>i<998?(i+1)*0.1:[99.9,99.95,99.99][i-998];
+  const t=(income-v[lo])/((v[hi]-v[lo])||1);
+  return pAt(lo)+t*(pAt(hi)-pAt(lo));
+}
+function valAt(view,pct){
+  const v=DATA.views[view].values;
+  /* v: indices 0..997 = p0.1..p99.8 in 0.1 steps; 998=p99.9; 999=p99.95; 1000=p99.99 */
+  if(pct>=99.99)return v[1000];
+  if(pct>=99.95)return v[999]+(v[1000]-v[999])*(pct-99.95)/0.04;
+  if(pct>=99.9)return v[998]+(v[999]-v[998])*(pct-99.9)/0.05;
+  const idx=pct*10-1;
+  if(idx<=0)return v[0];
+  const i=Math.floor(idx),t=idx-i;
+  return v[i]+(v[i+1]-v[i])*t;
+}
+const HHW=DATA.household_wealth_factor;
+const wf=()=>MODE==='hh'?HHW:1;
+function wPctOf(nw){
+  nw/=wf();
+  const P=DATA.wealth_curve.p,V=DATA.wealth_curve.values;
+  if(nw<=V[0])return Math.max(0.5,P[0]*100*(nw/V[0]));
+  if(nw>=V[V.length-1])return 99.995;
+  let lo=0,hi=V.length-1;
+  while(hi-lo>1){const m=(hi+lo)>>1;(V[m]<=nw)?lo=m:hi=m;}
+  const t=(nw-V[lo])/((V[hi]-V[lo])||1);
+  return (P[lo]+t*(P[hi]-P[lo]))*100;
+}
+function wValAt(pct){
+  const P=DATA.wealth_curve.p,V=DATA.wealth_curve.values;
+  const p=pct/100;
+  let out;
+  if(p<=P[0])out=V[0];
+  else if(p>=P[P.length-1])out=V[V.length-1];
+  else{let lo=0,hi=P.length-1;
+    while(hi-lo>1){const m=(hi+lo)>>1;(P[m]<=p)?lo=m:hi=m;}
+    const t=(p-P[lo])/((P[hi]-P[lo])||1);
+    out=V[lo]+t*(V[hi]-V[lo]);}
+  return out*wf();
+}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const seq=frac=>css('--seq'+Math.min(5,Math.max(1,Math.ceil(frac*5))));
+const tt=()=>$('#tt');
+function showTT(e,html){const t=tt();t.style.display='block';t.innerHTML=html;
+  t.style.left=Math.min(window.innerWidth-180,e.clientX+14)+'px';t.style.top=(e.clientY+14)+'px';}
+function hideTT(){tt().style.display='none';}
+
+/* ================= controls ================= */
+const applyTheme=t=>{document.documentElement.setAttribute('data-theme',t);try{localStorage.uaeTheme=t}catch(e){}renderAll();};
+$('#themeBtn').onclick=()=>applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+(()=>{let t;try{t=localStorage.uaeTheme}catch(e){}
+  if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.setAttribute('data-theme',t);})();
+$('#modeSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#modeSeg button').forEach(x=>x.classList.toggle('on',x===b));MODE=b.dataset.mode;applyMode();renderAll();};
+$('#curSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#curSeg button').forEach(x=>x.classList.toggle('on',x===b));CUR=b.dataset.cur;
+  $('#incCur').textContent=CUR;$('#wCur').textContent=CUR;renderAll();};
+$('#perSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#perSeg button').forEach(x=>x.classList.toggle('on',x===b));PER=b.dataset.per;
+  $('#incPer').textContent=PER==='mo'?'/ month':'/ year';renderAll();};
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  $$('section.tab').forEach(s=>s.classList.toggle('on',s.id==='tab-'+b.dataset.tab));
+  renderAll();};
+$('#groupSel').onclick=e=>{const o=e.target.closest('.opt');if(!o)return;
+  $$('#groupSel .opt').forEach(x=>x.classList.toggle('on',x===o));VIEW=o.dataset.view;renderIncome();};
+function applyMode(){
+  const hh=MODE==='hh';
+  $('#groupSel').style.display=hh?'none':'block';
+  $('#hhIncNote').style.display=hh?'block':'none';
+  $('#incTitle').textContent=hh?'Where does your household rank in the UAE?':'Where does your income rank in the UAE?';
+  $('#incInLbl').textContent=hh?'Your household’s gross income':'Your gross salary';
+  $('#wInLbl').textContent=hh?'Your household’s net worth':'Your net worth';
+  $('#wSub').textContent=hh?'Combined assets of your household minus all debts, compared against regular UAE households.':'Total assets (property, investments, cash, business equity) minus all debts, compared against the adult resident population.';
+  $('#wLadderSub').textContent=hh?'Net worth per household needed to reach each rung (per-adult curve × 2 wealth-holding adults per household)':'Net worth per adult needed to reach each rung';
+  $('#whyInd').style.display=hh?'none':'block';
+  $('#whyHH').style.display=hh?'block':'none';
+  $('#whyTitle').textContent=hh?'How household mode works':'Why three views?';
+  $('#scHHNote').style.display=hh?'block':'none';
+}
+function hookMoney(el,cb){
+  el.addEventListener('input',()=>{
+    const raw=el.value.replace(/[^0-9]/g,'');
+    el.value=raw?parseInt(raw,10).toLocaleString('en-US'):'';
+    cb();
+  });
+}
+
+/* ================= income ================= */
+function userIncomeAEDMonthly(){
+  let v=parseIn($('#incIn'));
+  if(CUR==='USD')v*=FX;
+  if(PER==='yr')v/=12;
+  return v;
+}
+function renderIncome(){
+  const vk=incomeView();
+  const inc=userIncomeAEDMonthly();
+  const view=DATA.views[vk];
+  const p=Math.min(99.99,Math.max(0.01,pctOf(vk,inc)));
+  $('#incBig').textContent=inc>0?heroLabel(p):'–';
+  const popTxt=view.population_millions.toFixed(1).replace(/\.0$/,'');
+  const unit=MODE==='hh'?'households':'people';
+  $('#incExpl').innerHTML=inc>0?
+    (MODE==='hh'?'Your household earns more than <b>'+pctTxt(p)+'</b> of the <b>'+popTxt+' million</b> regular households in the UAE.'
+    :'You earn more than <b>'+pctTxt(p)+'</b> of the <b>'+popTxt+' million</b> '+unit+' in the group “'+view.label+'”.')
+    :'Enter a salary to see your rank.';
+  const stats=[
+    ['Median',money(valAt(vk,50),{compact:true})],
+    ['Mean',money(view.mean,{compact:true})],
+    ['Top 10% needs',money(valAt(vk,90),{compact:true})],
+    ['Top 1% needs',money(valAt(vk,99),{compact:true})],
+  ];
+  $('#incStats').innerHTML=stats.map(s=>'<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>').join('');
+  const mile=$('#incMile');
+  const milestones=[[50,'the top half'],[75,'the top 25%'],[90,'the top 10%'],[95,'the top 5%'],[99,'the top 1%'],[99.9,'the top 0.1%']];
+  const next=milestones.find(m=>p<m[0]);
+  if(inc>0&&next){
+    const need=valAt(vk,next[0])-inc;
+    mile.classList.add('show');
+    mile.innerHTML='<b>'+money(need,{compact:true})+(PER==='yr'?' / year':' / month')+'</b> more would put '+(MODE==='hh'?'your household':'you')+' in <b>'+next[1]+'</b> of this group.';
+  }else if(inc>0){mile.classList.add('show');mile.innerHTML='You are in the very top of this group.';}
+  else mile.classList.remove('show');
+  $('#chartTitle').textContent='Income distribution — '+view.label;
+  const sh=DATA.hist.shares[vk], below5k=(sh[0]+sh[1]+sh[2]).toFixed(0);
+  const HEADS={
+    full:below5k+'% earn less than AED 5,000 a month',
+    household:'The survey frame hides the low-wage majority',
+    pro:'A market that runs from AED 8k to 180k-plus',
+    hh:'Pooled pay cheques lift the median to AED '+(Math.round(valAt('hh',50)/1000))+'k'};
+  $('#chartHead').textContent=HEADS[vk];
+  $('#chartSub').textContent='Share of '+(MODE==='hh'?'households':'workers')+' in each gross '+(PER==='yr'?'annual':'monthly')+' income band. Your band is highlighted. Hover for detail.';
+  drawHist(vk,inc,p);
+  drawLadder(vk,p,inc);
+  drawAge(inc);
+  drawPercCurve('#pcChart',{
+    getVal:pp=>valAt(vk,pp),userP:inc>0?p:null,userVal:inc,
+    fmt:v=>money(v,{compact:true}),unitTail:PER==='yr'?' / yr':' / mo',
+    yTicks:[1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000].map(t=>PER==='yr'?t:t)});
+  drawLorenz();
+}
+function drawLadder(vk,userP,inc){
+  const rows=[[10,'10th'],[25,'25th'],[50,'Median'],[75,'75th'],[90,'90th'],[95,'95th'],[99,'99th'],[99.9,'99.9th']];
+  const maxV=valAt(vk,99.9);
+  let html='<tr><th>Percentile</th><th>'+(MODE==='hh'?'Household income':'Salary')+'</th><th style="width:34%"></th></tr>';
+  let placed=false;
+  for(const[p,lbl]of rows){
+    const v=valAt(vk,p);
+    const youRow=inc>0&&!placed&&userP<=p;
+    if(youRow)placed=true;
+    const w=Math.max(2,100*Math.log(v/800)/Math.log(maxV/800));
+    html+='<tr'+(youRow?' class="you"':'')+'><td>'+lbl+(youRow?' · you: '+pctTxt(userP):'')+'</td><td>'+money(v,{compact:true})+'</td><td><div class="rbar" style="width:'+w.toFixed(1)+'%"></div></td></tr>';
+  }
+  $('#ladder').innerHTML=html;
+}
+/* ---- histogram (bars) ---- */
+function bandLabel(i){
+  const L=DATA.hist.labels[i];
+  if(PER==='mo'&&CUR==='AED')return L;
+  const edges=DATA.hist.edges;
+  const lo=edges[i],hi=edges[i+1]??null;
+  const conv=x=>{let v=x;if(PER==='yr')v*=12;if(CUR==='USD')v/=FX;return v>=1000?(Math.round(v/100)/10)+'k':Math.round(v);};
+  if(lo===0)return '<'+conv(edges[1]);
+  if(hi===null||hi===undefined)return conv(lo)+'+';
+  return conv(lo)+'–'+conv(hi);
+}
+function userBand(inc){
+  const e=DATA.hist.edges;
+  for(let i=0;i<e.length;i++){
+    const hi=(i+1<e.length)?e[i+1]:Infinity;
+    if(inc>=e[i]&&inc<(hi===null?Infinity:hi))return i;
+  }
+  return e.length-1;
+}
+function drawHist(vk,inc,userP){
+  const shares=DATA.hist.shares[vk];
+  const holder=$('#histChart');
+  const W=holder.clientWidth||1000,H=250,padL=34,padR=8,padT=26,padB=40;
+  const n=shares.length;
+  const bw=(W-padL-padR)/n;
+  const max=Math.max(...shares);
+  const yMax=Math.ceil(max/10)*10;
+  const ys=v=>padT+(1-v/yMax)*(H-padT-padB);
+  const ub=inc>0?userBand(inc):-1;
+  let s='<svg id="histSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Income distribution histogram">';
+  for(let g=0;g<=yMax;g+=10){
+    s+='<line x1="'+padL+'" y1="'+ys(g)+'" x2="'+(W-padR)+'" y2="'+ys(g)+'" stroke="'+css('--grid')+'" stroke-width="1"/>'
+      +'<text x="'+(padL-7)+'" y="'+(ys(g)+3.5)+'" text-anchor="end" font-size="10.5" fill="'+css('--muted')+'">'+g+'%</text>';
+  }
+  shares.forEach((v,i)=>{
+    const x=padL+i*bw+3, w=bw-6;
+    const y=ys(v), h=(H-padB)-y;
+    const isYou=i===ub;
+    s+='<rect class="hbar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(1,h).toFixed(1)+'" rx="1" fill="'+(isYou?css('--seq5'):seq(0.25+0.5*v/max))+'"/>';
+    if(v>=3||isYou)s+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="10.5" font-weight="'+(isYou?'800':'600')+'" fill="'+css('--ink2')+'">'+(v>=1?v.toFixed(1):v.toFixed(2))+'%</text>';
+    if(isYou){const cxp=x+w/2;
+      s+='<rect x="'+(cxp-24).toFixed(1)+'" y="0" width="48" height="18" rx="9" fill="'+css('--critical')+'"/>'
+        +'<text x="'+cxp.toFixed(1)+'" y="13" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">YOU</text>'
+        +'<path d="M'+(cxp-5).toFixed(1)+',18 L'+(cxp+5).toFixed(1)+',18 L'+cxp.toFixed(1)+',25 Z" fill="'+css('--critical')+'"/>';}
+    s+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-padB+15)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+bandLabel(i)+'</text>';
+  });
+  s+='<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'" stroke-width="1"/>'
+    +'<text x="'+((padL+W-padR)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">Gross '+(PER==='yr'?'annual':'monthly')+' income ('+CUR+(PER==='yr'?' / year':' / month')+')</text></svg>';
+  holder.innerHTML=s;
+  const svg=$('#histSvg');
+  svg.addEventListener('mousemove',e=>{
+    const b=e.target.closest('.hbar');
+    if(!b){hideTT();return;}
+    const i=+b.dataset.i;
+    showTT(e,'<b>'+shares[i].toFixed(1)+'%</b> of '+(MODE==='hh'?'households':'workers')+'<div class="l">earn '+bandLabel(i)+' '+CUR+(PER==='yr'?'/yr':'/mo')+'</div>');
+  });
+  svg.addEventListener('mouseleave',hideTT);
+}
+/* ---- age chart: modelled tiers per age band ---- */
+const AGE_TIERS={p10:0.534,p25:0.719,p50:1,p75:1.392,p90:1.874,p99:3.126}; /* lognormal sigma 0.49 from Paylab overall p10/p90 spread */
+function ageTier(i,t){return DATA.age.median_monthly_aed[i]*AGE_TIERS[t];}
+function drawAge(inc){
+  const A=DATA.age;
+  const holder=$('#ageChart');
+  const W=holder.clientWidth||480,H=278,padL=42,padR=72,padT=18,padB=28;
+  const n=A.labels.length;
+  const conv=v=>{let x=v;if(PER==='yr')x*=12;if(CUR==='USD')x/=FX;return x;};
+  $('#ageSub').textContent='Where white-collar salaries fall at each age: outer band 10th–90th percentile, inner band 25th–75th, bold line is the median. Modelled around Paylab UAE age medians; professional data, not the full workforce.'
+    +(MODE==='hh'?' Individual salaries: no household marker shown.':' Dashed line marks your salary.');
+  const peakIdx=A.median_monthly_aed.indexOf(Math.max(...A.median_monthly_aed));
+  $('#ageTitle').textContent='Earnings peak at '+A.labels[peakIdx];
+  const uv=(MODE==='ind'&&inc>0)?conv(inc):null;
+  const X=i=>padL+(i+0.5)*(W-padL-padR)/n;
+  // clean rounded axis max
+  const rawMax=Math.max(conv(Math.max(...A.median_monthly_aed)*AGE_TIERS.p90)*1.18, uv?uv*1.12:0);
+  const step=Math.pow(10,Math.floor(Math.log10(rawMax/4)));
+  const niceStep=[1,1.25,1.5,2,2.5,3,4,5,6,8,10].map(m=>m*step).find(sv=>sv*4>=rawMax)||4*step;
+  const max=niceStep*4;
+  const ys=v=>padT+(1-Math.max(0,Math.min(v,max))/max)*(H-padT-padB);
+  const pts=k=>A.median_monthly_aed.map((m,i)=>[X(i),ys(conv(m*AGE_TIERS[k]))]);
+  /* monotone smooth path (Catmull-Rom -> cubic bezier) */
+  const smooth=P=>{
+    if(P.length<3)return P.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    let d='M'+P[0][0].toFixed(1)+','+P[0][1].toFixed(1);
+    for(let i=0;i<P.length-1;i++){
+      const p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];
+      const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6];
+      const c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+      d+=' C'+c1[0].toFixed(1)+','+c1[1].toFixed(1)+' '+c2[0].toFixed(1)+','+c2[1].toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+    }
+    return d;
+  };
+  const smoothRev=P=>{const R=[...P].reverse();return smooth(R).replace(/^M/,'L');};
+  const band=(hiK,loK)=>smooth(pts(hiK))+' '+smoothRev(pts(loK))+' Z';
+  let s='<svg id="ageSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'
+    +'<defs>'
+    +'<linearGradient id="agB1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+css('--seq1')+'" stop-opacity="0.75"/><stop offset="1" stop-color="'+css('--seq1')+'" stop-opacity="0.28"/></linearGradient>'
+    +'<linearGradient id="agB2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+css('--seq3')+'" stop-opacity="0.55"/><stop offset="1" stop-color="'+css('--seq2')+'" stop-opacity="0.35"/></linearGradient>'
+    +'</defs>';
+  // gridlines at nice steps
+  for(let g=1;g<=4;g++){
+    const gv=niceStep*g, gy=ys(gv);
+    s+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="'+css('--grid')+'"/>'
+      +'<text x="'+(padL-7)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(gv>=1000?(Math.round(gv/100)/10)+'k':Math.round(gv))+'</text>';
+  }
+  // bands with hairline edges, then median curve
+  s+='<path d="'+band('p90','p10')+'" fill="url(#agB1)"/>'
+    +'<path d="'+smooth(pts('p90'))+'" fill="none" stroke="'+css('--seq2')+'" stroke-width="1"/>'
+    +'<path d="'+smooth(pts('p10'))+'" fill="none" stroke="'+css('--seq2')+'" stroke-width="1"/>'
+    +'<path d="'+band('p75','p25')+'" fill="url(#agB2)"/>'
+    +'<path d="'+smooth(pts('p75'))+'" fill="none" stroke="'+css('--seq3')+'" stroke-width="1" opacity="0.7"/>'
+    +'<path d="'+smooth(pts('p25'))+'" fill="none" stroke="'+css('--seq3')+'" stroke-width="1" opacity="0.7"/>'
+    +'<path d="'+smooth(pts('p50'))+'" fill="none" stroke="'+css('--seq5')+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  // median markers, value labels, x labels; annotate the peak
+  const peak=A.median_monthly_aed.indexOf(Math.max(...A.median_monthly_aed));
+  A.median_monthly_aed.forEach((m,i)=>{
+    const p=pts('p50')[i];
+    s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i===peak?4.5:3)+'" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.6"/>'
+      +'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-(i===peak?20:9)).toFixed(1)+'" text-anchor="middle" font-size="'+(i===peak?11:10)+'" font-weight="'+(i===peak?800:650)+'" fill="'+(i===peak?css('--seq5'):css('--ink3'))+'" font-variant-numeric="tabular-nums">'+money(m,{compact:true}).replace(CUR+' ','')+'</text>'
+      +(i===peak?'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="0.06em" fill="'+css('--ink3')+'">PEAK</text>':'')
+      +'<text x="'+p[0].toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+A.labels[i]+'</text>';
+  });
+  // right-edge band labels, tone-matched, collision-spread
+  const last=n-1, lx=W-padR+8;
+  const labels=[['p90','90th',css('--seq3')],['p75','75th',css('--seq4')],['p50','MEDIAN',css('--seq5')],['p25','25th',css('--seq4')],['p10','10th',css('--seq3')]];
+  let yprev=-99;
+  labels.forEach(([k,txt,col])=>{
+    let y=ys(conv(A.median_monthly_aed[last]*AGE_TIERS[k]))+3.5;
+    if(y-yprev<11)y=yprev+11;
+    yprev=y;
+    s+='<text x="'+lx.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="9" font-weight="750" letter-spacing="0.05em" fill="'+col+'">'+txt+'</text>';
+  });
+  if(uv&&uv<max){
+    const y=ys(uv);
+    s+='<line x1="'+padL+'" y1="'+y.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+y.toFixed(1)+'" stroke="'+css('--critical')+'" stroke-width="1.5" stroke-dasharray="5 4"/>'
+      +'<rect x="'+(padL+3)+'" y="'+(y-7.5).toFixed(1)+'" width="36" height="15" rx="7.5" fill="'+css('--critical')+'"/>'
+      +'<text x="'+(padL+21)+'" y="'+(y+3.5).toFixed(1)+'" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff">YOU</text>';
+  }
+  s+='<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/>'
+    +'<line id="ageXh" x1="0" y1="'+padT+'" x2="0" y2="'+(H-padB)+'" stroke="'+css('--muted')+'" stroke-width="1" stroke-dasharray="3 3" opacity="0"/></svg>';
+  holder.innerHTML=s;
+  /* refined hover: snap crosshair to the nearest age column, compact tier readout */
+  const svg=$('#ageSvg'),xh=$('#ageXh');
+  svg.onmousemove=e=>{
+    const r=svg.getBoundingClientRect();
+    const px=(e.clientX-r.left)*(W/r.width);
+    if(px<padL||px>W-padR){hideTT();xh.setAttribute('opacity',0);return;}
+    let best=0,bd=1e9;
+    for(let i=0;i<n;i++){const d=Math.abs(px-X(i));if(d<bd){bd=d;best=i;}}
+    const ax=X(best);
+    xh.setAttribute('x1',ax);xh.setAttribute('x2',ax);xh.setAttribute('opacity',0.7);
+    const m=k=>money(ageTier(best,k),{compact:true}).replace(CUR+' ','');
+    showTT(e,'<b>Age '+A.labels[best]+'</b>'
+      +'<div class="l" style="margin-top:3px">90th &nbsp;<b>'+m('p90')+'</b></div>'
+      +'<div class="l">75th &nbsp;<b>'+m('p75')+'</b></div>'
+      +'<div class="l">Median &nbsp;<b>'+m('p50')+'</b></div>'
+      +'<div class="l">25th &nbsp;<b>'+m('p25')+'</b></div>'
+      +'<div class="l">10th &nbsp;<b>'+m('p10')+'</b></div>'
+      +'<div class="l" style="margin-top:3px">'+CUR+(PER==='yr'?' per year':' per month')+', white-collar</div>');
+  };
+  svg.onmouseleave=()=>{hideTT();xh.setAttribute('opacity',0);};
+}
+/* ---- segments chart ---- */
+function drawSegments(){
+  const S=DATA.segments;
+  const idx=[...S.labels.keys()].sort((a,b)=>S.pop_m[b]-S.pop_m[a]);
+  const holder=$('#segChart');
+  const W=holder.clientWidth||480,rowH=32,padL=168,padR=142;
+  const H=idx.length*rowH+6;
+  const max=Math.max(...S.pop_m);
+  let s='<svg id="segSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  idx.forEach((k,r)=>{
+    const y=3+r*rowH;
+    const w=Math.max(3,(S.pop_m[k]/max)*(W-padL-padR));
+    s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+S.labels[k]+'</text>'
+      +'<rect class="sbar" data-i="'+k+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'"  rx="1" fill="'+css('--seq3')+'"/>'
+      +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+S.pop_m[k].toFixed(2)+'M · med '+money(S.median_aed[k],{compact:true})+'</text>';
+  });
+  s+='</svg>';
+  holder.innerHTML=s;
+  $('#segSvg').addEventListener('mousemove',e=>{
+    const b=e.target.closest('.sbar');
+    if(!b){hideTT();return;}
+    const i=+b.dataset.i;
+    showTT(e,'<b>'+DATA.segments.labels[i]+'</b><div class="l">'+DATA.segments.pop_m[i].toFixed(2)+'M workers · median '+money(DATA.segments.median_aed[i],{compact:true})+(PER==='yr'?'/yr':'/mo')+'</div>');
+  });
+  $('#segSvg').addEventListener('mouseleave',hideTT);
+}
+
+/* ================= percentile curves (wealthdashboard-style) ================= */
+function drawPercCurve(sel,{getVal,userP,userVal,fmt,yTicks,unitTail}){
+  const holder=$(sel);
+  const W=holder.clientWidth||1000,H=290,padL=46,padR=16,padT=16,padB=30;
+  const P=[];for(let p=1;p<=99;p++)P.push(p);P.push(99.5,99.9);
+  const y0=Math.log(getVal(1)*0.8),y1=Math.log(getVal(99.9)*1.25);
+  const xs=p=>padL+(p/100)*(W-padL-padR);
+  const ys=v=>padT+(1-(Math.log(v)-y0)/(y1-y0))*(H-padT-padB);
+  let s='<svg id="'+sel.slice(1)+'Svg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  yTicks.forEach(t=>{
+    if(Math.log(t)<y0||Math.log(t)>y1)return;
+    const gy=ys(t);
+    s+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="'+css('--grid')+'"/>'
+      +'<text x="'+(padL-7)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'" font-variant-numeric="tabular-nums">'+(t>=1e6?(t/1e6)+'M':t>=1000?(t/1000)+'k':t)+'</text>';
+  });
+  [10,25,50,75,90].forEach(p=>{
+    s+='<text x="'+xs(p).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">'+p+'th</text>';
+  });
+  s+='<text x="'+xs(99).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">99th</text>';
+  const pts=P.map(p=>[xs(p),ys(getVal(p))]);
+  const area='M'+pts[0][0].toFixed(1)+','+(H-padB)+' L'+pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+' L'+pts[pts.length-1][0].toFixed(1)+','+(H-padB)+' Z';
+  s+='<defs><linearGradient id="'+sel.slice(1)+'g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="'+css('--seq1')+'" stop-opacity="0.25"/><stop offset="1" stop-color="'+css('--seq3')+'" stop-opacity="0.45"/></linearGradient></defs>'
+    +'<path d="'+area+'" fill="url(#'+sel.slice(1)+'g)"/>'
+    +'<path d="M'+pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+'" fill="none" stroke="'+css('--seq5')+'" stroke-width="2.5" stroke-linejoin="round"/>';
+  [[50,'median'],[90,'top 10%'],[99,'top 1%']].forEach(([p,lbl])=>{
+    const v=getVal(p);
+    s+='<circle cx="'+xs(p).toFixed(1)+'" cy="'+ys(v).toFixed(1)+'" r="3.5" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.5"/>'
+      +'<text x="'+(xs(p)-(p>95?8:0)).toFixed(1)+'" y="'+(ys(v)-9).toFixed(1)+'" text-anchor="'+(p>95?'end':'middle')+'" font-size="9.5" font-weight="700" fill="'+css('--ink3')+'">'+lbl+' · '+fmt(v)+'</text>';
+  });
+  if(userP&&userVal>0){
+    const ux=xs(Math.min(99.9,userP)),uy=ys(Math.max(getVal(1)*0.8,Math.min(getVal(99.9),userVal)));
+    const py=Math.min(H-padB-18,uy+10), px2=Math.min(W-58,Math.max(padL,ux-45));
+    s+='<line x1="'+ux.toFixed(1)+'" y1="'+uy.toFixed(1)+'" x2="'+ux.toFixed(1)+'" y2="'+(H-padB)+'" stroke="'+css('--critical')+'" stroke-width="1.2" stroke-dasharray="3 3"/>'
+      +'<circle cx="'+ux.toFixed(1)+'" cy="'+uy.toFixed(1)+'" r="5" fill="'+css('--critical')+'" stroke="'+css('--surface')+'" stroke-width="1.8"/>'
+      +'<rect x="'+px2.toFixed(1)+'" y="'+py.toFixed(1)+'" width="36" height="15" rx="7.5" fill="'+css('--critical')+'"/>'
+      +'<text x="'+(px2+18).toFixed(1)+'" y="'+(py+11).toFixed(1)+'" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff">YOU</text>';
+  }
+  s+='<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/></svg>';
+  holder.innerHTML=s;
+  const svg=$(sel+'Svg');
+  svg.onmousemove=e=>{
+    const r=svg.getBoundingClientRect();
+    const px=(e.clientX-r.left)*(W/r.width);
+    if(px<padL||px>W-padR){hideTT();return;}
+    const p=Math.min(99.9,Math.max(1,(px-padL)/(W-padL-padR)*100));
+    const v=getVal(p);
+    showTT(e,'<b>'+fmt(v)+unitTail+'</b><div class="l">'+p.toFixed(p>99?1:0)+'th percentile — richer than '+p.toFixed(p>99?1:0)+'% · top '+(100-p).toFixed(p>99?1:0)+'%</div>');
+  };
+  svg.onmouseleave=hideTT;
+}
+/* ---- Lorenz curve ---- */
+function drawLorenz(){
+  const vk=incomeView();
+  const v=DATA.views[vk].values;
+  const cum=[0];let tot=0;
+  for(let i=0;i<998;i++){tot+=v[i];cum.push(tot);}
+  const L=p=>cum[Math.round(p*998/100)]/tot;      // income share of bottom p%
+  let gini=0;for(let p=1;p<=99;p++)gini+=L(p);
+  gini=1-2*(gini/100+0.005);
+  const top10=Math.round((1-L(90))*100);
+  $('#lzHead').textContent='The top 10% take '+top10+'% of pay';
+  const holder=$('#lzChart');
+  const W=holder.clientWidth||480,H=252,padL=40,padR=14,padT=12,padB=30;
+  const xs=p=>padL+(p/100)*(W-padL-padR);
+  const ys=f=>padT+(1-f)*(H-padT-padB);
+  const pp=[];for(let p=0;p<=98;p+=2)pp.push([xs(p),ys(L(p))]);pp.push([xs(100),ys(1)]);
+  let s='<svg id="lzSvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  [0.25,0.5,0.75,1].forEach(f=>{
+    s+='<line x1="'+padL+'" y1="'+ys(f)+'" x2="'+(W-padR)+'" y2="'+ys(f)+'" stroke="'+css('--grid')+'"/>'
+      +'<text x="'+(padL-6)+'" y="'+(ys(f)+3.5)+'" text-anchor="end" font-size="10" fill="'+css('--muted')+'">'+(f*100)+'%</text>';
+  });
+  [25,50,75,100].forEach(p=>{s+='<text x="'+xs(p)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">'+p+'%</text>';});
+  s+='<line x1="'+xs(0)+'" y1="'+ys(0)+'" x2="'+xs(100)+'" y2="'+ys(1)+'" stroke="'+css('--baseline')+'" stroke-width="1.2" stroke-dasharray="5 4"/>'
+    +'<path d="M'+pp.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+' L'+xs(100)+','+ys(0)+' L'+xs(0)+','+ys(0)+' Z" fill="'+css('--seq1')+'" opacity="0.45"/>'
+    +'<path d="M'+pp.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' L')+'" fill="none" stroke="'+css('--seq5')+'" stroke-width="2.5"/>'
+    +'<circle cx="'+xs(90)+'" cy="'+ys(L(90))+'" r="3.5" fill="'+css('--seq5')+'" stroke="'+css('--surface')+'" stroke-width="1.5"/>'
+    +'<text x="'+(xs(90)-6)+'" y="'+(ys(L(90))-8)+'" text-anchor="end" font-size="9.5" font-weight="700" fill="'+css('--ink3')+'">bottom 90% earn '+Math.round(L(90)*100)+'%</text>'
+    +'<text x="'+(padL+8)+'" y="'+(padT+14)+'" font-size="11" font-weight="800" fill="'+css('--ink2')+'">Gini ≈ '+gini.toFixed(2)+'</text>'
+    +'<line x1="'+padL+'" y1="'+ys(0)+'" x2="'+(W-padR)+'" y2="'+ys(0)+'" stroke="'+css('--baseline')+'"/></svg>';
+  holder.innerHTML=s;
+  const svg=$('#lzSvg');
+  svg.onmousemove=e=>{
+    const r=svg.getBoundingClientRect();
+    const px=(e.clientX-r.left)*(W/r.width);
+    if(px<padL||px>W-padR){hideTT();return;}
+    const p=Math.min(99,Math.max(1,(px-padL)/(W-padL-padR)*100));
+    showTT(e,'<b>Bottom '+Math.round(p)+'%</b><div class="l">earn '+ (100*L(Math.round(p))).toFixed(1)+'% of total income</div>');
+  };
+  svg.onmouseleave=hideTT;
+}
+/* ---- global city comparison ---- */
+const CITIES=[['New York',384500],['Bay Area',342400],['Tokyo',292300],['Singapore',242400],['Los Angeles',220600],['London',215700],['Paris',160100],['Hong Kong',154900],['Sydney',152900],['Dubai',81200]];
+function drawCities(){
+  const holder=$('#cityChart');
+  const W=holder.clientWidth||480,rowH=27,padL=96,padR=64;
+  const H=CITIES.length*rowH+6;
+  const max=CITIES[0][1];
+  let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  CITIES.forEach(([name,v],i)=>{
+    const y=3+i*rowH, w=Math.max(3,(v/max)*(W-padL-padR)), dxb=name==='Dubai';
+    s+='<text x="'+(padL-8)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11" font-weight="'+(dxb?'800':'400')+'" fill="'+(dxb?css('--ink'):css('--ink2'))+'">'+name+'</text>'
+      +'<rect x="'+padL+'" y="'+(y+6)+'" width="'+w.toFixed(1)+'" height="'+(rowH-12)+'" rx="1" fill="'+(dxb?css('--seq5'):css('--seq2'))+'"'+(dxb?'':' opacity="0.55"')+'/>'
+      +'<text x="'+(padL+w+7).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="10.5" font-weight="'+(dxb?'800':'600')+'" fill="'+(dxb?css('--ink'):css('--muted'))+'" font-variant-numeric="tabular-nums">'+(v/1000).toFixed(0)+'k</text>';
+  });
+  s+='</svg>';
+  holder.innerHTML=s;
+}
+/* ---- UHNWI projection ---- */
+function drawUhnwi(){
+  const holder=$('#uhnwiChart');
+  const ws=DATA.wealth_stats;
+  const W=holder.clientWidth||480,H=170,padB=26,padT=20;
+  const items=[[2026,ws.uhnwi_2026],[2031,ws.uhnwi_2031]];
+  const max=ws.uhnwi_2031;
+  const bw=74;
+  let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  items.forEach(([yr,v],i)=>{
+    const x=W/2+(i-1)*130+28;
+    const h=(v/max)*(H-padT-padB), y=H-padB-h;
+    s+='<rect x="'+x+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+h.toFixed(1)+'" rx="1" fill="'+(i?css('--seq5'):css('--seq2'))+'"/>'
+      +'<text x="'+(x+bw/2)+'" y="'+(y-6).toFixed(1)+'" text-anchor="middle" font-size="12" font-weight="800" fill="'+css('--ink2')+'" font-variant-numeric="tabular-nums">'+v.toLocaleString()+'</text>'
+      +'<text x="'+(x+bw/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+yr+(i?' forecast':'')+'</text>';
+  });
+  const growth=Math.round(100*(ws.uhnwi_2031/ws.uhnwi_2026-1));
+  s+='<text x="'+(W/2+25)+'" y="'+(padT+8)+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+css('--critical')+'">+'+growth+'%</text>'
+    +'<line x1="16" y1="'+(H-padB)+'" x2="'+(W-16)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/></svg>';
+  holder.innerHTML=s;
+  $('#uhnwiStats').innerHTML=[['Millionaires 2028','~242k','UBS projection'],['Wealth inflow 2025','$63B','with 9,800 migrants']]
+    .map(x=>'<div class="stat"><div class="v">'+x[1]+'</div><div class="k">'+x[0]+' · '+x[2]+'</div></div>').join('');
+}
+
+/* ================= wealth ================= */
+function userNWaed(){let v=parseIn($('#wIn'));if(CUR==='USD')v*=FX;return v;}
+function renderWealth(){
+  const nw=userNWaed();
+  const p=Math.min(99.99,Math.max(0.05,wPctOf(nw)));
+  $('#wBig').textContent=nw>0?heroLabel(p):'–';
+  $('#wExpl').innerHTML=nw>0?(MODE==='hh'
+    ?'Your household’s net worth exceeds that of <b>'+pctTxt(p)+'</b> of regular UAE households (WID-based model).'
+    :'Your net worth exceeds that of <b>'+pctTxt(p)+'</b> of UAE resident adults (WID-based model).')
+    :'Enter your net worth to see your rank.';
+  const per=MODE==='hh'?'household':'adult';
+  const stats=[
+    ['Model median / '+per,moneyW(DATA.wealth_curve.median_aed*wf())],
+    ['Model mean / '+per,moneyW(DATA.wealth_curve.mean_aed*wf())],
+    ['Top 10% needs',moneyW(wValAt(90))],
+    ['Top 1% needs',moneyW(wValAt(99))],
+  ];
+  $('#wStats').innerHTML=stats.map(s=>'<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>').join('');
+  const rows=[[25,'25th*'],[50,'Median'],[75,'75th'],[90,'90th'],[95,'95th'],[99,'99th'],[99.9,'99.9th']];
+  const maxV=wValAt(99.9);
+  let placed=false,html='<tr><th>Percentile</th><th>Net worth</th><th style="width:34%"></th></tr>';
+  for(const[pp,lbl]of rows){
+    const v=wValAt(pp);
+    const youRow=nw>0&&!placed&&p<=pp;
+    if(youRow)placed=true;
+    const w=Math.max(2,100*Math.log(v/20000)/Math.log(maxV/20000));
+    html+='<tr'+(youRow?' class="you"':'')+'><td>'+lbl+(youRow?' · you: '+pctTxt(p):'')+'</td><td>'+moneyW(v)+'</td><td><div class="rbar" style="width:'+w.toFixed(1)+'%"></div></td></tr>';
+  }
+  $('#wLadder').innerHTML=html+'<tr><td colspan="3" class="tiny">* below-median rungs are model extrapolations</td></tr>';
+  $('#wpcSub').textContent='Net worth required at every percentile of '+(MODE==='hh'?'regular UAE households':'UAE resident adults')+' (log scale). Hover to explore; your position is marked.';
+  drawPercCurve('#wpcChart',{
+    getVal:pp=>wValAt(pp),userP:nw>0?p:null,userVal:nw,
+    fmt:v=>moneyW(v),unitTail:'',
+    yTicks:[50000,100000,200000,500000,1000000,2000000,5000000,10000000,20000000,50000000,100000000,500000000]});
+  drawCities();
+  drawUhnwi();
+  const ctx=[
+    ['USD millionaires','~183k','UBS 2025 data'],
+    ['Wealth Gini','0.82','world’s highest'],
+    ['Dubai millionaires','81,200','end-2024'],
+    ['UAE billionaires','28','Henley, end-2024'],
+  ];
+  $('#wContext').innerHTML=ctx.map(s=>'<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+' · '+s[2]+'</div></div>').join('');
+  drawMig();
+}
+function drawMig(){
+  const M=DATA.wealth_stats.migration;
+  const holder=$('#migChart');
+  const W=holder.clientWidth||420,H=150,padB=24,padT=18;
+  const max=Math.max(...M.map(m=>m[1]));
+  const bw=Math.min(60,(W-40)/M.length-14);
+  let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Millionaire net inflows by year">';
+  M.forEach((m,i)=>{
+    const x=20+i*((W-40)/M.length)+((W-40)/M.length-bw)/2;
+    const h=(m[1]/max)*(H-padT-padB);
+    const y=H-padB-h;
+    s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'"  rx="1" fill="'+seq(m[1]/max)+'"/>'
+      +'<text x="'+(x+bw/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="700" fill="'+css('--ink2')+'">+'+m[1].toLocaleString()+'</text>'
+      +'<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+m[0]+(m[0]===2025?'*':'')+'</text>';
+  });
+  s+='<line x1="10" y1="'+(H-padB)+'" x2="'+(W-10)+'" y2="'+(H-padB)+'" stroke="'+css('--baseline')+'"/></svg><div class="tiny">* 2025 projected. #1 destination worldwide every year shown.</div>';
+  holder.innerHTML=s;
+}
+
+/* ================= emirates ================= */
+function hbarChart(holderSel,items,{fmtVal,ranges=null,cls='embar',padR=84}){
+  const holder=$(holderSel);
+  const W=holder.clientWidth||900,rowH=32,padL=122;
+  const H=items.length*rowH+8;
+  const max=Math.max(...items.map(e=>ranges?e.range[1]:e.value));
+  let s='<svg width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  items.forEach((e,i)=>{
+    const y=4+i*rowH;
+    const scale=v=>Math.max(3,(v/max)*(W-padL-padR));
+    const w=scale(e.value);
+    s+='<text x="'+(padL-9)+'" y="'+(y+rowH/2+1)+'" text-anchor="end" font-size="11.5" fill="'+css('--ink2')+'">'+e.name+'</text>'
+      +'<rect class="'+cls+'" data-i="'+i+'" x="'+padL+'" y="'+(y+7)+'" width="'+w.toFixed(1)+'" height="'+(rowH-15)+'"  rx="1" fill="'+seq(e.value/max)+'"/>';
+    if(ranges){
+      const x1=padL+scale(e.range[0]),x2=padL+scale(e.range[1]),cy=y+rowH/2-0.5;
+      s+='<line x1="'+x1.toFixed(1)+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+cy+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+        +'<line x1="'+x1.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x1.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>'
+        +'<line x1="'+x2.toFixed(1)+'" y1="'+(cy-4)+'" x2="'+x2.toFixed(1)+'" y2="'+(cy+4)+'" stroke="'+css('--s1-deep')+'" stroke-width="1.5"/>';
+    }
+    s+='<text x="'+(padL+((ranges? scale(e.range[1]):w))+8).toFixed(1)+'" y="'+(y+rowH/2+1)+'" font-size="11.5" font-weight="700" fill="'+css('--ink2')+'" font-variant-numeric="tabular-nums">'+fmtVal(e)+'</text>';
+  });
+  s+='</svg>';
+  holder.innerHTML=s;
+}
+function renderEmirates(){
+  const E=DATA.emirates;
+  const WE=DATA.wealth_by_emirate.items;
+  hbarChart('#emWealthChart',WE.map(w=>({name:w.name,value:w.mean_wealth_per_adult_usd,range:w.range_usd})),
+    {fmtVal:e=>usdK(e.value),ranges:true,padR:126});
+  hbarChart('#emChart',E.map(e=>({name:e.name,value:e.gdp_pc_usd})),
+    {fmtVal:e=>'$'+e.value.toLocaleString()});
+  const rentE=E.filter(e=>e.rent_1bed_annual_aed);
+  hbarChart('#emRentChart',rentE.map(e=>({name:e.name,value:(e.rent_1bed_annual_aed[0]+e.rent_1bed_annual_aed[1])/2})),
+    {fmtVal:e=>CUR==='USD'?('$'+Math.round(e.value/FX/1000)+'k'):('AED '+Math.round(e.value/1000)+'k')});
+  const G=$('#emGrid');
+  G.innerHTML=E.map(e=>{
+    const rent=e.rent_1bed_annual_aed?money(e.rent_1bed_annual_aed[0]/12,{perAdj:false,compact:true})+'–'+money(e.rent_1bed_annual_aed[1]/12,{perAdj:false,compact:true})+' /mo':'n/a';
+    const sal=e.salary_index_annual_aed?money(e.salary_index_annual_aed/12,{perAdj:false,compact:true})+' /mo':'n/a';
+    return '<div class="emcard"><h3>'+e.name+'</h3>'
+      +'<div class="row wl"><span>Est. wealth / adult</span><b>'+usdK(e.wealth_per_adult_usd)+'</b></div>'
+      +'<div class="row"><span>Population</span><b>'+e.pop_m.toFixed(2).replace(/0$/,'')+'M <span class="tiny">('+e.pop_year+')</span></b></div>'
+      +'<div class="row"><span>GDP per capita</span><b>$'+e.gdp_pc_usd.toLocaleString()+'</b></div>'
+      +'<div class="row"><span>Share of UAE GDP</span><b>'+e.share_gdp_pct+'%</b></div>'
+      +'<div class="row"><span>Avg salary (est.)</span><b>'+sal+'</b></div>'
+      +'<div class="row"><span>1-bed rent (typ.)</span><b>'+rent+'</b></div></div>';
+  }).join('');
+}
+
+/* ================= roles ================= */
+const SRC={CF:'Cooper Fitch 2025',RH:'Robert Half 2024',MP:'Michael Page 2025',GT:'GulfTalent',
+US:'UAESalary 2026',JB:'Jooble postings 2026',SG:'SOEG Consulting 2026',SA:'salary.ae 2025',EH:'UAE Expert Hub 2026',MK:'market benchmarks 2025',
+JX:'JobXDubai 2025',AV:'aviation press 2025',RF:'RFS HR 2025',FH:'nursing market data 2026',BC:'BaseCareer 2025',
+GL:'GroupL manpower 2025',UT:'unofficial (Dubai Police) 2025',TA:'TeachAbroadDirect 2025'};
+const ABBR={cfo:'chief financial officer',ceo:'chief executive officer',coo:'chief operating officer',cto:'chief technology officer',cio:'chief information officer',chro:'chief human resources officer',cmo:'chief marketing officer',gm:'general manager',md:'managing director',swe:'software engineer',ib:'investment banking',pe:'private equity',banker:'banking'};
+const expandQ=q=>q.toLowerCase().split(/\s+/).map(w=>ABBR[w]||w).join(' ');
+let roleLimit=60;
+function initRoles(){
+  const sectors=[...new Set(DATA.roles.map(r=>r[1].split('–')[0].split('—')[0].trim()))].sort();
+  $('#roleSector').innerHTML='<option value="">All sectors</option>'+sectors.map(s=>'<option>'+s+'</option>').join('');
+  $('#roleQ').oninput=()=>{roleLimit=60;renderRoles();};
+  $('#roleSector').onchange=()=>{roleLimit=60;renderRoles();};
+  $('#roleSort').onchange=()=>{roleLimit=60;renderRoles();};
+  $('#roleMore').onclick=()=>{roleLimit+=80;renderRoles();};
+}
+function renderRoles(){
+  const q=expandQ($('#roleQ').value.trim()),sec=$('#roleSector').value,sort=$('#roleSort').value;
+  let rows=DATA.roles.filter(r=>
+    (!q||r[2].toLowerCase().includes(q)||r[1].toLowerCase().includes(q))&&
+    (!sec||r[1].startsWith(sec)));
+  rows.sort((a,b)=>sort==='az'?a[2].localeCompare(b[2]):sort==='lo'?(a[3]+a[4])-(b[3]+b[4]):(b[3]+b[4])-(a[3]+a[4]));
+  $('#roleCount').innerHTML=rows.length+' roles from recruiter salary guides, gross monthly pay. Each role shows its salary range and where the <b>midpoint</b> of that range would rank among all ~9.2M workers in the UAE.';
+  const shown=rows.slice(0,roleLimit);
+  const LOG0=Math.log(800),LOG1=Math.log(300000);
+  $('#roleList').innerHTML=shown.map(r=>{
+    const mid=(r[3]+r[4])/2, p=pctOf('full',mid), top=100-p;
+    const l=Math.max(0,(Math.log(r[3])-LOG0)/(LOG1-LOG0))*100;
+    const rr=Math.min(100,(Math.log(r[4])-LOG0)/(LOG1-LOG0))*100;
+    const chip=top<1?('Top '+top.toFixed(1)+'% overall'):('Top '+Math.round(top)+'% overall');
+    const chipTitle='A salary of '+money(mid,{compact:true})+(PER==='yr'?'/yr':'/mo')+' (this range’s midpoint) is higher than what '+pctTxt(p)+' of all UAE workers earn';
+    return '<div class="rrow"><div class="nm"><b>'+r[2]+'</b><small>'+r[1]+' · '+SRC[r[0]]+'</small></div>'
+      +'<div class="rangewrap" title="'+money(r[3],{compact:true})+' – '+money(r[4],{compact:true})+'"><div class="rangetrack"></div><div class="rangefill" style="left:'+l.toFixed(1)+'%;width:'+Math.max(1.5,rr-l).toFixed(1)+'%"></div></div>'
+      +'<div class="vals">'+money(r[3],{compact:true})+' – '+money(r[4],{compact:true})+(PER==='yr'?' /yr':' /mo')
+      +'<span class="pctchip" title="'+chipTitle+'">'+chip+'</span></div></div>';
+  }).join('');
+  $('#roleMore').style.display=rows.length>roleLimit?'block':'none';
+}
+
+/* ================= salary check ================= */
+function initSalCheck(){
+  const names=[...new Set(DATA.roles.map(r=>r[2]))].sort();
+  $('#scRoles').innerHTML=names.map(n=>'<option value="'+n.replace(/"/g,'&quot;')+'">').join('');
+  $('#scRole').addEventListener('input',renderSalCheck);
+  $('#scYrs').addEventListener('input',renderSalCheck);
+  $('#scCity').addEventListener('change',renderSalCheck);
+  hookMoney($('#scPay'),renderSalCheck);
+}
+function expFrac(y){ // where in the range experience should place you
+  return Math.min(0.95,Math.max(0.08,0.08+0.87*Math.min(1,y/14)));
+}
+function renderSalCheck(){
+  $('#scCur').textContent=CUR;
+  $('#scPer').textContent=PER==='mo'?'/ month':'/ year';
+  const q=expandQ($('#scRole').value.trim());
+  const yrs=Math.max(0,parseFloat($('#scYrs').value)||0);
+  const cityF=parseFloat($('#scCity').value)||1;
+  const cityName=$('#scCity').selectedOptions[0]?.textContent||'Dubai';
+  let pay=parseIn($('#scPay'));
+  if(CUR==='USD')pay*=FX;
+  if(PER==='yr')pay/=12;
+  const V=$('#scVerdict'),R=$('#scRangeViz'),S=$('#scStats'),M=$('#scMatches');
+  if(!q){V.innerHTML='<div class="sub">Pick a role and enter your package to see where you stand.</div>';R.innerHTML='';S.innerHTML='';M.innerHTML='';renderScJobs(null);return;}
+  let matches=DATA.roles.filter(r=>r[2].toLowerCase()===q);
+  if(!matches.length)matches=DATA.roles.filter(r=>r[2].toLowerCase().includes(q));
+  if(!matches.length){V.innerHTML='<div class="sub">No benchmark found for that title. Try a broader term (e.g. "engineer", "finance manager") or browse the Roles tab.</div>';R.innerHTML='';S.innerHTML='';M.innerHTML='';renderScJobs(null);return;}
+  matches=matches.slice(0,8);
+  const lo=Math.min(...matches.map(r=>r[3]))*cityF;
+  const hi=Math.max(...matches.map(r=>r[4]))*cityF;
+  const exp=lo+(hi-lo)*expFrac(yrs);
+  const band=[exp*0.88,exp*1.12];
+  if(!(pay>0)){
+    V.innerHTML='<div class="sub">Benchmark range for “'+matches[0][2]+'” in '+cityName+': <b>'+money(lo,{compact:true})+' – '+money(hi,{compact:true})+(PER==='yr'?' /yr':' /mo')+'</b>. Enter your package for a verdict.</div>';
+    R.innerHTML='';S.innerHTML='';M.innerHTML=matchList(matches);renderScJobs(matches[0][2]);return;
+  }
+  let cls,ic,txt,detail;
+  const mid=(lo+hi)/2;
+  if(pay<lo*0.95){cls='bad';ic='▼';txt='Below the typical range';
+    detail='Your package is <b>'+money(lo-pay,{compact:true})+'</b> below the bottom of the published range for this role in '+cityName+'.';}
+  else if(pay>hi*1.08){cls='good';ic='▲';txt='Above the typical range';
+    detail='Your package is <b>'+money(pay-hi,{compact:true})+'</b> above the top of the published range. Well negotiated.';}
+  else if(pay<band[0]){cls='warn';ic='◆';txt='Below market for your experience';
+    detail='You are inside the role’s range, but with '+yrs+' yrs of experience the expected point is about <b>'+money(exp,{compact:true})+'</b>. You are <b>'+money(exp-pay,{compact:true})+'</b> under it — there may be room to negotiate.';}
+  else if(pay>band[1]){cls='good';ic='▲';txt='Above market for your experience';
+    detail='You earn about <b>'+money(pay-exp,{compact:true})+'</b> more than the expected point (<b>'+money(exp,{compact:true})+'</b>) for '+yrs+' yrs of experience.';}
+  else{cls='good';ic='✓';txt='At market';
+    detail='Your package sits right around the expected point of <b>'+money(exp,{compact:true})+'</b> for '+yrs+' yrs of experience in '+cityName+'.';}
+  V.innerHTML='<span class="verdict '+cls+'"><span class="ic">'+ic+'</span>'+txt+'</span><div class="scdelta">'+detail+'</div>';
+  // range bar
+  const W=Math.max(340,($('#scResult').clientWidth||560)-44),BH=54;
+  const axLo=Math.min(lo,pay)*0.85, axHi=Math.max(hi,pay)*1.12;
+  const X=v=>14+(Math.log(v)-Math.log(axLo))/(Math.log(axHi)-Math.log(axLo))*(W-28);
+  R.innerHTML='<svg width="100%" height="'+BH+'" viewBox="0 0 '+W+' '+BH+'" style="margin-top:8px">'
+    +'<line x1="14" y1="34" x2="'+(W-14)+'" y2="34" stroke="'+css('--grid')+'" stroke-width="4" stroke-linecap="round"/>'
+    +'<line x1="'+X(lo).toFixed(1)+'" y1="34" x2="'+X(hi).toFixed(1)+'" y2="34" stroke="'+css('--fill-hi')+'" stroke-width="7" stroke-linecap="round" opacity="0.9"/>'
+    +'<line x1="'+X(exp).toFixed(1)+'" y1="26" x2="'+X(exp).toFixed(1)+'" y2="42" stroke="'+css('--s1-deep')+'" stroke-width="2"/>'
+    +'<text x="'+X(exp).toFixed(1)+'" y="52" text-anchor="middle" font-size="10" fill="'+css('--muted')+'">expected</text>'
+    +'<text x="'+X(lo).toFixed(1)+'" y="20" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+money(lo,{compact:true}).replace(CUR+' ','')+'</text>'
+    +'<text x="'+X(hi).toFixed(1)+'" y="20" text-anchor="middle" font-size="10.5" fill="'+css('--muted')+'">'+money(hi,{compact:true}).replace(CUR+' ','')+'</text>'
+    +'<path d="M'+(X(pay)-6).toFixed(1)+',8 L'+(X(pay)+6).toFixed(1)+',8 L'+X(pay).toFixed(1)+',18 Z" fill="'+css('--critical')+'"/>'
+    +'<text x="'+X(pay).toFixed(1)+'" y="6" text-anchor="middle" font-size="10.5" font-weight="800" fill="'+css('--critical')+'">YOU</text>'
+    +'</svg>';
+  const pAll=pctOf('full',pay),pPro=pctOf('pro',pay);
+  S.innerHTML=[
+    ['Role range · '+cityName,money(lo,{compact:true})+'–'+money(hi,{compact:true})],
+    ['Expected @ '+yrs+' yrs',money(exp,{compact:true})],
+    ['Vs all UAE workers','Top '+(100-pAll<1?(100-pAll).toFixed(1):Math.round(100-pAll))+'%'],
+    ['Vs professionals',(pPro>=50?'Top '+Math.round(100-pPro)+'%':'Bottom '+Math.round(pPro)+'%')],
+  ].map(s=>'<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>').join('');
+  M.innerHTML=matchList(matches);
+  renderScJobs(matches[0][2]);
+}
+function matchList(matches){
+  return 'Benchmarks used: '+matches.map(r=>r[2]+' ('+r[1].split('–')[0].trim()+', '+SRC[r[0]]+': '+money(r[3],{compact:true})+'–'+money(r[4],{compact:true})+')').join('; ')+'. Dubai-level figures scaled by emirate factor.';
+}
+
+/* ================= monetization (subtle, config-driven) =================
+   HOW TO USE: replace each url with your referral/affiliate URL once you join
+   the program (Wise: wise.com/partnerwise; IBKR: ibkr affiliate program; Sarwa:
+   in-app referral; Bayut/PF/job boards: plain deep links until you have deals).
+   Set enabled:false on any group to hide it entirely. Links are text-only and
+   labelled; the footer disclosure appears automatically if anything is enabled. */
+const MONETIZE={
+  jobs:{enabled:true,label:'Negotiating or looking? Live openings for this role:',
+    links:[
+      {name:'LinkedIn',url:q=>'https://www.linkedin.com/jobs/search/?location=United%20Arab%20Emirates&keywords='+encodeURIComponent(q)},
+      {name:'Bayt',url:q=>'https://www.bayt.com/en/uae/jobs/'+encodeURIComponent(q.toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'))+'-jobs/'},
+      {name:'Indeed',url:q=>'https://ae.indeed.com/jobs?q='+encodeURIComponent(q)}
+    ]},
+  wealth:{enabled:true,kicker:'Tools UAE expats use · partner links',
+    links:[
+      {name:'Send money home with Wise',url:'https://wise.com/'},
+      {name:'Invest with Interactive Brokers',url:'https://www.interactivebrokers.com/'},
+      {name:'Robo-invest with Sarwa',url:'https://www.sarwa.co/'}
+    ]},
+  emirates:{enabled:true,kicker:'Live market · partner links',
+    links:[
+      {name:'Browse rents on Bayut',url:'https://www.bayut.com/to-rent/property/uae/'},
+      {name:'Compare on Property Finder',url:'https://www.propertyfinder.ae/'}
+    ]},
+  newsletter:{enabled:true,text:'Want the annual UAE salary report when official data lands?',cta:'Get notified',
+    url:'mailto:hello@example.com?subject=UAE%20salary%20report%20updates'} // swap for your form (e.g. Buttondown/Substack)
+};
+function renderMonetize(){
+  const any=['wealth','emirates'].some(k=>MONETIZE[k].enabled)||MONETIZE.jobs.enabled;
+  $('#ftDisclosure').style.display=any?'block':'none';
+  const fill=(sel,cfg)=>{const el=$(sel);if(!el)return;
+    if(!cfg.enabled||!cfg.links.length){el.style.display='none';return;}
+    el.style.display='block';
+    el.innerHTML='<div class="pk">'+cfg.kicker+'</div>'+cfg.links.map(l=>'<a href="'+l.url+'" target="_blank" rel="noopener sponsored">'+l.name+'</a>').join('');};
+  fill('#plWealth',MONETIZE.wealth);
+  fill('#plEmirates',MONETIZE.emirates);
+  const nw=$('#ftNews');
+  if(MONETIZE.newsletter.enabled){nw.innerHTML=MONETIZE.newsletter.text+' <a href="'+MONETIZE.newsletter.url+'">'+MONETIZE.newsletter.cta+' →</a>';}
+  else nw.style.display='none';
+}
+function renderScJobs(roleTitle){
+  const el=$('#scJobs');
+  if(!MONETIZE.jobs.enabled||!roleTitle){el.style.display='none';return;}
+  const q=roleTitle.replace(/\(.*?\)/g,'').trim();
+  el.style.display='block';
+  el.innerHTML='<span class="tiny" style="display:block;margin-bottom:2px">'+MONETIZE.jobs.label+'</span>'
+    +MONETIZE.jobs.links.map(l=>'<a href="'+l.url(q)+'" target="_blank" rel="noopener sponsored">'+l.name+'</a>').join('');
+}
+
+/* ================= boot ================= */
+function renderAll(){renderIncome();renderWealth();renderEmirates();renderRoles();drawSegments();renderSalCheck();}
+hookMoney($('#incIn'),renderIncome);
+hookMoney($('#wIn'),renderWealth);
+initRoles();
+initSalCheck();
+applyMode();
+renderMonetize();
+renderAll();
+let rsz;window.addEventListener('resize',()=>{clearTimeout(rsz);rsz=setTimeout(renderAll,180);});
+</script>
+</body>
+</html>
