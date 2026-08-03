@@ -224,6 +224,43 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
 .scjobs a{font-weight:650;margin-right:10px}
 .newsline{margin-top:6px}
 .newsline a{font-weight:650}
+/* ---------- refine chips + capture (frictionless, never blocking) ---------- */
+.capcard{margin-top:16px}
+.caphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.capsub{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.chiprow{margin-top:9px}
+.chiprow .cl{font-size:9.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12.5px;font-weight:600;line-height:1;color:var(--ink2);background:var(--page);
+  border:1px solid var(--hair);border-radius:999px;padding:8px 12px;cursor:pointer;transition:.12s;min-height:32px}
+.chip:hover{border-color:var(--s1-deep);color:var(--ink)}
+.chip.on{background:var(--s1-deep);border-color:var(--s1-deep);color:#fff}
+.chip:focus-visible{outline:2px solid var(--s1-deep);outline-offset:2px}
+.capout{margin-top:12px;padding-top:11px;border-top:1px solid var(--hair);font-size:13.5px;line-height:1.6;color:var(--ink);display:none}
+.capout b{font-weight:750}
+.capout .cdelta{display:block;margin-top:4px;font-size:12.5px;color:var(--ink2)}
+.capskip{font-size:11px;color:var(--muted);margin-top:8px}
+.emailbox{margin-top:14px;padding:12px 14px;border:1px solid var(--hair);border-left:3px solid var(--s1-deep);
+  border-radius:8px;background:var(--page);display:none;position:relative}
+.emailbox .et{font-size:13px;font-weight:650;color:var(--ink);padding-right:22px;line-height:1.45}
+.emailbox .es{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.emailform{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.emailform input{flex:1;min-width:190px;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--hair);
+  border-radius:7px;background:var(--surface);color:var(--ink)}
+.emailform input:focus{outline:none;border-color:var(--s1-deep)}
+.emailform button{font:inherit;font-size:13.5px;font-weight:700;padding:9px 15px;border:0;border-radius:7px;
+  background:var(--s1-deep);color:#fff;cursor:pointer;white-space:nowrap}
+.emailform button:hover{filter:brightness(1.08)}
+.emailx{position:absolute;top:7px;right:8px;background:none;border:0;color:var(--muted);font-size:16px;
+  line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px}
+.emailx:hover{color:var(--ink)}
+.emailok{font-size:13px;font-weight:650;color:#0ca30c}
+@media(max-width:560px){
+  .chip{font-size:12px;padding:8px 11px}
+  .capout{font-size:13px}
+  .emailform input{min-width:0;width:100%}
+  .emailform button{width:100%}
+}
 </style>
 </head>
 <body>
@@ -301,6 +338,18 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
       <div class="statrow" id="incStats"></div>
       <div class="milestone" id="incMile"></div>
     </div>
+  </div>
+  <div class="card capcard" id="capCard">
+    <div class="caphead">
+      <div>
+        <div class="klabel" style="margin-bottom:2px">Sharpen your comparison</div>
+        <div class="capsub" id="capSub">Three optional taps. Each one narrows the benchmark to people more like you.</div>
+      </div>
+    </div>
+    <div id="capChips"></div>
+    <div class="capskip">No account, no name, no gate. Your figures stay anonymous and the full dashboard works whether or not you tap anything. <a href="/privacy.html">How we handle data</a>.</div>
+    <div class="capout" id="capOut"></div>
+    <div class="emailbox" id="capEmail"></div>
   </div>
   <div class="card chartcard">
     <div class="klabel" id="chartTitle">Income distribution</div>
@@ -408,6 +457,7 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
       <div class="statrow" id="scStats"></div>
       <div id="scMatches" class="tiny" style="margin-top:12px"></div>
       <div class="scjobs" id="scJobs"></div>
+      <div class="emailbox" id="scEmail"></div>
     </div>
   </div>
   <div class="note">The verdict compares you with the matched role's guide range (min of mins to max of maxes across matching rows), reduced by 10% because published guide figures typically include benefits that vary a lot by company, then scaled by an emirate factor derived from relative average salaries, with an experience-based expected point inside the range (early career sits near the bottom, 12+ years near the top). Pay for the same title varies widely by employer, sector and hiring market, so treat this as a benchmark, not a promise.</div>
@@ -572,7 +622,7 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
 <footer>
   <div class="wrap">
 <div class="keyfacts"><b>Key UAE income &amp; wealth figures (2026):</b> median salary across all workers AED 3,662/month; median in the official household-survey frame AED 8,926; median for white-collar professionals AED 20,010; top 10% of workers earn above AED 21,674 and the top 1% above AED 87,333; about 60% of all UAE workers earn under AED 5,000 a month; median household income AED 19,720; median net worth per adult AED 337,549 and the top 1% threshold about AED 14.4M; UAE wealth Gini 0.82, the highest in the world; roughly 183,000 US-dollar millionaires nationally and 81,200 in Dubai; no personal income tax on salaries.</div><nav class="guides"><b>Guides:</b> <a href="/average-salary-in-dubai.html">Average salary in Dubai</a> · <a href="/average-salary-in-uae.html">Average salary in the UAE</a> · <a href="/uae-income-percentile.html">UAE income percentile calculator</a> · <a href="/median-salary-uae.html">Median salary in the UAE</a> · <a href="/salary-by-emirate.html">Salaries and wealth by emirate</a> · <a href="/uae-net-worth-percentile.html">UAE net worth percentiles</a> · <a href="/how-many-millionaires-in-dubai.html">How many millionaires in Dubai</a> · <a href="/uae-salary-guide-by-role.html">UAE salary guide by role</a> · <a href="/is-my-salary-good-in-dubai.html">Is my salary good in Dubai?</a> · <a href="/uae-wealth-inequality.html">UAE wealth inequality explained</a></nav>
-    UAE Income &amp; Wealth Dashboard — modelled estimates from public sources, compiled July 2026. Not affiliated with any UAE government entity. See Methodology for caveats.
+    UAE Income &amp; Wealth Dashboard — modelled estimates from public sources, compiled July 2026. Not affiliated with any UAE government entity. See Methodology for caveats. <a href="/privacy.html">Privacy &amp; data</a>.
     <div id="ftDisclosure" style="display:none">Some links on this site are referral links; they support the project at no extra cost to you and never affect the data shown.</div>
     <div class="newsline" id="ftNews"></div>
   </div>
@@ -710,9 +760,11 @@ $('#perSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
 $('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;
   $$('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
   $$('section.tab').forEach(s=>s.classList.toggle('on',s.id==='tab-'+b.dataset.tab));
+  track('tab',{tab:b.dataset.tab});
   renderAll();};
 $('#groupSel').onclick=e=>{const o=e.target.closest('.opt');if(!o)return;
-  $$('#groupSel .opt').forEach(x=>x.classList.toggle('on',x===o));VIEW=o.dataset.view;renderIncome();};
+  $$('#groupSel .opt').forEach(x=>x.classList.toggle('on',x===o));VIEW=o.dataset.view;
+  track('group',{view:VIEW});renderIncome();updateCapture();};
 function applyMode(){
   const hh=MODE==='hh';
   $('#groupSel').style.display=hh?'none':'block';
@@ -1335,10 +1387,14 @@ function renderRoles(){
 function initSalCheck(){
   const names=[...new Set(DATA.roles.map(r=>r[2]))].sort();
   $('#scRoles').innerHTML=names.map(n=>'<option value="'+n.replace(/"/g,'&quot;')+'">').join('');
-  $('#scRole').addEventListener('input',renderSalCheck);
-  $('#scYrs').addEventListener('input',renderSalCheck);
-  $('#scCity').addEventListener('change',renderSalCheck);
-  hookMoney($('#scPay'),renderSalCheck);
+  $('#scRole').addEventListener('input',()=>{renderSalCheck();noteSalary('sc');});
+  $('#scYrs').addEventListener('input',()=>{renderSalCheck();noteSalary('sc');});
+  $('#scCity').addEventListener('change',()=>{renderSalCheck();noteSalary('sc');});
+  hookMoney($('#scPay'),()=>{renderSalCheck();noteSalary('sc');});
+  // carry anything the visitor already told us on the Income tab into this form
+  const em=PROFILE.get('emirate'),ex=PROFILE.get('exp');
+  if(em)$('#scCity').value=emFactor(em).toFixed(2);
+  if(ex){const eb=EXPB.find(x=>x[0]===ex);if(eb)$('#scYrs').value=eb[2];}
 }
 function expFrac(y){ // where in the range experience should place you
   return Math.min(0.95,Math.max(0.08,0.08+0.87*Math.min(1,y/14)));
@@ -1433,7 +1489,7 @@ const MONETIZE={
       {name:'Compare on Property Finder',url:'https://www.propertyfinder.ae/'}
     ]},
   newsletter:{enabled:true,text:'Want the annual UAE salary report when official data lands?',cta:'Get notified',
-    url:'mailto:hello@example.com?subject=UAE%20salary%20report%20updates'} // swap for your form (e.g. Buttondown/Substack)
+    url:'#capCard'} // handled in-page: opens the Income tab and focuses the inline sign-up
 };
 function renderMonetize(){
   const any=['wealth','emirates'].some(k=>MONETIZE[k].enabled)||MONETIZE.jobs.enabled;
@@ -1445,7 +1501,19 @@ function renderMonetize(){
   fill('#plWealth',MONETIZE.wealth);
   fill('#plEmirates',MONETIZE.emirates);
   const nw=$('#ftNews');
-  if(MONETIZE.newsletter.enabled){nw.innerHTML=MONETIZE.newsletter.text+' <a href="'+MONETIZE.newsletter.url+'">'+MONETIZE.newsletter.cta+' →</a>';}
+  if(MONETIZE.newsletter.enabled){
+    nw.innerHTML=MONETIZE.newsletter.text+' <a href="#capCard" id="ftNewsLink">'+MONETIZE.newsletter.cta+' →</a>';
+    $('#ftNewsLink').onclick=e=>{
+      e.preventDefault();
+      PROFILE.del('emailNo');emailForce=true;
+      const b=document.querySelector('#tabs button[data-tab="income"]');if(b)b.click();
+      updateCapture();
+      const box=$('#capEmail');
+      if(box){box.scrollIntoView({behavior:'smooth',block:'center'});
+        const i=box.querySelector('input[type=email]');if(i)setTimeout(()=>i.focus(),400);}
+      track('email_intent',{from:'footer'});
+    };
+  }
   else nw.style.display='none';
 }
 function renderScJobs(roleTitle){
@@ -1457,15 +1525,304 @@ function renderScJobs(roleTitle){
     +MONETIZE.jobs.links.map(l=>'<a href="'+l.url(q)+'" target="_blank" rel="noopener sponsored">'+l.name+'</a>').join('');
 }
 
+/* ============================================================================
+   ANALYTICS + DATA CAPTURE
+   Design rules, in priority order:
+     1. Nothing is ever gated. The percentile, the charts and the verdict are
+        free and always visible. Capture rides alongside the payoff, never
+        in front of it.
+     2. Salary is captured passively, because the user already has to type it
+        to get their answer. No extra step is asked of them.
+     3. Refinements are one tap each and every tap returns a real number.
+     4. The email ask appears only after a result exists, is inline (never a
+        modal or an overlay), and is permanently dismissible.
+     5. Cookieless. Do Not Track and Global Privacy Control switch the whole
+        thing off. No personal data leaves the browser except an email the
+        user typed on purpose.
+   ========================================================================== */
+const CAPTURE={
+  /* --- 1. Event collector -------------------------------------------------
+     Paste your collector URL below. Works with the Cloudflare Worker in
+     collector-worker.js, a Google Apps Script web app, Formspree, Basin, Val
+     Town, or anything that accepts a POST. Until it is set, events queue in
+     the visitor's own browser and flush automatically once a URL exists.
+     mode:'json' posts application/json as text/plain (no CORS preflight).
+     mode:'form' posts urlencoded with no-cors, for Google Apps Script. */
+  endpoint:'',
+  mode:'json',
+  /* --- 2. Page analytics (optional, both cookieless) ---------------------- */
+  cfBeacon:'',          // Cloudflare Web Analytics token, free, unlimited
+  plausibleDomain:'',   // e.g. 'wealthdashboarduae.com', paid
+  /* --- 3. Tuning --------------------------------------------------------- */
+  salaryMin:500, salaryMax:5000000,   // sanity bounds, AED per month
+  salaryDebounce:2200,                // ms of stillness before a value counts
+  emailAfterMs:20000,                 // don't ask before the user has read something
+  emailAfterActions:4,                // ...or after this many interactions
+  maxQueue:60
+};
+
+const TRACK=(()=>{
+  const off=(navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.msDoNotTrack==='1'
+             ||navigator.globalPrivacyControl===true);
+  const rid=()=>Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);
+  const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+  const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  let vid=null;
+  if(!off){vid=lsGet('uaeVid');if(!vid){vid=rid();lsSet('uaeVid',vid);}}
+  let sid=rid();try{sid=sessionStorage.uaeSid||(sessionStorage.uaeSid=sid);}catch(e){}
+  let q=[];try{q=JSON.parse(lsGet('uaeQ')||'[]');if(!Array.isArray(q))q=[];}catch(e){q=[];}
+  const save=()=>lsSet('uaeQ',JSON.stringify(q));
+  const started=Date.now();
+  let actions=0,timer=null;
+  function push(name,props){
+    if(off)return;
+    actions++;
+    let ref='';try{ref=document.referrer?new URL(document.referrer).hostname:'';}catch(e){}
+    q.push({e:name,t:new Date().toISOString(),vid:vid,sid:sid,p:props||{},
+            path:location.pathname,ref:ref,w:innerWidth,
+            tz:(Intl.DateTimeFormat().resolvedOptions().timeZone||'')});
+    if(q.length>CAPTURE.maxQueue)q=q.slice(-CAPTURE.maxQueue);
+    save();
+    if(CAPTURE.endpoint&&!timer)timer=setTimeout(()=>flush(false),4000);
+  }
+  function flush(useBeacon){
+    timer=null;
+    if(!CAPTURE.endpoint||!q.length)return;
+    const batch=q.slice(0);
+    const body=JSON.stringify({site:'wealthdashboarduae',v:1,events:batch});
+    const done=()=>{q=q.slice(batch.length);save();};
+    try{
+      if(CAPTURE.mode==='form'){
+        fetch(CAPTURE.endpoint,{method:'POST',mode:'no-cors',keepalive:true,
+          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+          body:'payload='+encodeURIComponent(body)});
+        done();return;
+      }
+      if(useBeacon&&navigator.sendBeacon){
+        if(navigator.sendBeacon(CAPTURE.endpoint,new Blob([body],{type:'text/plain;charset=UTF-8'}))){done();return;}
+      }
+      fetch(CAPTURE.endpoint,{method:'POST',keepalive:true,
+        headers:{'Content-Type':'text/plain;charset=UTF-8'},body:body})
+        .then(r=>{if(r.ok)done();}).catch(()=>{});
+    }catch(e){}
+  }
+  addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush(true);});
+  addEventListener('pagehide',()=>flush(true));
+  return {push:push,flush:flush,off:off,
+          elapsed:()=>Date.now()-started,actions:()=>actions,queued:()=>q.length};
+})();
+const track=(n,p)=>TRACK.push(n,p);
+
+/* page-analytics beacons, injected only if configured and only if not opted out */
+(function(){
+  if(TRACK.off)return;
+  if(CAPTURE.cfBeacon){
+    const s=document.createElement('script');s.defer=true;
+    s.src='https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon',JSON.stringify({token:CAPTURE.cfBeacon}));
+    document.head.appendChild(s);
+  }
+  if(CAPTURE.plausibleDomain){
+    const s=document.createElement('script');s.defer=true;
+    s.setAttribute('data-domain',CAPTURE.plausibleDomain);
+    s.src='https://plausible.io/js/script.js';
+    document.head.appendChild(s);
+  }
+})();
+
+/* progressive profile: whatever the visitor has told us, remembered between visits */
+const PROFILE=(()=>{
+  let o={};try{o=JSON.parse(localStorage.uaeProfile||'{}')||{}}catch(e){o={}}
+  const save=()=>{try{localStorage.uaeProfile=JSON.stringify(o)}catch(e){}};
+  const PUB=['sector','exp','emirate'];
+  return {get:k=>o[k],set:(k,v)=>{o[k]=v;save();},del:k=>{delete o[k];save();},
+          all:()=>Object.assign({},o),
+          /* only the three fields the visitor actually chose ever leave the browser;
+             internal flags (email sent, ask dismissed) stay local */
+          pub:()=>{const r={};PUB.forEach(k=>{if(o[k]!==undefined)r[k]=o[k]});return r;}};
+})();
+
+/* ---- taxonomy: 837 recruiter-guide rows folded into ten one-tap sectors ---- */
+const SECTORS=[['fin','Banking & finance'],['tech','Technology'],['adv','Consulting, legal & advisory'],
+  ['re','Real estate & construction'],['hc','Healthcare'],['hos','Hospitality & retail'],
+  ['log','Logistics & aviation'],['ind','Industry & trades'],['pub','Public sector & education'],
+  ['oth','Something else']];
+function secGroup(s){
+  const t=(s||'').toLowerCase();
+  if(/^technology/.test(t))return 'tech';
+  if(/^(finance|banking|financial services|investment)/.test(t))return 'fin';
+  if(/^(advisory|strategy|consulting|legal|professional services)/.test(t))return 'adv';
+  if(/^(real estate|construction)/.test(t))return 're';
+  if(/^healthcare/.test(t))return 'hc';
+  if(/^hospitality/.test(t))return 'hos';
+  if(/^sales & marketing/.test(t))return t.indexOf('consumer')>=0?'hos':'ind';
+  if(/^(supply chain|transport|aviation)/.test(t))return 'log';
+  if(/^(manufacturing|trades)/.test(t))return 'ind';
+  if(/^(public sector|education|security)/.test(t))return 'pub';
+  return 'oth';
+}
+const EXPB=[['0-2','0–2 yrs',1],['3-5','3–5 yrs',4],['6-10','6–10 yrs',8],
+            ['11-15','11–15 yrs',13],['16+','16+ yrs',20]];
+const EMS=[['Dubai',1.00],['Abu Dhabi',0.98],['Sharjah',0.95],['Ajman',0.90],
+           ['Ras Al Khaimah',0.92],['Fujairah',0.88],['Umm Al Quwain',0.88]];
+const emFactor=n=>{const e=EMS.find(x=>x[0]===n);return e?e[1]:1;};
+
+/* the payoff: every tap returns a real number computed from the roles dataset */
+function cohortStats(){
+  const sec=PROFILE.get('sector');
+  if(!sec)return null;
+  const rows=DATA.roles.filter(r=>secGroup(r[1])===sec);
+  if(rows.length<5)return null;
+  const f=emFactor(PROFILE.get('emirate'));
+  const mids=rows.map(r=>(r[3]+r[4])/2*f).sort((a,b)=>a-b);
+  const q=p=>{const i=(mids.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);
+              return mids[lo]+(mids[hi]-mids[lo])*(i-lo);};
+  const out={n:rows.length,p25:q(0.25),p50:q(0.5),p75:q(0.75),
+             label:(SECTORS.find(s=>s[0]===sec)||[0,''])[1]};
+  const eb=PROFILE.get('exp')&&EXPB.find(e=>e[0]===PROFILE.get('exp'));
+  if(eb)out.expected=q(Math.min(0.9,0.12+0.72*expFrac(eb[2])));
+  return out;
+}
+
+/* ---- chip UI ---- */
+function chipRow(key,label,items){
+  const cur=PROFILE.get(key);
+  return '<div class="chiprow"><div class="cl">'+label+'</div><div class="chips">'
+    +items.map(it=>'<button type="button" class="chip'+(cur===it[0]?' on':'')+'" data-k="'+key
+      +'" data-v="'+String(it[0]).replace(/"/g,'&quot;')+'">'+it[1]+'</button>').join('')
+    +'</div></div>';
+}
+function initCapture(){
+  $('#capChips').innerHTML=
+     chipRow('sector','What field do you work in?',SECTORS)
+    +chipRow('exp','Years of experience',EXPB.map(e=>[e[0],e[1]]))
+    +chipRow('emirate','Where do you work?',EMS.map(e=>[e[0],e[0]]));
+  $('#capChips').addEventListener('click',e=>{
+    const b=e.target.closest('.chip');if(!b)return;
+    const k=b.dataset.k,v=b.dataset.v;
+    const wasOn=PROFILE.get(k)===v;
+    if(wasOn)PROFILE.del(k);else PROFILE.set(k,v);
+    b.parentNode.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===b&&!wasOn));
+    track('refine',{field:k,value:wasOn?null:v,profile:PROFILE.pub()});
+    if(k==='emirate'&&!wasOn){const sel=$('#scCity');if(sel)sel.value=emFactor(v).toFixed(2);}
+    if(k==='exp'&&!wasOn){const y=$('#scYrs'),eb=EXPB.find(x=>x[0]===v);if(y&&eb)y.value=eb[2];}
+    renderSalCheck();
+    updateCapture();
+  });
+  // permanently dismissible email ask, and the submit handler, for both placements
+  ['#capEmail','#scEmail'].forEach(sel=>{
+    const el=$(sel);if(!el)return;
+    el.addEventListener('click',e=>{
+      if(e.target.closest('.emailx')){PROFILE.set('emailNo',1);track('email_dismiss',{});updateCapture();}
+    });
+    el.addEventListener('submit',e=>{
+      e.preventDefault();
+      const inp=el.querySelector('input[type=email]');
+      const v=(inp&&inp.value||'').trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){if(inp){inp.focus();inp.style.borderColor='var(--critical)';}return;}
+      PROFILE.set('email',1);
+      track('email',Object.assign({},PROFILE.pub(),lastSalary?{aed_month:lastSalary}:{},{email:v}));
+      TRACK.flush(false);
+      updateCapture();
+    });
+  });
+}
+function emailHTML(){
+  if(PROFILE.get('email'))
+    return '<div class="emailok">✓ You are on the list. We will email you when the official 2024/25 household survey lands.</div>';
+  return '<button type="button" class="emailx" aria-label="Dismiss">×</button>'
+    +'<div class="et">Want to know when these numbers change?</div>'
+    +'<div class="es">The UAE’s 2024/25 national Household Income and Expenditure Survey has not been published yet. '
+    +'It will move every figure on this page. One email when it lands, plus the annual salary update. Nothing else.</div>'
+    +'<form class="emailform" novalidate><input type="email" inputmode="email" autocomplete="email" '
+    +'placeholder="you@example.com" aria-label="Email address"><button type="submit">Notify me</button></form>';
+}
+let emailShownLogged=false,emailForce=false;
+function updateCapture(){
+  const c=cohortStats(),out=$('#capOut');
+  if(c){
+    const inc=userIncomeAEDMonthly();
+    let h='Across the <b>'+c.n+'</b> '+c.label.toLowerCase()+' roles we track'
+      +(PROFILE.get('emirate')?' in <b>'+PROFILE.get('emirate')+'</b>':'')
+      +', typical packages run <b>'+money(c.p25,{compact:true})+'–'
+      +money(c.p75,{compact:true}).replace(CUR+' ','')
+      +'</b>, with a midpoint of <b>'+money(c.p50,{compact:true})+'</b>.';
+    if(c.expected){
+      const eb=EXPB.find(e=>e[0]===PROFILE.get('exp'));
+      h+='<span class="cdelta">At <b>'+eb[1]+'</b>, the expected point is about <b>'
+        +money(c.expected,{compact:true})+'</b>'
+        +(inc>0?'. You are <b>'+Math.abs(Math.round((inc/c.expected-1)*100))+'% '
+          +(inc>=c.expected?'above':'below')+'</b> that.':'.')+'</span>';
+    } else {
+      h+='<span class="cdelta">Add your experience to see the expected point for your level.</span>';
+    }
+    out.innerHTML=h;out.style.display='block';
+    $('#capSub').textContent='Benchmarks below update with every tap. Nothing is required and nothing is hidden.';
+  } else {
+    out.style.display='none';
+    $('#capSub').textContent='Three optional taps. Each one narrows the benchmark to people more like you.';
+  }
+  // email ask: only after a real result, only once the visitor has had value
+  const ready=userIncomeAEDMonthly()>0||PROFILE.get('sector');
+  const earned=emailForce||TRACK.elapsed()>CAPTURE.emailAfterMs||TRACK.actions()>=CAPTURE.emailAfterActions;
+  const show=!PROFILE.get('emailNo')&&ready&&(earned||PROFILE.get('email'));
+  ['#capEmail','#scEmail'].forEach(sel=>{
+    const el=$(sel);if(!el)return;
+    if(!show){el.style.display='none';return;}
+    const want=emailHTML();
+    if(el.dataset.h!==want){el.innerHTML=want;el.dataset.h=want;}
+    el.style.display='block';
+  });
+  if(show&&!PROFILE.get('email')&&!emailShownLogged){emailShownLogged=true;track('email_shown',{});}
+}
+
+/* ---- passive salary capture: debounced, bounded, de-duplicated ---- */
+let salTimer=null,lastSalary=0,sentSalary={};
+function noteSalary(src){
+  clearTimeout(salTimer);
+  salTimer=setTimeout(()=>{
+    let v=0,extra={};
+    if(src==='income'){
+      v=userIncomeAEDMonthly();
+      extra={view:incomeView(),mode:MODE};
+      if(v>0)extra.pct=+pctOf(incomeView(),v).toFixed(2);
+    } else {
+      v=parseIn($('#scPay'));if(CUR==='USD')v*=FX;if(PER==='yr')v/=12;
+      extra={role:($('#scRole').value||'').trim().slice(0,80),
+             yrs:Math.max(0,parseFloat($('#scYrs').value)||0)};
+      if(v>0)extra.pct=+pctOf('pro',v).toFixed(2);
+    }
+    if(!(v>=CAPTURE.salaryMin&&v<=CAPTURE.salaryMax))return;   // sanity bounds
+    const rounded=Math.round(v/100)*100;                       // coarsen: never a fingerprint
+    const key=src+':'+rounded+':'+(extra.role||'');
+    if(sentSalary[key])return;                                 // de-dup within the session
+    sentSalary[key]=1;lastSalary=rounded;
+    track('salary',Object.assign({src:src,aed_month:rounded},extra,PROFILE.pub()));
+  },CAPTURE.salaryDebounce);
+}
+
+/* outbound link instrumentation, so partner conversations start with a number */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href]');if(!a)return;
+  let host='';try{host=new URL(a.href,location.href).hostname}catch(err){return}
+  if(!host||host===location.hostname)return;
+  track('outbound',{host:host,text:(a.textContent||'').trim().slice(0,60),
+                    sponsored:/sponsored/.test(a.rel||'')});
+},true);
+
 /* ================= boot ================= */
-function renderAll(){renderIncome();renderWealth();renderEmirates();renderRoles();drawSegments();renderSalCheck();}
-hookMoney($('#incIn'),renderIncome);
+function renderAll(){renderIncome();renderWealth();renderEmirates();renderRoles();drawSegments();renderSalCheck();
+  if($('#capOut'))updateCapture();}
+hookMoney($('#incIn'),()=>{renderIncome();noteSalary('income');});
 hookMoney($('#wIn'),renderWealth);
 initRoles();
 initSalCheck();
+initCapture();
 applyMode();
 renderMonetize();
 renderAll();
+track('view',{ref_full:(document.referrer||'').slice(0,200)});
+setTimeout(updateCapture,CAPTURE.emailAfterMs+500);
 let rsz;window.addEventListener('resize',()=>{clearTimeout(rsz);rsz=setTimeout(renderAll,180);});
 </script>
 </body>
