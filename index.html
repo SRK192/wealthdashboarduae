@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* force https so the padlock shows even before the host-level redirect is active */
+if(location.protocol==='http:'&&location.hostname.indexOf('localhost')<0&&location.hostname!=='127.0.0.1'){
+  location.replace('https://'+location.host+location.pathname+location.search+location.hash);
+}</script>
 <title>The UAE Wealth Dashboard — income percentiles, wealth and salaries</title>
 <meta name="description" content="See exactly where you stand among 11 million UAE residents. Income percentiles, net-worth rankings, salary checks for 800+ roles, and wealth by emirate.">
 <link rel="canonical" href="https://wealthdashboarduae.com/">
