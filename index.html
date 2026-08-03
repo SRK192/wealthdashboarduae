@@ -1730,11 +1730,11 @@ function initCapture(){
 }
 function emailHTML(){
   if(PROFILE.get('email'))
-    return '<div class="emailok">✓ You are on the list. We will email you when the official 2024/25 household survey lands.</div>';
+    return '<div class="emailok">✓ You are on the list. We will email you the moment official UAE household income data is published.</div>';
   return '<button type="button" class="emailx" aria-label="Dismiss">×</button>'
     +'<div class="et">Want to know when these numbers change?</div>'
-    +'<div class="es">The UAE’s 2024/25 national Household Income and Expenditure Survey has not been published yet. '
-    +'It will move every figure on this page. One email when it lands, plus the annual salary update. Nothing else.</div>'
+    +'<div class="es">Every figure here is a modelled estimate, because the official UAE household income survey that would settle them is still unpublished. '
+    +'One email the moment it lands, plus the annual salary-guide update. Nothing else.</div>'
     +'<form class="emailform" novalidate><input type="email" inputmode="email" autocomplete="email" '
     +'placeholder="you@example.com" aria-label="Email address"><button type="submit">Notify me</button></form>';
 }
