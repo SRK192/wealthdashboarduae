@@ -1865,7 +1865,7 @@ document.addEventListener('click',e=>{
 /* ================= boot ================= */
 function renderAll(){renderIncome();renderWealth();renderEmirates();renderRoles();drawSegments();renderSalCheck();
   if($('#capOut'))updateCapture();}
-hookMoney($('#incIn'),()=>{renderIncome();noteSalary('income');});
+hookMoney($('#incIn'),()=>{renderIncome();noteSalary('income');/* the age payoff compares the typed salary to the age-band median, so it has to recompute when the salary changes, not only when a chip is tapped */if($('#capOut'))updateCapture();});
 hookMoney($('#wIn'),()=>{renderWealth();noteWealth();});
 initRoles();
 initSalCheck();
