@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4044805221291585"></script>
 <meta name="msvalidate.01" content="6FF66D737C5C997F92287D93F379F731" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* force https so the padlock shows even before the host-level redirect is active */
@@ -1640,7 +1641,7 @@ const track=(n,p)=>TRACK.push(n,p);
 const PROFILE=(()=>{
   let o={};try{o=JSON.parse(localStorage.uaeProfile||'{}')||{}}catch(e){o={}}
   const save=()=>{try{localStorage.uaeProfile=JSON.stringify(o)}catch(e){}};
-  const PUB=['sector','exp','emirate'];
+  const PUB=['sector','exp','emirate','age'];
   return {get:k=>o[k],set:(k,v)=>{o[k]=v;save();},del:k=>{delete o[k];save();},
           all:()=>Object.assign({},o),
           /* only the three fields the visitor actually chose ever leave the browser;
@@ -1669,6 +1670,11 @@ function secGroup(s){
 }
 const EXPB=[['0-2','0–2 yrs',1],['3-5','3–5 yrs',4],['6-10','6–10 yrs',8],
             ['11-15','11–15 yrs',13],['16+','16+ yrs',20]];
+/* Age is the single most useful dimension the model cannot currently validate:
+   the salary-by-age chart is built from one third-party source. Asking for a
+   band rather than a number keeps it one tap and non-identifying, and it pays
+   the visitor back immediately with an age-peer comparison. */
+const AGEB=DATA.age.labels.map((l,i)=>[l,l,DATA.age.median_monthly_aed[i]]);
 const EMS=[['Dubai',1.00],['Abu Dhabi',0.98],['Sharjah',0.95],['Ajman',0.90],
            ['Ras Al Khaimah',0.92],['Fujairah',0.88],['Umm Al Quwain',0.88]];
 const emFactor=n=>{const e=EMS.find(x=>x[0]===n);return e?e[1]:1;};
@@ -1676,7 +1682,11 @@ const emFactor=n=>{const e=EMS.find(x=>x[0]===n);return e?e[1]:1;};
 /* the payoff: every tap returns a real number computed from the roles dataset */
 function cohortStats(){
   const sec=PROFILE.get('sector');
-  if(!sec)return null;
+  if(!sec){
+    // age alone is enough to say something useful, so do not gate it behind sector
+    const ab=PROFILE.get('age')&&AGEB.find(a=>a[0]===PROFILE.get('age'));
+    return ab?{ageOnly:true,ageLabel:ab[1],ageMedian:ab[2]}:null;
+  }
   const rows=DATA.roles.filter(r=>secGroup(r[1])===sec);
   if(rows.length<5)return null;
   const f=emFactor(PROFILE.get('emirate'));
@@ -1687,6 +1697,8 @@ function cohortStats(){
              label:(SECTORS.find(s=>s[0]===sec)||[0,''])[1]};
   const eb=PROFILE.get('exp')&&EXPB.find(e=>e[0]===PROFILE.get('exp'));
   if(eb)out.expected=q(Math.min(0.9,0.12+0.72*expFrac(eb[2])));
+  const ab=PROFILE.get('age')&&AGEB.find(a=>a[0]===PROFILE.get('age'));
+  if(ab){out.ageLabel=ab[1];out.ageMedian=ab[2];}
   return out;
 }
 
@@ -1702,7 +1714,8 @@ function initCapture(){
   $('#capChips').innerHTML=
      chipRow('sector','What field do you work in?',SECTORS)
     +chipRow('exp','Years of experience',EXPB.map(e=>[e[0],e[1]]))
-    +chipRow('emirate','Where do you work?',EMS.map(e=>[e[0],e[0]]));
+    +chipRow('emirate','Where do you work?',EMS.map(e=>[e[0],e[0]]))
+    +chipRow('age','Your age group',AGEB.map(a=>[a[0],a[1]]));
   $('#capChips').addEventListener('click',e=>{
     const b=e.target.closest('.chip');if(!b)return;
     const k=b.dataset.k,v=b.dataset.v;
@@ -1746,7 +1759,16 @@ function emailHTML(){
 let emailShownLogged=false,emailForce=false;
 function updateCapture(){
   const c=cohortStats(),out=$('#capOut');
-  if(c){
+  if(c&&c.ageOnly){
+    const inc2=userIncomeAEDMonthly();
+    out.innerHTML='The median white-collar salary at <b>'+c.ageLabel+'</b> is <b>'
+      +money(c.ageMedian,{compact:true})+'</b>'
+      +(inc2>0?', so you are <b>'+Math.abs(Math.round((inc2/c.ageMedian-1)*100))+'% '
+        +(inc2>=c.ageMedian?'above':'below')+'</b> your age group.':'.')
+      +'<span class="cdelta">Add your field to compare against role-level pay too.</span>';
+    out.style.display='block';
+    $('#capSub').textContent='Benchmarks below update with every tap. Nothing is required and nothing is hidden.';
+  } else if(c){
     const inc=userIncomeAEDMonthly();
     let h='Across the <b>'+c.n+'</b> '+c.label.toLowerCase()+' roles we track'
       +(PROFILE.get('emirate')?' in <b>'+PROFILE.get('emirate')+'</b>':'')
@@ -1761,6 +1783,13 @@ function updateCapture(){
           +(inc>=c.expected?'above':'below')+'</b> that.':'.')+'</span>';
     } else {
       h+='<span class="cdelta">Add your experience to see the expected point for your level.</span>';
+    }
+    if(c.ageMedian){
+      const inc2=userIncomeAEDMonthly();
+      h+='<span class="cdelta">The median white-collar salary at <b>'+c.ageLabel+'</b> is <b>'
+        +money(c.ageMedian,{compact:true})+'</b>'
+        +(inc2>0?', so you are <b>'+Math.abs(Math.round((inc2/c.ageMedian-1)*100))+'% '
+          +(inc2>=c.ageMedian?'above':'below')+'</b> your age group.':'.')+'</span>';
     }
     out.innerHTML=h;out.style.display='block';
     $('#capSub').textContent='Benchmarks below update with every tap. Nothing is required and nothing is hidden.';
@@ -1784,6 +1813,23 @@ function updateCapture(){
 
 /* ---- passive salary capture: debounced, bounded, de-duplicated ---- */
 let salTimer=null,lastSalary=0,sentSalary={};
+/* Net worth is captured on exactly the same terms as salary: it is already
+   typed to get the answer, so nothing extra is asked. Bounds are wider because
+   net worth legitimately spans from near zero to hundreds of millions, and a
+   negative figure is meaningful (debt) rather than an error. */
+let wTimer=null,sentWealth={};
+function noteWealth(){
+  clearTimeout(wTimer);
+  wTimer=setTimeout(()=>{
+    let v=parseIn($('#wIn'));
+    if(CUR==='USD')v*=FX;
+    if(!(v>=1000&&v<=500000000))return;
+    const rounded=Math.round(v/1000)*1000;
+    if(sentWealth[rounded])return;
+    sentWealth[rounded]=1;
+    track('wealth',Object.assign({aed:rounded,mode:MODE,pct:+wPctOf(rounded).toFixed(2)},PROFILE.pub()));
+  },CAPTURE.salaryDebounce);
+}
 function noteSalary(src){
   clearTimeout(salTimer);
   salTimer=setTimeout(()=>{
@@ -1820,7 +1866,7 @@ document.addEventListener('click',e=>{
 function renderAll(){renderIncome();renderWealth();renderEmirates();renderRoles();drawSegments();renderSalCheck();
   if($('#capOut'))updateCapture();}
 hookMoney($('#incIn'),()=>{renderIncome();noteSalary('income');});
-hookMoney($('#wIn'),renderWealth);
+hookMoney($('#wIn'),()=>{renderWealth();noteWealth();});
 initRoles();
 initSalCheck();
 initCapture();
