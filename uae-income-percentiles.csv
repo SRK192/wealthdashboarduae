@@ -1,0 +1,125 @@
+# UAE income and wealth percentile thresholds
+# Source: The UAE Wealth Dashboard, https://wealthdashboarduae.com
+# Compiled 2026-08-04. Modelled estimates, not official statistics.
+# Licence: CC BY 4.0. Cite as "The UAE Wealth Dashboard, https://wealthdashboarduae.com".
+#
+# TABLE 1: income percentile thresholds by population view
+percentile,view,view_label,gross_monthly_aed,gross_annual_aed
+1,full,All UAE workers,820,9840
+5,full,All UAE workers,1163,13956
+10,full,All UAE workers,1415,16980
+15,full,All UAE workers,1626,19512
+20,full,All UAE workers,1828,21936
+25,full,All UAE workers,2035,24420
+30,full,All UAE workers,2260,27120
+35,full,All UAE workers,2515,30180
+40,full,All UAE workers,2817,33804
+45,full,All UAE workers,3190,38280
+50,full,All UAE workers,3662,43944
+55,full,All UAE workers,4270,51240
+60,full,All UAE workers,5053,60636
+65,full,All UAE workers,6053,72636
+70,full,All UAE workers,7341,88092
+75,full,All UAE workers,9068,108816
+80,full,All UAE workers,11558,138696
+85,full,All UAE workers,15410,184920
+90,full,All UAE workers,21674,260088
+95,full,All UAE workers,34244,410928
+99,full,All UAE workers,87333,1047996
+1,household,Household-survey frame,1326,15912
+5,household,Household-survey frame,2036,24432
+10,household,Household-survey frame,2648,31776
+15,household,Household-survey frame,3238,38856
+20,household,Household-survey frame,3870,46440
+25,household,Household-survey frame,4570,54840
+30,household,Household-survey frame,5338,64056
+35,household,Household-survey frame,6160,73920
+40,household,Household-survey frame,7026,84312
+45,household,Household-survey frame,7942,95304
+50,household,Household-survey frame,8926,107112
+55,household,Household-survey frame,10010,120120
+60,household,Household-survey frame,11237,134844
+65,household,Household-survey frame,12673,152076
+70,household,Household-survey frame,14418,173016
+75,household,Household-survey frame,16635,199620
+80,household,Household-survey frame,19603,235236
+85,household,Household-survey frame,23872,286464
+90,household,Household-survey frame,30814,369768
+95,household,Household-survey frame,46189,554268
+99,household,Household-survey frame,115188,1382256
+1,pro,White-collar professionals,4610,55320
+5,pro,White-collar professionals,7008,84096
+10,pro,White-collar professionals,8779,105348
+15,pro,White-collar professionals,10234,122808
+20,pro,White-collar professionals,11572,138864
+25,pro,White-collar professionals,12869,154428
+30,pro,White-collar professionals,14169,170028
+35,pro,White-collar professionals,15504,186048
+40,pro,White-collar professionals,16902,202824
+45,pro,White-collar professionals,18392,220704
+50,pro,White-collar professionals,20010,240120
+55,pro,White-collar professionals,21800,261600
+60,pro,White-collar professionals,23823,285876
+65,pro,White-collar professionals,26167,314004
+70,pro,White-collar professionals,28973,347676
+75,pro,White-collar professionals,32476,389712
+80,pro,White-collar professionals,37124,445488
+85,pro,White-collar professionals,43899,526788
+90,pro,White-collar professionals,55520,666240
+95,pro,White-collar professionals,83129,997548
+99,pro,White-collar professionals,183120,2197440
+1,hh,Household income,4044,48528
+5,hh,Household income,5993,71916
+10,hh,Household income,7495,89940
+15,hh,Household income,8793,105516
+20,hh,Household income,10050,120600
+25,hh,Household income,11336,136032
+30,hh,Household income,12698,152376
+35,hh,Household income,14175,170100
+40,hh,Household income,15807,189684
+45,hh,Household income,17638,211656
+50,hh,Household income,19720,236640
+55,hh,Household income,22119,265428
+60,hh,Household income,24930,299160
+65,hh,Household income,28299,339588
+70,hh,Household income,32465,389580
+75,hh,Household income,37850,454200
+80,hh,Household income,45260,543120
+85,hh,Household income,56344,676128
+90,hh,Household income,74837,898044
+95,hh,Household income,112093,1345116
+99,hh,Household income,218292,2619504
+
+# TABLE 2: net worth percentile thresholds, per adult
+percentile,net_worth_aed,net_worth_usd
+1,4459,1214
+5,15826,4309
+10,31100,8468
+15,49063,13360
+20,70491,19194
+25,96200,26195
+30,127883,34822
+35,167216,45532
+40,215020,58549
+45,271821,74015
+50,337549,91913
+55,412777,112397
+60,500599,136310
+65,605401,164847
+70,734608,200029
+75,901669,245519
+80,1133545,308658
+85,1493391,406642
+90,2173142,591734
+95,3956897,1077440
+99,14419108,3926238
+
+# TABLE 3: by emirate
+emirate,population_m,gdp_per_capita_usd,avg_salary_annual_aed,wealth_per_adult_usd,rent_1bed_annual_aed_low,rent_1bed_annual_aed_high
+Dubai,4.58,44600,257700,243000,68000,82000
+Abu Dhabi,4.14,65700,253400,123000,40000,60000
+Sharjah,1.8,32100,245300,83000,37000,43000
+Ajman,0.59,22600,232900,61000,27000,30000
+Ras Al Khaimah,0.47,30700,,69000,26000,60000
+Fujairah,0.36,23500,,58000,,
+Umm Al Quwain,0.1,7700,,50000,,

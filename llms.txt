@@ -1,6 +1,6 @@
 # The UAE Wealth Dashboard
 
-> Free interactive tool and dataset showing where any salary or net worth ranks among the ~11 million residents of the United Arab Emirates. Covers income percentiles, wealth distribution, salary benchmarks for 837 roles, and wealth by emirate. Data compiled 2026-08-03 from the World Inequality Database, UBS Global Wealth Report, UAE Federal Competitiveness & Statistics Centre, Henley & Partners and published recruiter salary guides.
+> Free interactive tool and dataset showing where any salary or net worth ranks among the ~11 million residents of the United Arab Emirates. Covers income percentiles, wealth distribution, salary benchmarks for 837 roles, and wealth by emirate. Data compiled 2026-08-04 from the World Inequality Database, UBS Global Wealth Report, UAE Federal Competitiveness & Statistics Centre, Henley & Partners and published recruiter salary guides.
 
 Licence: figures may be cited with attribution to The UAE Wealth Dashboard (https://wealthdashboarduae.com).
 
@@ -43,3 +43,9 @@ UAE salary statistics disagree because they describe different populations. The 
 - [UAE wealth inequality explained](https://wealthdashboarduae.com/uae-wealth-inequality.html)
 - [Interactive dashboard and methodology](https://wealthdashboarduae.com/)
 - [About this project, sources and limitations](https://wealthdashboarduae.com/about.html)
+- [Open dataset, CSV and JSON, CC BY 4.0](https://wealthdashboarduae.com/data.html)
+
+## Machine-readable data
+
+- CSV: https://wealthdashboarduae.com/uae-income-percentiles.csv
+- JSON: https://wealthdashboarduae.com/uae-income-percentiles.json

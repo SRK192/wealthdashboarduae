@@ -1,0 +1,226 @@
+{
+ "name": "UAE income and wealth percentile thresholds",
+ "source": "https://wealthdashboarduae.com",
+ "compiled": "2026-08-04",
+ "licence": "CC BY 4.0",
+ "attribution": "The UAE Wealth Dashboard, https://wealthdashboarduae.com",
+ "caveat": "Modelled estimates, not official statistics. UAE income figures disagree across sources because they describe different populations; each view below states which.",
+ "currency": "AED",
+ "usd_per_aed": 0.272294,
+ "aed_per_usd": 3.6725,
+ "views": {
+  "full": {
+   "label": "All UAE workers",
+   "definition": "Everyone employed in the UAE, including labour-camp, collective-household and domestic workers",
+   "mean_monthly_aed": 9490,
+   "percentiles_monthly_aed": {
+    "1": 820,
+    "5": 1163,
+    "10": 1415,
+    "15": 1626,
+    "20": 1828,
+    "25": 2035,
+    "30": 2260,
+    "35": 2515,
+    "40": 2817,
+    "45": 3190,
+    "50": 3662,
+    "55": 4270,
+    "60": 5053,
+    "65": 6053,
+    "70": 7341,
+    "75": 9068,
+    "80": 11558,
+    "85": 15410,
+    "90": 21674,
+    "95": 34244,
+    "99": 87333
+   }
+  },
+  "household": {
+   "label": "Household-survey frame",
+   "definition": "Workers living in conventional households, comparable to the official Labour Force Survey frame",
+   "mean_monthly_aed": 15234,
+   "percentiles_monthly_aed": {
+    "1": 1326,
+    "5": 2036,
+    "10": 2648,
+    "15": 3238,
+    "20": 3870,
+    "25": 4570,
+    "30": 5338,
+    "35": 6160,
+    "40": 7026,
+    "45": 7942,
+    "50": 8926,
+    "55": 10010,
+    "60": 11237,
+    "65": 12673,
+    "70": 14418,
+    "75": 16635,
+    "80": 19603,
+    "85": 23872,
+    "90": 30814,
+    "95": 46189,
+    "99": 115188
+   }
+  },
+  "pro": {
+   "label": "White-collar professionals",
+   "definition": "Professional and management roles, the group most recruiter salary guides describe",
+   "mean_monthly_aed": 29679,
+   "percentiles_monthly_aed": {
+    "1": 4610,
+    "5": 7008,
+    "10": 8779,
+    "15": 10234,
+    "20": 11572,
+    "25": 12869,
+    "30": 14169,
+    "35": 15504,
+    "40": 16902,
+    "45": 18392,
+    "50": 20010,
+    "55": 21800,
+    "60": 23823,
+    "65": 26167,
+    "70": 28973,
+    "75": 32476,
+    "80": 37124,
+    "85": 43899,
+    "90": 55520,
+    "95": 83129,
+    "99": 183120
+   }
+  },
+  "hh": {
+   "label": "Household income",
+   "definition": "Combined gross income of all earners in a conventional UAE household",
+   "mean_monthly_aed": 33997,
+   "percentiles_monthly_aed": {
+    "1": 4044,
+    "5": 5993,
+    "10": 7495,
+    "15": 8793,
+    "20": 10050,
+    "25": 11336,
+    "30": 12698,
+    "35": 14175,
+    "40": 15807,
+    "45": 17638,
+    "50": 19720,
+    "55": 22119,
+    "60": 24930,
+    "65": 28299,
+    "70": 32465,
+    "75": 37850,
+    "80": 45260,
+    "85": 56344,
+    "90": 74837,
+    "95": 112093,
+    "99": 218292
+   }
+  }
+ },
+ "net_worth_per_adult": {
+  "currency": "AED",
+  "percentiles_aed": {
+   "1": 4459,
+   "5": 15826,
+   "10": 31100,
+   "15": 49063,
+   "20": 70491,
+   "25": 96200,
+   "30": 127883,
+   "35": 167216,
+   "40": 215020,
+   "45": 271821,
+   "50": 337549,
+   "55": 412777,
+   "60": 500599,
+   "65": 605401,
+   "70": 734608,
+   "75": 901669,
+   "80": 1133545,
+   "85": 1493391,
+   "90": 2173142,
+   "95": 3956897,
+   "99": 14419108
+  },
+  "median_aed": 337549,
+  "gini": 0.82
+ },
+ "emirates": [
+  {
+   "name": "Dubai",
+   "population_m": 4.58,
+   "gdp_per_capita_usd": 44600,
+   "avg_salary_annual_aed": 257700,
+   "wealth_per_adult_usd": 243000,
+   "rent_1bed_annual_aed": [
+    68000,
+    82000
+   ]
+  },
+  {
+   "name": "Abu Dhabi",
+   "population_m": 4.14,
+   "gdp_per_capita_usd": 65700,
+   "avg_salary_annual_aed": 253400,
+   "wealth_per_adult_usd": 123000,
+   "rent_1bed_annual_aed": [
+    40000,
+    60000
+   ]
+  },
+  {
+   "name": "Sharjah",
+   "population_m": 1.8,
+   "gdp_per_capita_usd": 32100,
+   "avg_salary_annual_aed": 245300,
+   "wealth_per_adult_usd": 83000,
+   "rent_1bed_annual_aed": [
+    37000,
+    43000
+   ]
+  },
+  {
+   "name": "Ajman",
+   "population_m": 0.59,
+   "gdp_per_capita_usd": 22600,
+   "avg_salary_annual_aed": 232900,
+   "wealth_per_adult_usd": 61000,
+   "rent_1bed_annual_aed": [
+    27000,
+    30000
+   ]
+  },
+  {
+   "name": "Ras Al Khaimah",
+   "population_m": 0.47,
+   "gdp_per_capita_usd": 30700,
+   "avg_salary_annual_aed": null,
+   "wealth_per_adult_usd": 69000,
+   "rent_1bed_annual_aed": [
+    26000,
+    60000
+   ]
+  },
+  {
+   "name": "Fujairah",
+   "population_m": 0.36,
+   "gdp_per_capita_usd": 23500,
+   "avg_salary_annual_aed": null,
+   "wealth_per_adult_usd": 58000,
+   "rent_1bed_annual_aed": null
+  },
+  {
+   "name": "Umm Al Quwain",
+   "population_m": 0.1,
+   "gdp_per_capita_usd": 7700,
+   "avg_salary_annual_aed": null,
+   "wealth_per_adult_usd": 50000,
+   "rent_1bed_annual_aed": null
+  }
+ ]
+}
