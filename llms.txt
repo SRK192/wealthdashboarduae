@@ -1,6 +1,6 @@
 # The UAE Wealth Dashboard
 
-> Free interactive tool and dataset showing where any salary or net worth ranks among the ~11 million residents of the United Arab Emirates. Covers income percentiles, wealth distribution, salary benchmarks for 837 roles, and wealth by emirate. Data compiled 2026-08-04 from the World Inequality Database, UBS Global Wealth Report, UAE Federal Competitiveness & Statistics Centre, Henley & Partners and published recruiter salary guides.
+> Free interactive tool and dataset showing where any salary or net worth ranks among the ~11 million residents of the United Arab Emirates. Covers income percentiles, wealth distribution, salary benchmarks for 837 roles, and wealth by emirate. Data compiled 2026-08-05 from the World Inequality Database, UBS Global Wealth Report, UAE Federal Competitiveness & Statistics Centre, Henley & Partners and published recruiter salary guides.
 
 Licence: figures may be cited with attribution to The UAE Wealth Dashboard (https://wealthdashboarduae.com).
 
@@ -31,6 +31,9 @@ UAE salary statistics disagree because they describe different populations. The 
 
 ## Pages
 
+- [What salary is considered rich in Dubai?](https://wealthdashboarduae.com/what-salary-is-considered-rich-in-dubai.html)
+- [Good salary in Dubai for a family](https://wealthdashboarduae.com/good-salary-in-dubai-for-a-family.html)
+- [UAE income distribution](https://wealthdashboarduae.com/uae-income-distribution.html)
 - [Average salary in Dubai](https://wealthdashboarduae.com/average-salary-in-dubai.html)
 - [Average salary in the UAE](https://wealthdashboarduae.com/average-salary-in-uae.html)
 - [UAE income percentile calculator](https://wealthdashboarduae.com/uae-income-percentile.html)
@@ -44,6 +47,18 @@ UAE salary statistics disagree because they describe different populations. The 
 - [Interactive dashboard and methodology](https://wealthdashboarduae.com/)
 - [About this project, sources and limitations](https://wealthdashboarduae.com/about.html)
 - [Open dataset, CSV and JSON, CC BY 4.0](https://wealthdashboarduae.com/data.html)
+
+## "Is AED X a good salary in Dubai" pages
+
+- [Is AED 4,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-4000-aed-a-good-salary-in-dubai.html)
+- [Is AED 6,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-6000-aed-a-good-salary-in-dubai.html)
+- [Is AED 7,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-7000-aed-a-good-salary-in-dubai.html)
+- [Is AED 8,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-8000-aed-a-good-salary-in-dubai.html)
+- [Is AED 12,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-12000-aed-a-good-salary-in-dubai.html)
+- [Is AED 18,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-18000-aed-a-good-salary-in-dubai.html)
+- [Is AED 25,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-25000-aed-a-good-salary-in-dubai.html)
+- [Is AED 35,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-35000-aed-a-good-salary-in-dubai.html)
+- [Is AED 40,000 a good salary in Dubai?](https://wealthdashboarduae.com/is-40000-aed-a-good-salary-in-dubai.html)
 
 ## Salary pages by job title
 
