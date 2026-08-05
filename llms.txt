@@ -45,6 +45,35 @@ UAE salary statistics disagree because they describe different populations. The 
 - [About this project, sources and limitations](https://wealthdashboarduae.com/about.html)
 - [Open dataset, CSV and JSON, CC BY 4.0](https://wealthdashboarduae.com/data.html)
 
+## Salary pages by job title
+
+- [Accountant salary in the UAE](https://wealthdashboarduae.com/accountant-salary-uae.html)
+- [Financial Controller salary in the UAE](https://wealthdashboarduae.com/financial-controller-salary-uae.html)
+- [Finance Manager salary in the UAE](https://wealthdashboarduae.com/finance-manager-salary-uae.html)
+- [Chief Financial Officer salary in the UAE](https://wealthdashboarduae.com/chief-financial-officer-salary-uae.html)
+- [Financial Analyst salary in the UAE](https://wealthdashboarduae.com/financial-analyst-salary-uae.html)
+- [Marketing Manager salary in the UAE](https://wealthdashboarduae.com/marketing-manager-salary-uae.html)
+- [Sales Manager salary in the UAE](https://wealthdashboarduae.com/sales-manager-salary-uae.html)
+- [HR Manager salary in the UAE](https://wealthdashboarduae.com/hr-manager-salary-uae.html)
+- [Project Manager salary in the UAE](https://wealthdashboarduae.com/project-manager-salary-uae.html)
+- [Civil Engineer salary in the UAE](https://wealthdashboarduae.com/civil-engineer-salary-uae.html)
+- [Software Engineer salary in the UAE](https://wealthdashboarduae.com/software-engineer-salary-uae.html)
+- [Data Scientist salary in the UAE](https://wealthdashboarduae.com/data-scientist-salary-uae.html)
+- [Business Analyst salary in the UAE](https://wealthdashboarduae.com/business-analyst-salary-uae.html)
+- [Operations Manager salary in the UAE](https://wealthdashboarduae.com/operations-manager-salary-uae.html)
+- [Procurement Manager salary in the UAE](https://wealthdashboarduae.com/procurement-manager-salary-uae.html)
+- [Legal Counsel salary in the UAE](https://wealthdashboarduae.com/legal-counsel-salary-uae.html)
+- [Architect salary in the UAE](https://wealthdashboarduae.com/architect-salary-uae.html)
+- [Solutions Architect salary in the UAE](https://wealthdashboarduae.com/solutions-architect-salary-uae.html)
+- [Enterprise Architect salary in the UAE](https://wealthdashboarduae.com/enterprise-architect-salary-uae.html)
+- [Quantity Surveyor salary in the UAE](https://wealthdashboarduae.com/quantity-surveyor-salary-uae.html)
+- [Registered Nurse salary in the UAE](https://wealthdashboarduae.com/registered-nurse-salary-uae.html)
+- [Teacher salary in the UAE](https://wealthdashboarduae.com/teacher-salary-uae.html)
+- [Executive Assistant salary in the UAE](https://wealthdashboarduae.com/executive-assistant-salary-uae.html)
+- [Relationship Manager salary in the UAE](https://wealthdashboarduae.com/relationship-manager-salary-uae.html)
+- [Cabin Crew salary in the UAE](https://wealthdashboarduae.com/cabin-crew-salary-uae.html)
+- [Pilot salary in the UAE](https://wealthdashboarduae.com/pilot-salary-uae.html)
+
 ## Machine-readable data
 
 - CSV: https://wealthdashboarduae.com/uae-income-percentiles.csv
