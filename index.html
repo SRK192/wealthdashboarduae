@@ -90,6 +90,11 @@ h1,.pagetitle{font-size:27px;letter-spacing:-.025em;margin-bottom:5px;font-weigh
 .sub{color:var(--ink2);font-size:13.5px}
 .klabel{font-size:10.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
 .tiny{color:var(--ink3);font-size:11.5px;line-height:1.45}
+.chartlegend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:11.5px;color:var(--ink3)}
+.chartlegend span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.chartlegend i{display:inline-block}
+.chartlegend i.ln{width:16px;height:0;border-top-width:2.5px;border-top-style:solid}
+.chartlegend i.bk{width:16px;height:10px;border-radius:2px}
 /* ---------- input hero ---------- */
 .hero{display:grid;grid-template-columns:minmax(300px,370px) 1fr;gap:12px;margin-bottom:12px}
 @media(max-width:840px){.hero{grid-template-columns:1fr}}
@@ -386,6 +391,7 @@ footer{border-top:1px solid var(--border);padding:12px 0 16px;color:var(--muted)
       <div class="ctitle" id="ageTitle"></div>
       <div class="tiny" style="margin-bottom:10px" id="ageSub"></div>
       <div id="ageChart" style="position:relative"></div>
+      <div class="chartlegend" id="ageLegend"></div>
       <div class="src">Source: Paylab UAE 2026 age medians; percentile tiers modelled from the overall white-collar spread</div>
     </div>
   </div>
@@ -945,14 +951,14 @@ function drawAge(inc){
   const W=W0,H=nar?250:278,padL=nar?42:50,padR=nar?12:72,padT=18,padB=nar?34:28;
   const n=A.labels.length;
   const conv=v=>{let x=v;if(PER==='yr')x*=12;if(CUR==='USD')x/=FX;return x;};
-  $('#ageSub').textContent='Where white-collar salaries fall at each age: outer band 10th–90th percentile, inner band 25th–75th, bold line is the median. Modelled around Paylab UAE age medians; professional data, not the full workforce.'
-    +(MODE==='hh'?' Individual salaries: no household marker shown.':' Dashed line marks your salary.');
+  $('#ageSub').textContent='Where white-collar salaries fall at each age: outer band 10th–90th percentile, inner band 25th–75th, bold line is the median, dashed line at the top is the 99th. The 99th sits more than three times the median, which is why most of the vertical space is empty: that gap is the finding. Modelled around Paylab UAE age medians; professional data, not the full workforce.'
+    +(MODE==='hh'?' Individual salaries: no household marker shown.':' Your salary is marked in red.');
   const peakIdx=A.median_monthly_aed.indexOf(Math.max(...A.median_monthly_aed));
   $('#ageTitle').textContent='Earnings peak at '+A.labels[peakIdx];
   const uv=(MODE==='ind'&&inc>0)?conv(inc):null;
   const X=i=>padL+(i+0.5)*(W-padL-padR)/n;
   // clean rounded axis max
-  const rawMax=Math.max(conv(Math.max(...A.median_monthly_aed)*AGE_TIERS.p90)*1.18, uv?uv*1.12:0);
+  const rawMax=Math.max(conv(Math.max(...A.median_monthly_aed)*AGE_TIERS.p99)*1.06, uv?uv*1.12:0);
   const step=Math.pow(10,Math.floor(Math.log10(rawMax/4)));
   const niceStep=[1,1.25,1.5,2,2.5,3,4,5,6,8,10].map(m=>m*step).find(sv=>sv*4>=rawMax)||4*step;
   const max=niceStep*4;
@@ -990,6 +996,9 @@ function drawAge(inc){
     +'<path d="'+band('p75','p25')+'" fill="url(#agB2)"/>'
     +'<path d="'+smooth(pts('p75'))+'" fill="none" stroke="'+css('--seq3')+'" stroke-width="1" opacity="0.7"/>'
     +'<path d="'+smooth(pts('p25'))+'" fill="none" stroke="'+css('--seq3')+'" stroke-width="1" opacity="0.7"/>'
+    /* the 99th is extrapolated from a p10-p90 spread rather than measured, so it
+       is dashed: a solid band edge would claim the same confidence as the middle */
+    +'<path d="'+smooth(pts('p99'))+'" fill="none" stroke="'+css('--seq4')+'" stroke-width="1.75" stroke-dasharray="6 4" stroke-linecap="round"/>'
     +'<path d="'+smooth(pts('p50'))+'" fill="none" stroke="'+css('--seq5')+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
   // median markers, value labels, x labels; annotate the peak
   const peak=A.median_monthly_aed.indexOf(Math.max(...A.median_monthly_aed));
@@ -1000,10 +1009,17 @@ function drawAge(inc){
       +(i===peak?'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="0.06em" fill="'+css('--ink3')+'">PEAK</text>':'')
       +'<text x="'+p[0].toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle" font-size="'+(nar?9:10.5)+'" fill="'+css('--muted')+'">'+(nar?A.labels[i].replace('Under ','<').replace('–','-'):A.labels[i])+'</text>';
   });
+  // the 99th carries a value at the peak age, because a dashed line three times
+  // the median is the number people came for and it is otherwise unlabelled
+  {
+    const pk=pts('p99')[peak];
+    s+='<text x="'+pk[0].toFixed(1)+'" y="'+(pk[1]-8).toFixed(1)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+css('--ink3')+'" font-variant-numeric="tabular-nums">'
+      +money(ageTier(peak,'p99'),{compact:true}).replace(CUR+' ','')+' at the 99th</text>';
+  }
   // right-edge band labels, tone-matched, collision-spread
   if(!nar){
     const last=n-1, lx=W-padR+8;
-    const labels=[['p90','90th',css('--seq3')],['p75','75th',css('--seq4')],['p50','MEDIAN',css('--seq5')],['p25','25th',css('--seq4')],['p10','10th',css('--seq3')]];
+    const labels=[['p99','99th',css('--seq4')],['p90','90th',css('--seq3')],['p75','75th',css('--seq4')],['p50','MEDIAN',css('--seq5')],['p25','25th',css('--seq4')],['p10','10th',css('--seq3')]];
     let yprev=-99;
     labels.forEach(([k,txt,col])=>{
       let y=ys(conv(A.median_monthly_aed[last]*AGE_TIERS[k]))+3.5;
@@ -1033,7 +1049,8 @@ function drawAge(inc){
     xh.setAttribute('x1',ax);xh.setAttribute('x2',ax);xh.setAttribute('opacity',0.7);
     const m=k=>money(ageTier(best,k),{compact:true}).replace(CUR+' ','');
     showTT(e,'<b>Age '+A.labels[best]+'</b>'
-      +'<div class="l" style="margin-top:3px">90th &nbsp;<b>'+m('p90')+'</b></div>'
+      +'<div class="l" style="margin-top:3px">99th &nbsp;<b>'+m('p99')+'</b></div>'
+      +'<div class="l">90th &nbsp;<b>'+m('p90')+'</b></div>'
       +'<div class="l">75th &nbsp;<b>'+m('p75')+'</b></div>'
       +'<div class="l">Median &nbsp;<b>'+m('p50')+'</b></div>'
       +'<div class="l">25th &nbsp;<b>'+m('p25')+'</b></div>'
@@ -1041,6 +1058,17 @@ function drawAge(inc){
       +'<div class="l" style="margin-top:3px">'+CUR+(PER==='yr'?' per year':' per month')+', white-collar</div>');
   });
   svg.addEventListener('mouseleave',()=>xh.setAttribute('opacity',0));
+  /* identity must not depend on the right-edge labels, which are suppressed below
+     520px, so the legend carries it at every width */
+  /* the legend mirrors what is actually on the plot: two bands, one bold line and
+     one dashed line. Six line swatches would be wrong, because the band edges get
+     their identity from being inner or outer, not from their stroke colour. */
+  const leg=$('#ageLegend');
+  if(leg)leg.innerHTML=
+     '<span><i class="ln" style="border-top-color:'+css('--seq4')+';border-top-style:dashed"></i>99th percentile</span>'
+    +'<span><i class="ln" style="border-top-color:'+css('--seq5')+';border-top-width:3px"></i>Median</span>'
+    +'<span><i class="bk" style="background:'+css('--seq3')+';opacity:.45"></i>25th–75th</span>'
+    +'<span><i class="bk" style="background:'+css('--seq1')+';opacity:.5"></i>10th–90th</span>';
 }
 /* ---- segments chart ---- */
 function drawSegments(){
